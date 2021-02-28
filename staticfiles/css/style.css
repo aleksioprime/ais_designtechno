@@ -1,13 +1,37 @@
+[v-cloak] {
+    display: none;
+}
+
 .content {
     min-height: calc(100vh - 170px);
 }
 
 header {
-    height: 80px;
+    height: 60px;
 }
 
 footer {
     background-color: rgb(189, 189, 189);
+}
+
+.appname-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px 15px;
+}
+
+.content-wrapper {
+    padding: 5px 15px;
+}
+
+/* Обёртка для кнопок */
+.buttons-wrapper {
+    padding: 15px 0;
+}
+
+.buttons-wrapper input {
+    margin-right: 15px;
 }
 
 .emp-mini-photo {
@@ -24,6 +48,11 @@ footer {
 .wrapper-thing-detail {
     display: flex;
     justify-content:space-between;
+}
+
+.img-thing-detail {
+    width: 300px;
+    padding: 20px;
 }
 
 .wrapper-user-data {
@@ -129,4 +158,145 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.btn-year {
+    margin: 15px 0;
+}
+
+/* Стиль таблицы с выбором студентов */
+.student-choice td,th {
+    padding: 2px;
+}
+
+.class-unit {
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.card-class-unit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(41, 160, 41);
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin: 5px 5px;
+}
+.card-class-unit a {
+    text-decoration: none;
+    color: white;
+}
+
+.card-unit {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+.card-unit-element {
+    margin: 5px 15px;
+}
+
+/* Строка заголовка в списке юнитов */
+.wrapper-head-period {
+    display: flex;
+    justify-content: space-between;
+}
+
+.period-bar {
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.period-year {
+    margin: 0 15px;
+}
+
+.btn-objectives button {
+    margin: 10px 10px 5px 0;
+}
+
+.assessment-level {
+    margin: 15px 10px;
+}
+
+
+.td-not-criterion {
+    background-color: beige;
+}
+
+/* Ссылка названия юнита в списке */
+.unit-link-edit:hover {
+    text-decoration: none; 
+    color: red; 
+}
+
+/* Обёртка для списка классов в пункте юнита */
+.unit-group-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.unit-group-wrapper a {
+    text-decoration: none; 
+}
+
+/* Класс в пункте юнита */
+.unit-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    margin: 5px 5px;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(81, 168, 73);
+    border-radius: 5px;
+}
+
+/* Обёртка для данных об оцениваемом студенте */
+.assessment-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.criterion-mark {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.criterion-mark-a, .criterion-mark-b, .criterion-mark-c, .criterion-mark-d {
+    width: 50px;
+    height: 50px;
+    padding: 5px 10px;
+    margin: 0 10px;
+    color:rgb(255, 255, 255);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.criterion-mark-a {
+    background-color: rgb(28, 128, 141);
+}
+
+.criterion-mark-b {
+    background-color: rgb(124, 136, 17);
+}
+
+.criterion-mark-c {
+    background-color: rgb(31, 121, 13);
+}
+
+.criterion-mark-d {
+    background-color: rgb(150, 46, 42);
 }
