@@ -8,4 +8,3 @@ urlpatterns = [
     path('', include('storage.urls')),
     path('', include('sumassess.urls')),
 ]
-
