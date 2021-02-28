@@ -1,0 +1,132 @@
+.content {
+    min-height: calc(100vh - 170px);
+}
+
+header {
+    height: 80px;
+}
+
+footer {
+    background-color: rgb(189, 189, 189);
+}
+
+.emp-mini-photo {
+    width: 40px;
+    margin: 5px 10px 5px 5px;
+    border-radius: 100%;
+}
+
+.use-emp-data {
+    display: flex;
+    justify-content: stretch;
+}
+
+.wrapper-thing-detail {
+    display: flex;
+    justify-content:space-between;
+}
+
+.wrapper-user-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.header-content {
+    padding: 15px 10px;
+}
+
+.user-data{
+    padding: 15px 10px;
+    min-width: 400px;
+}
+
+.user-data table {
+    width: 100%;
+}
+
+.user-data td {
+    padding: 10px 5px;
+}
+
+.user-img {
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 30px; 
+}
+
+.user-img label {
+    margin-top: 15px;
+}
+
+.user-img input {
+    margin-top: 10px;
+    min-width: 100px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.user-buttons {
+    margin: 15px 5px;
+}
+
+.wrapper-all-applications {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper-application {
+    border: 3px solid rgb(169, 245, 106);
+    margin: 20px 10px;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+}
+
+.wrapper-thing-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
+.thing-data{
+    padding: 15px 10px;
+    max-width: 600px;
+}
+
+.thing-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.wrapper-usething-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
+.usething-data{
+    padding: 15px 10px;
+    max-width: 600px;
+}
+
+.usething-data td {
+    padding: 10px 5px;
+}
+
+.usething-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

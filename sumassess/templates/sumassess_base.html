@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Итоговое оценивание {% endblock %}
+
+{% block extra_head %}
+{% load static %}
+<a class="navbar-brand" href="{% url 'sumassess:index' %}">
+    <img src="{% static 'img/bookmark.svg' %}" width="30" height="30" alt="">
+    Итоговое оценивание
+</a>
+
+{% endblock %}
+
+{% block extra_base %}
+{% load static %}
+<div class="content-wrapper">
+    {% block sumassess_content %}
+
+
+    {% endblock %}
+</div>
+<div class="buttons-wrapper">
+</div>
+
+{% endblock %}

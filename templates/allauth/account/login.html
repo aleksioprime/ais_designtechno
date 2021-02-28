@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block extra_base %}
+
+<h1>{% trans "Войдите в свою учётную запись" %}</h1>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Вы можете войти в систему, используя существующую учетную запись на стороннем ресурсе. {% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+  <div class="login-or">{% trans 'или войти с существующим логином и паролем' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}Если вы ещё не создали аккаунт, то, пожвлуйста,
+<a href="{{ signup_url }}">зарегистрируйтесь</a> на сайте!{% endblocktrans %}</p>
+{% endif %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  <br>
+  <table>
+    <tr>
+      <td><label for="id_login"> Имя пользователя:
+        </label> </td>
+      <td>{{form.login}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="id_password"> Пароль:
+        </label>
+      </td>
+      <td>{{form.password}}</td>
+    </tr>
+  </table>
+  <br>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="primaryAction" type="submit">{% trans "Войти" %}</button>
+</form>
+<br> 
+Также вы можете <a href="{{ signup_url }}">зарегистрироваться на сайте</a>
+{% endblock %}

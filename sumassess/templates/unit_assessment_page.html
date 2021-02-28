@@ -1,0 +1,80 @@
+{% extends "sumassess_base.html" %}
+
+{% block sumassess_content %}
+{% load static %}
+{{ selected_student.id|json_script:"dataAssessStudent" }}
+{{ current_year.id|json_script:"dataYear" }}
+{{ current_unit.id|json_script:"dataUnit" }}
+{{ selected_student.student.group.id|json_script:"dataGroup" }}
+
+<div class="assessment-wrapper">
+    <div class="assessment-unit">
+        <h5>Юнит: <b>{{current_unit.name}} ({{current_unit.year_ib.programm}} Year {{current_unit.year_ib.year_ib}})</b>
+        </h5>
+        <p>Оценивание студента: <b>{{selected_student.student.shortname}}
+                ({{selected_student.student.group.year.grade_rus}}{{selected_student.student.group.letter}})</b></p>
+    </div>
+    <div class="criterion-mark">
+        <div class="criterion-mark-a">{{selected_student.mark_a}}</div>
+        <div class="criterion-mark-b">{{selected_student.mark_b}}</div>
+        <div class="criterion-mark-c">{{selected_student.mark_c}}</div>
+        <div class="criterion-mark-d">{{selected_student.mark_d}}</div>
+    </div>
+</div>
+
+
+{% verbatim %}
+
+<div class="container" id="assessment" v-cloak>
+    <!-- <p>На странице: {{markIB}}</p> -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" v-for="cri in criteria">
+            <a class="nav-link" v-if="objCriteria(cri.letter).length" :id="cri.letter+'-tab'" data-toggle="tab"
+                :href="'#'+cri.letter" role="tab" :aria-controls="cri.letter" aria-selected="true">{{cri.letter}}.
+                {{cri.name_rus}}</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div v-for="cri in criteria" class="tab-pane fade" :id="cri.letter" role="tabpanel"
+            :aria-labelledby="cri.letter+'-tab'">
+            <div v-for="(curobj,id_criterion) in objCriteria(cri.letter)">
+                <div class="assessment-level">
+                    <h5>{{curobj.criteria.letter}} {{curobj.strand.letter}}. Студент должен {{curobj.name_rus}}</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" :name="'default'+curobj.id"
+                            :id="'default'+curobj.id" :value="{'criterion': curobj.criteria.letter, 'point': 0}"
+                            v-model="selectedLevel[curobj.id]">
+                        <label class="form-check-label" :for="'default'+curobj.id">
+                            Студент не достиг ни одного уровня
+                        </label>
+                    </div>
+                    <div class="form-check"
+                        v-for="(curlev,id_level) in objLevel(curobj.criteria.letter, curobj.strand.letter)">
+
+
+                        <input class="form-check-input" type="radio" :name="curobj.id" :id="curlev.id"
+                            :value="{'id': curlev.id, 'criterion': curlev.objective.criteria.letter, 'point': curlev.point}"
+                            v-model="selectedLevel[curobj.id]" @click=calculateMark()>
+                        <label class="form-check-label" :for="curlev.id">
+                            Студент {{ curlev.name_rus }}
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- <h5>{{cl.objective.criteria.letter}}. {{cl.objective.strand.letter}}. {{cl.name_rus}}</h5> -->
+    </div>
+    <div class="buttons-wrapper">
+        <input type="submit" class="btn btn-primary" value="Сохранить" @click="saveClick">
+        <input type="submit" class="btn btn-secondary" value="Вернуться" @click="goToBack">
+    </div>
+</div>
+{% endverbatim %}
+{% endblock %}
+
+{% block load_vue %}
+<script src="/static/js/assessment.js"></script>
+{% endblock %}

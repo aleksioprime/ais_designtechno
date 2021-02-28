@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block extra_base %}
+<h1>{% trans "Регистрация" %}</h1>
+
+<p>{% blocktrans %}Если у вас уже есть акканут, то, пожалуйста, <a href="{{ login_url }}">авторизуйтесь</a>!{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td><label for="id_username"> Имя пользователя:
+        </label> </td>
+      <td>{{form.username}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="id_password1"> Пароль:
+        </label>
+      </td>
+      <td>{{form.password1}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="id_password2"> Повторить пароль:
+        </label>
+      </td>
+      <td>{{form.password2}}</td>
+    </tr>
+  </table>
+  <br>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button type="submit">{% trans "Зарегистрироваться" %} </button>
+</form>
+
+{% endblock %}

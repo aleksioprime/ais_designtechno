@@ -1,0 +1,18 @@
+<!-- templates/usethings_delete.html -->
+{% extends 'storage_base.html' %}
+{% block title %} Возврат {{ usethings.thing }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+<h3> Возврат: {{ usethings.thing }}</h3>
+<form action="" method="post">{% csrf_token %}
+  <p>Вы подтверждаете возврат позиции <b>{{ usethings.thing }}</b> в количестве: <b>{{ usethings.count }} шт.?</b></p>
+  <p>Держатель: <b>{{usethings.employee}}</b></p>
+  <p>Обоснование: {{usethings.justification}}</p>
+  <p>Дата: {{usethings.created}}</p>
+  <div class="buttons-wrapper">
+    <input class="btn btn-danger" type="submit" value="Вернуть" />
+    <a class="btn btn-secondary" href="{% url 'storage:things' %}">Отмена</a>
+  </div>
+</form>
+{% endblock %}

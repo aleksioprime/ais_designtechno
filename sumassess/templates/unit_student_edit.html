@@ -1,0 +1,29 @@
+<!-- templates/unit_student_edit.html -->
+{% extends "sumassess_base.html" %}
+
+{% block sumassess_content %}
+{% load static %}
+
+<h3> Выставление оценок: {{ assessmentunit.student.shortname }}</h3>
+
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="wrapper-thing-data">
+        <div class="thing-data">
+            <table>
+                <tr>
+                    <td><label for="id_level"> Оценки: </label> </td>
+                    <td>{{form.level}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_count}"> Итоговая оценка: </label> </td>
+                    <td>{{form.mark_ib}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="buttons-wrapper">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+    </div>
+</form>
+{% endblock %}

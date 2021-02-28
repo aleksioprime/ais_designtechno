@@ -1,0 +1,63 @@
+<!-- templates/user_edit.html -->
+{% extends 'base.html' %}
+
+{% block extra_base %}
+{% load static %}
+<div class="header-content">
+  <h3>Редактирование профиля <b>{{user.username}}</b></h3>
+</div>
+
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="wrapper-user-data">
+    <div class="user-data">
+      <table>
+        <tr>
+          <td><label for="id_username"> Логин: </label> </td>
+          <td>{{form.username}}</td>
+        </tr>
+        <tr>
+          <td><label for="id_surname"> Фамилия: </label> </td>
+          <td>{{form.surname}}</td>
+        </tr>
+        <tr>
+          <td><label for="id_name"> Имя: </label> </td>
+          <td>{{form.name}}</td>
+        </tr>
+        <tr>
+          <td><label for="id_patronymic"> Отчество: </label> </td>
+          <td>{{form.patronymic}}</td>
+        </tr>
+        <tr>
+          <td><label for="id_email"> Email: </label> </td>
+          <td>{{form.email}}</td>
+        </tr>
+        <tr>
+          <td><label for="id_position"> Должность: </label> </td>
+          <td>{{form.position}}</td>
+        </tr>
+        <tr>
+          <td><label for="id_phone}"> Телефон: </label> </td>
+          <td>{{form.phone}}</td>
+        </tr>
+      </table>
+      <div class="user-buttons">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        <a class="btn btn-secondary" href="{% url 'employee:index' %}"> Назад </a>
+      </div>
+    </div>
+    <div class="user-img">
+      {% if user.photo %}
+      <img src="{{ user.photo.url }}" alt="" width="200px" height="auto">
+      {% else %}
+      <img src="{% static 'img/teacher.svg' %}" alt="" width="200px" height="auto">
+      {% endif %}
+      <label for="id_photo"> Изменить фотографию: </label>
+      {{form.photo}}
+    </div>
+  </div>
+
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "storage_base.html" %}
+
+{% block title %}Склад кафедры{% endblock %}
+
+{% block storage_content %}
+{% load static %}
+<h5 class="mt-3">Список оборудования и материалов</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Инв. №</th>
+            <th scope="col" style="max-width: 50px;">Фото</th>
+            <th scope="col">Наименование</th>
+            <th scope="col" style="max-width: 70px;">Всего</th>
+            <th scope="col" style="max-width: 70px;">Склад</th>
+            <th scope="col" style="min-width: 100px;">Пользование</th>
+        </tr>
+    </thead>
+    {% for thing in page_obj %}
+    <tr>
+        <th scope="row">{{ thing.inventory_number }}</th>
+        <td>
+            {% if thing.photo %}
+            <img src="{{ thing.photo.url }}" alt="" width="100px" height="auto">
+            {% else %}
+            <img src="{% static 'img/unknown.svg' %}" alt="" width="80px" height="auto">
+            {% endif %}
+        </td>
+        <td><a href="{% url 'storage:things_detail' thing.pk %}">{{ thing.name_manufacturer }}</td>
+        <td style="text-align: center">{{ thing.count }}</td>
+        <td style="text-align: center">{{ thing.count_storage }}</td>
+        <td>
+
+            <div class="use-emp-data">
+                {% for usething in thing.use_thing.all %}
+                <div> <a href="{% url 'storage:usethings_edit' usething.pk %}">
+                        {% if usething.employee.photo %}
+                        <img src="{{ usething.employee.photo.url }}" alt="{{usething.employee.surname }}"
+                            title="{{usething.employee.surname }} {{usething.employee.name|truncatechars:2 }} - {{usething.count}} шт."
+                            width="30px" height="auto" class="emp-mini-photo">
+                        {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+        </td>
+        <td><a href="{% url 'storage:usethings_create' %}?thing={{thing.pk}}">
+                <img src="{% static 'img/hand.svg' %}" alt="" width="30px" height="auto">
+            </a></td>
+        <td><a href="{% url 'storage:things_edit' thing.pk %}">
+                <img src="{% static 'img/pencil.svg' %}" alt="" width="25px" height="auto">
+            </a></td>
+        </td>
+        <td><a href="{% url 'storage:things_delete' thing.pk %}">
+                <img src="{% static 'img/remove.svg' %}" alt="" width="25px" height="auto">
+            </a></td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; На первую</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<div class="buttons-wrapper">
+    <a class="btn btn-primary" href="{% url 'storage:things_create' %}">Добавить</a>
+</div>
+
+
+{% endblock %}

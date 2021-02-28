@@ -1,0 +1,15 @@
+<!-- templates/unit_delete.html -->
+{% extends "sumassess_base.html" %}
+
+{% block sumassess_content %}
+{% load static %}
+
+<h3> Удаление: {{ unit.name }}</h3>
+<form action="" method="post">{% csrf_token %}
+  <p>Вы подтверждаете удаление "{{ unit.name }} ({{ unit.subject }}, {{ unit.period }})"?</p>
+  <div class="buttons-wrapper">
+    <input class="btn btn-danger" type="submit" value="Удалить" />
+    <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+  </div>
+</form>
+{% endblock %}

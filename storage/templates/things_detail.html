@@ -1,0 +1,164 @@
+<!-- templates/thing_detail.html -->
+{% extends 'storage_base.html' %}
+{% block title %} Склад. Просмотр {{ thing.name_manufacturer }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+<h3> {{ thing.name_manufacturer }} ({{ thing.inventory_number }}) </h3>
+
+<div class="wrapper-thing-detail">
+    <div class="img-thing-detail">
+        {% if thing.photo %}
+        <img src="{{ thing.photo.url }}" alt="" width="300px" height="auto">
+        {% else %}
+        <img src="{% static 'img/unknown.svg' %}" alt="" width="200px" height="auto">
+        {% endif %}
+    </div>
+    <div>
+        <table class="table">
+            <tr>
+                <th scope="row" style="width: 200px;">Название (по бухгалтерии):</th>
+                <td>{{ thing.name_bookkeeping }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Инвентарный номер:</th>
+                <td>{{ thing.inventory_number }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Производитель: </th>
+                <td>{{ thing.manufacturer }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Цена: </th>
+                <td>{{ thing.price }} руб.</td>
+            </tr>
+            <tr>
+                <th scope="row">Количество:</th>
+                <td>{{ thing.count }} шт.</td>
+            </tr>
+            <tr>
+                <th scope="row">В доступе:</th>
+                <td>{{ thing.count_storage }} шт.</td>
+            </tr>
+            <tr>
+                <th scope="row">Материально-ответственное лицо:</th>
+                <td>{{ thing.finresp.surname }} {{ thing.finresp.name }} {{ thing.finresp.patronymic }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<h4>Элементы: </h4>
+<table class="table table-striped">
+    <tbody>
+        <th>№</th>
+        <th>Фото</th>
+        <th>Элемент</th>
+        <th>Кол-во</th>
+        <th>Состояние</th>
+    </tbody>
+    {% for equipment in thing.thing_equipment.all %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ equipment.photo }}</td>
+        <td>{{ equipment.name }}</td>
+        <td>{{ equipment.count }}</td>
+        <td>
+            <div class="use-emp-data">
+                {% for status in equipment.status_equipment.all %}
+                <div>
+                    {% if status.user %}
+                    <img src="{{ status.user.photo.url }}" alt="{{status.user.surname }}"
+                        title="{{ status.name }} - {{status.count}} шт." width="30px" height="auto"
+                        class="emp-mini-photo">
+                    {% else %}
+                    <img src="{% static 'img/break.svg' %}" alt="{{status.user.surname }}"
+                        title="{{ status.name }} - {{status.count}} шт." width="30px" height="auto"
+                        class="emp-mini-photo">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Дополнительные данные
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+
+                <div class="mb-5">
+                    <table class="table">
+                        <tr>
+                            <th scope="row">Описание: </th>
+                            <td>{{ thing.description }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" style="width: 300px;">Базовое местоположение:</th>
+                            <td>{{ thing.base_location }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Фотография места:</th>
+                            <td>
+                                {% if thing.photo_base_location %}
+                                <img src="{{ thing.photo_base_location.url }}" alt="" width="300px" height="auto">
+                                {% else %}
+                                <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                {% if thing.use_thing.all %}
+                <h4>Использование: </h4>
+                <table class="table table-striped">
+                    <tbody>
+                        <th colspan="2">ФИО сотрудника</th>
+                        <th>Информация</th>
+                        <th>Местоположение</th>
+                    </tbody>
+                    {% for usething in thing.use_thing.all %}
+                    <tr>
+                        <td style="width: 50px;">
+                            {% if usething.employee.photo %}
+                            <img src="{{ usething.employee.photo.url }}" alt="{{usething.employee.surname }}"
+                                width="50px" height="auto" class="emp-mini-photo">
+                            {% endif %}
+                        </td>
+                        <td style="width: 300px;">{{ usething.employee.surname }}
+                            {{ usething.employee.name }}
+                            {{usething.employee.patronymic }}</td>
+                        <td>
+                            <div>Кол-во: <b>{{usething.count}} шт.</b></div>
+                            <div>Обоснование: {{usething.justification}}</div>
+                            <div>Запись внесена: {{usething.created}}</div>
+                        </td>
+                        <td>{{usething.location}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <h4>Данная позиция никому не была передана</h4>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="buttons-wrapper">
+    <a class="btn btn-secondary" href="{% url 'storage:things' %}">Вернуться к списку</a>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!-- templates/unit_edit.html -->
+{% extends "sumassess_base.html" %}
+
+{% block sumassess_content %}
+{% load static %}
+
+{% if unit.name %}
+<h3> Редактирование юнита: {{ unit.name }} </h3>
+{% else %}
+<h3> Создание нового юнита </h3>
+{% endif %}
+
+<form class="form-group" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+  <table class="table mt-3">
+    <tr>
+      <td><label for="id_styear"> Учебный год: </label> </td>
+      <td>{{form.styear}}</td>
+    </tr>
+    {% if unit.name %}
+    <tr>
+      <td><label for="id_year_ib}"> Год обучения: </label> </td>
+      <td>{{form.year_ib}} {{unit.year_ib}}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td><label for="id_year_ib}"> Год обучения: </label> </td>
+      <td>{{form.year_ib}}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td><label for="id_name}"> Название: </label> </td>
+      <td>{{form.name}}</td>
+    </tr>
+    <tr>
+      <td><label for="id_teacher}"> Учитель: </label> </td>
+      <td>{{form.teacher}} {{user}}</td>
+    </tr>
+    <tr>
+      <td><label for="id_subject}"> Предмет: </label> </td>
+      <td>{{form.subject}}</td>
+    </tr>
+    <tr>
+      <td><label for="id_period}"> Период: </label> </td>
+      <td>{{form.period}}</td>
+    </tr>
+  </table>
+
+  {% if unit.name %}
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            <h5>Выберите цели текущего юнита:</h5>
+          </button>
+        </h2>
+      </div>
+      <div id="collapseOne" class="collapse collapsed" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            {% for value, label, objective in form.objective.field.choices %}
+            <li class="list-group-item">
+              
+              
+              <label class="checkbox-label-container">
+                <input type="checkbox" value="{{ value }}" {% if objective in unit.objective.all %} checked {% endif %} name="objective">
+                <span class="checkmark"></span>
+                <b>{{ objective.criteria.letter }} - {{ objective.strand.letter }}.</b>
+                <span id="objective-{{ value }}">Студенты должны {{ objective.name_rus }}</span>
+              </label>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="buttons-wrapper">
+    <input class="btn btn-success" type="submit" value="Сохранить" />
+    <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+  </div>
+</form>
+{% endblock %}
