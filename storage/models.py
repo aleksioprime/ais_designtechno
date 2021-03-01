@@ -3,27 +3,52 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 from datetime import date
 
+class Location(models.Model):
+    label = models.CharField(max_length=16, verbose_name=_("№/метка"))
+    name = models.CharField(max_length=64, verbose_name=_("Название"))
+    photo_map = models.ImageField(upload_to='location_photo', blank=True, verbose_name=_("Изображение кабинета на плане"), null=True)
+    url_coord = models.URLField(verbose_name=_("Ссылка на координаты"), null=True, blank=True)
+    class Meta:
+        verbose_name = 'Кабинет'
+        verbose_name_plural = 'Кабинеты'
+        ordering = ['label']
+    def __str__(self):
+            return "{}".format(self.label)
+
 class Thing(models.Model):
     name_manufacturer = models.CharField(max_length=255, verbose_name=_("Название от производителя"))   
     manufacturer = models.CharField(max_length=255, verbose_name=_("Производитель"), null=True)
+    url_site = models.URLField(verbose_name=_("Ссылка на web-страницу"), null=True, blank=True)
     name_bookkeeping = models.CharField(max_length=255, verbose_name=_("Наименование от бухгалтерии"), null=True, blank=True)
     inventory_number = models.CharField(max_length=16, verbose_name=_("Инвентарный номер"), null=True, blank=True)
     description = models.TextField(verbose_name=_("Описание"), null=True, blank=True)
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name=_("Цена (руб)"))
     count = models.SmallIntegerField(verbose_name=_("Общее кол-во"), default=1)
     photo = models.ImageField(upload_to='thing_photo', blank=True, verbose_name=_("Изображение предмета"), null=True)
-    base_location = models.CharField(max_length=255, verbose_name=_("Базовое местоположение"), blank=True, null=True) 
+    base_location = models.ForeignKey("storage.Location", on_delete=models.SET_NULL, verbose_name=_("Местоположение/кабинет"), related_name="loc_thing", null=True, blank=True)
     photo_base_location = models.ImageField(upload_to='thing_photo_location', blank=True, verbose_name=_("Фотография метонахождения"), null=True)
     employees = models.ManyToManyField("employee.User", verbose_name=_("Сотрудники"), through="storage.UseThings")
     finresp = models.ForeignKey("employee.User", on_delete=models.SET_NULL, verbose_name=_("Материально-ответственное лицо"), related_name="finresp_thing", null=True, blank=True)
+    comment = models.TextField(verbose_name=_("Комментарии"), null=True, blank=True)
+    
     class Meta:
         verbose_name = 'Предмет'
         verbose_name_plural = 'Предметы'
-        ordering = ['name_manufacturer']
+        ordering = ['id']
     def __str__(self):
             return self.name_manufacturer
     def get_absolute_url(self):
         return reverse('storage:things') 
+    def get_id(self):
+        return "ДиТ-{:05}".format(self.id)
+    def get_invnumber(self):
+        if self.inventory_number is not None: 
+            if self.inventory_number.isdigit():
+                return "{:09}".format(int(self.inventory_number))
+            else:
+                return self.inventory_number
+        else:
+            return "-"
 
 class UseThings(models.Model):
     thing = models.ForeignKey("storage.Thing", on_delete=models.CASCADE,

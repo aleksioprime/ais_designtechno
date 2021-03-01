@@ -107,12 +107,14 @@ class UnitList(authView, ListView):
         return queryset
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Нужно откорректировать работа с несуществующими данными
         year = StudyYear.objects.filter(Q(data_start__lte=date.today()) & Q(data_end__gte=date.today())).first()
-        periods = Period.objects.filter(styear=year.id)
+        if year is not None:
+            periods = Period.objects.filter(styear=year.id)
+            context['periods'] = periods
         if 'period' in self.request.GET:
             context['current_period'] = int(self.request.GET['period'])
-        context['current_year'] = year
-        context['periods'] = periods
+            context['current_year'] = year
         return context 
 
 class UnitCreate(authView, CreateView):

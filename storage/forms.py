@@ -1,6 +1,6 @@
 from django import forms
 from employee.models import User
-from storage.models import Thing, UseThings
+from storage.models import Thing, UseThings, Location
 from datetime import date
 
 class ThingForm(forms.ModelForm):            
@@ -9,9 +9,11 @@ class ThingForm(forms.ModelForm):
         name_bookkeeping = forms.CharField(required=False, max_length=255, label='Наименование от бухгалтерии')
         inventory_number = forms.CharField(required=False, max_length=16, label='Инвентарный номер')
         description = forms.CharField(widget=forms.Textarea, required=False, label='Описание')
-        base_location = forms.CharField(required=False, max_length=255, label='Базовое местоположение')
+        base_location = forms.ModelChoiceField(queryset=Location.objects.all(), required=False, label='Базовое местоположение')
         price = forms.DecimalField(widget=forms.TextInput, label='Цена', decimal_places=2, min_value=0, required=False)
         count = forms.DecimalField(widget=forms.NumberInput, required=True, label='Количество', decimal_places=0, min_value=1)
+        finresp = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='teacher'), required=True, label='Ответственный пользователь')
+        comment = forms.CharField(widget=forms.Textarea, required=False, label='Комментарии')
 
         photo = forms.ImageField(label='Фотография', required=False)
         photo_base_location = forms.ImageField(label='Фотография метонахождения', required=False)
@@ -23,6 +25,8 @@ class ThingForm(forms.ModelForm):
                     'class': 'form-control',
                 })
             self.fields['count'].widget.attrs['value'] = 1
+            self.fields['finresp'].empty_label="Выберите ответственного"
+            self.fields['base_location'].empty_label="Выберите кабинет"
 
         def save(self, *args, **kwargs):
             super(ThingForm, self).save(*args, **kwargs)
@@ -31,7 +35,7 @@ class ThingForm(forms.ModelForm):
         class Meta:
             model = Thing
             fields = ['name_manufacturer', 'manufacturer', 'name_bookkeeping', 'inventory_number', \
-                'description', 'base_location', 'base_location', 'price', 'count', 'photo', 'photo_base_location']
+                'description', 'base_location', 'base_location', 'price', 'count', 'photo', 'photo_base_location', 'finresp', 'url_site']
 
 class UseThingsForm(forms.ModelForm):            
         thing = forms.ModelChoiceField(queryset=Thing.objects.all(), required=True, label='Позиция')

@@ -7,17 +7,27 @@ from employee.views import authView
 from storage.forms import ThingForm, UseThingsForm
 from django.urls import reverse_lazy
 from django.db.models.functions import Coalesce
+from django_filters.views import FilterView
+from storage.filters import ThingFilter
 
 class CountThing():
     def get_queryset(self):
         queryset = Thing.objects.all().annotate(count_storage=Coalesce(F("count") - Sum("use_thing__count"),F("count")))
         return queryset
 
-class ThingList(authView, CountThing, ListView):
-    paginate_by = 20
+class ThingList(authView, CountThing, FilterView):
     model = Thing
     context_object_name = "things"
     template_name = "things_list.html"
+    filterset_class = ThingFilter
+    paginate_by = 20
+    ordering = ['id']
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     filter = ThingFilter(self.request.GET, queryset=Thing.objects.all())
+    #     context['filter'] = filter
+    #     return context 
 
 class ThingDetail(authView, CountThing, DetailView):
     model = Thing
@@ -48,7 +58,6 @@ class UseThingsEdit(authView, UpdateView):
     slug_field = 'id'
     success_url = reverse_lazy('storage:things')
     def get(self, request, *args, **kwargs):
-        
         return super().get(request, *args, **kwargs)
 
 class UseThingsDelete(authView, DeleteView):
@@ -63,9 +72,7 @@ class UseThingsCreate(authView, CreateView):
     success_url = reverse_lazy('storage:things')
     def get_initial(self):
         initial = super(UseThingsCreate, self).get_initial()
-        
         if self.request.GET['thing']:
-            
             initial.update({'thing': self.request.GET['thing']})
         return initial
     def get_context_data(self, **kwargs):

@@ -23,7 +23,7 @@ class MyUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True, verbose_name=_("Идентификатор"))
+    # id = models.UUIDField(default=uuid.uuid4, primary_key=True, verbose_name=_("Идентификатор"))
     username = models.CharField(_('Логин'), max_length=16, blank=False, unique=True)
     email = models.EmailField(_('E-Mail'), blank=True, unique=False)
     surname = models.CharField(_('Фамилия'), max_length=40, blank=True, null=True, unique=False)
@@ -64,7 +64,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return full_name.strip()
 
     def get_short_name(self):
-        return self.name
+        if self.name and self.patronymic:
+            return "{} {}. {}.".format(self.surname, self.name[0], self.patronymic[0])
+        else:
+            return self.name
     
     def get_absolute_url(self):
         return reverse('employee:index') 

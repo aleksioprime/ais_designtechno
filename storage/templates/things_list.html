@@ -5,45 +5,80 @@
 {% block storage_content %}
 {% load static %}
 <h5 class="mt-3">Список оборудования и материалов</h5>
-<table class="table table-hover">
+<div>
+    <form action="" method="get">
+        <div class="filter-things">
+            <div class="filter-item">
+                <!-- <label for="id_name_manufacturer"> Наименование: </label> -->
+                {{ filter.form.name_manufacturer }}
+            </div>
+            <div class="filter-item">
+                <!-- <label for="id_base_location"> Помещение: </label> -->
+                {{ filter.form.base_location }}
+            </div>
+            <div class="filter-item">
+                <!-- <label for="id_finresp"> Ответственный: </label> -->
+                {{ filter.form.finresp }}
+            </div>
+            <div class="filter-buttons">
+                <input class="btn btn-info" type="submit" value="Фильтр" />
+                <a class="btn btn-secondary" href="{% url 'storage:things' %}">Отмена</a>
+            </div> <br>
+        </div>
+    </form>
+</div>
+<table class="table table-hover table-sm">
     <thead>
         <tr>
-            <th scope="col">Инв. №</th>
+            <th scope="col" style="min-width: 90px;">№</th>
             <th scope="col" style="max-width: 50px;">Фото</th>
             <th scope="col">Наименование</th>
-            <th scope="col" style="max-width: 70px;">Всего</th>
-            <th scope="col" style="max-width: 70px;">Склад</th>
-            <th scope="col" style="min-width: 100px;">Пользование</th>
+            <th scope="col" style="width: 90px;">Кол-во</th>
+            <!-- <th scope="col" style="max-width: 70px;">Склад</th> -->
+            <th scope="col" style="min-width: 100px;">Отв.</th>
+            <th scope="col" style="min-width: 100px;">Используют</th>
         </tr>
     </thead>
-    {% for thing in page_obj %}
+    {% for thing in things %}
     <tr>
-        <th scope="row">{{ thing.inventory_number }}</th>
+        <th scope="row">{{ thing.get_id }}</th>
         <td>
             {% if thing.photo %}
             <img src="{{ thing.photo.url }}" alt="" width="100px" height="auto">
             {% else %}
-            <img src="{% static 'img/unknown.svg' %}" alt="" width="80px" height="auto">
+            <img src="{% static 'img/unknown.svg' %}" alt="" width="50px" height="auto">
             {% endif %}
         </td>
         <td><a href="{% url 'storage:things_detail' thing.pk %}">{{ thing.name_manufacturer }}</td>
         <td style="text-align: center">{{ thing.count }}</td>
-        <td style="text-align: center">{{ thing.count_storage }}</td>
+        <!-- <td style="text-align: center">{{ thing.count_storage }}</td> -->
         <td>
-
+            <div class="finresp-wrapper">
+                <div class="finresp-photo">
+                    {% if thing.finresp.photo %}
+                    <img src="{{ thing.finresp.photo.url }}" alt="" width="40px" height="auto">
+                    {% else %}
+                    <img src="{% static 'img/noname.svg' %}" alt="" width="40px" height="auto">
+                    {% endif %}
+                </div>
+                <div>
+                    <!-- {{ thing.finresp.get_short_name }} -->
+                </div>
+            </div>
+        </td>
+        <td>
             <div class="use-emp-data">
                 {% for usething in thing.use_thing.all %}
                 <div> <a href="{% url 'storage:usethings_edit' usething.pk %}">
                         {% if usething.employee.photo %}
                         <img src="{{ usething.employee.photo.url }}" alt="{{usething.employee.surname }}"
-                            title="{{usething.employee.surname }} {{usething.employee.name|truncatechars:2 }} - {{usething.count}} шт."
-                            width="30px" height="auto" class="emp-mini-photo">
+                            title="{{usething.employee.get_short_name }} - {{usething.count}} шт." width="40px"
+                            height="auto" class="emp-mini-photo">
                         {% endif %}
                     </a>
                 </div>
                 {% endfor %}
             </div>
-
         </td>
         <td><a href="{% url 'storage:usethings_create' %}?thing={{thing.pk}}">
                 <img src="{% static 'img/hand.svg' %}" alt="" width="30px" height="auto">

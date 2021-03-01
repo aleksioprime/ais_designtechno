@@ -12,14 +12,19 @@
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <div class="wrapper-thing-data">
         <div class="thing-data">
-            <table>
+            <table class='table'>
                 <tr>
-                    <td><label for="id_name_manufacturer"> Название от производителя: </label> </td>
+                    <td style="width: 150px;"><label for="id_name_manufacturer"> Название от производителя: </label>
+                    </td>
                     <td>{{form.name_manufacturer}}</td>
                 </tr>
                 <tr>
                     <td><label for="id_manufacturer"> Производитель: </label> </td>
                     <td>{{form.manufacturer}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_url_site"> Ссылка на сайт: </label> </td>
+                    <td>{{form.url_site}}</td>
                 </tr>
                 <tr>
                     <td><label for="id_name_bookkeeping"> Наименование по бухгалтерии: </label> </td>
@@ -38,31 +43,41 @@
                     <td>{{form.base_location}}</td>
                 </tr>
                 <tr>
-                    <td><label for="id_price"> Цена: </label> </td>
+                    <td><label for="id_price"> Цена поставки: </label> </td>
                     <td>{{form.price}}</td>
                 </tr>
                 <tr>
                     <td><label for="id_count}"> Количество: </label> </td>
                     <td>{{form.count}}</td>
                 </tr>
+                <tr>
+                    <td><label for="id_finresp}"> Ответственный: </label> </td>
+                    <td>{{form.finresp}}</td>
+                </tr>
             </table>
         </div>
-        <div class="thing-img">
-            {% if thing.photo %}
-            <img src="{{ thing.photo.url }}" alt="" width="200px" height="auto">
-            {% else %}
-            <img src="{% static 'img/teacher.svg' %}" alt="" width="200px" height="auto">
-            {% endif %}
-            <label for="id_photo"> Фотография: </label>
-            {{form.photo}}
-            {% if thing.photo_base_location %}
-            <img src="{{ thing.photo_base_location.url }}" alt="" width="200px" height="auto">
-            {% else %}
-            <img src="{% static 'img/teacher.svg' %}" alt="" width="200px" height="auto">
-            {% endif %}
-            <label for="id_photo"> Фотография локации: </label>
-            {{form.photo_base_location}}
+        <div class="wrapper-thing-img">
+            <div class="thing-img">
+                <label for="id_photo"> Фотография позиции: </label>
+                {% if thing.photo %}
+                <img src="{{ thing.photo.url }}" alt="" width="200px" height="auto">
+                {% else %}
+                <img src="{% static 'img/unknown.svg' %}" alt="" width="200px" height="auto">
+                {% endif %}
+                
+                {{form.photo}}
+            </div>
+            <div class="location-img">
+                <label for="id_photo"> Фотография локации: </label>
+                {% if thing.photo_base_location %}
+                <img src="{{ thing.photo_base_location.url }}" alt="" width="200px" height="auto">
+                {% else %}
+                <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
+                {% endif %}
+                {{form.photo_base_location}}
+            </div>
         </div>
+
     </div>
     <div class="buttons-wrapper">
         <input class="btn btn-success" type="submit" value="Сохранить" />

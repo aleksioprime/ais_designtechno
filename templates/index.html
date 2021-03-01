@@ -5,21 +5,21 @@
 {% block extra_base %}
 {% load static %}
 {% if username %}
-<h3> Приложения кафедры дизайна и технологии</h3>
+<h4> Приложения кафедры дизайна и технологии</h4>
 
 <div class="wrapper-all-applications">
     <div class="wrapper-application">
         <img src="{% static 'img/storage.svg' %}" width="100" height="100" class="" alt="">
         <a href="{% url 'storage:things' %}">Складской учёт</a>
     </div>
-    <div class="wrapper-application">
+    <!-- <div class="wrapper-application">
         <img src="{% static 'img/macbook.svg' %}" width="100" height="100" class="" alt="">
         <a href="">Использование ноутбуков</a>
     </div>
     <div class="wrapper-application">
         <img src="{% static 'img/bookmark.svg' %}" width="100" height="100" class="" alt="">
         <a href="{% url 'sumassess:index' %}">Выставление оценок</a>
-    </div>
+    </div> -->
 </div>
 
 {% endif %}

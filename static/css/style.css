@@ -19,6 +19,14 @@ footer {
     justify-content: flex-start;
     align-items: center;
     margin: 15px 15px;
+    text-transform: uppercase;
+}
+
+.appname-wrapper a {
+    color: rgb(197, 132, 34);;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .content-wrapper {
@@ -132,10 +140,46 @@ footer {
     max-width: 600px;
 }
 
-.thing-img {
+.wrapper-thing-img {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.wrapper-thing-img img {
+    margin: 15px 10px;
+}
+
+.thing-img {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.location-img {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Стили ответственного в таблице */
+.finresp-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.finresp-photo {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.finresp-photo img {
+    border-radius: 100%;
 }
 
 .wrapper-usething-data {
@@ -299,4 +343,29 @@ footer {
 
 .criterion-mark-d {
     background-color: rgb(150, 46, 42);
+}
+
+
+.filter-things {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(113, 130, 134);
+    border-radius: 10px;
+}
+
+.filter-item {
+    margin: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.filter-buttons input {
+    margin-right: 5px;
 }

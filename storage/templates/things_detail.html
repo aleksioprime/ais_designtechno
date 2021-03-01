@@ -4,7 +4,7 @@
 
 {% block storage_content %}
 {% load static %}
-<h3> {{ thing.name_manufacturer }} ({{ thing.inventory_number }}) </h3>
+<h3> {{ thing.name_manufacturer }} ({{ thing.get_id }}) </h3>
 
 <div class="wrapper-thing-detail">
     <div class="img-thing-detail">
@@ -22,14 +22,18 @@
             </tr>
             <tr>
                 <th scope="row">Инвентарный номер:</th>
-                <td>{{ thing.inventory_number }}</td>
+                <td>{{ thing.get_invnumber }}</td>
             </tr>
             <tr>
                 <th scope="row">Производитель: </th>
                 <td>{{ thing.manufacturer }}</td>
             </tr>
             <tr>
-                <th scope="row">Цена: </th>
+                <th scope="row">Ссылка на сайт: </th>
+                <td>{{ thing.url_site }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Цена поставки: </th>
                 <td>{{ thing.price }} руб.</td>
             </tr>
             <tr>
@@ -42,7 +46,16 @@
             </tr>
             <tr>
                 <th scope="row">Материально-ответственное лицо:</th>
-                <td>{{ thing.finresp.surname }} {{ thing.finresp.name }} {{ thing.finresp.patronymic }}</td>
+                <td> 
+                <div class="finresp-photo">
+                    {% if thing.finresp.photo %}
+                    <img src="{{ thing.finresp.photo.url }}" alt="" width="40px" height="auto">
+                    {% else %}
+                    <img src="{% static 'img/noname.svg' %}" alt="" width="40px" height="auto">
+                    {% endif %}
+                    <p>{{ thing.finresp.surname }} {{ thing.finresp.name }} {{ thing.finresp.patronymic }}</p>
+                </div>
+                </td>
             </tr>
         </table>
     </div>
