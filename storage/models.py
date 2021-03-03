@@ -3,6 +3,16 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 from datetime import date
 
+class Status(models.Model):
+    name = models.CharField(max_length=32, verbose_name=_("Название"))
+    info = models.CharField(max_length=255, verbose_name=_("Пояснение"), null=True, blank=True)
+    class Meta:
+        verbose_name = 'Статус'
+        verbose_name_plural = 'Статусы'
+        ordering = ['name']
+    def __str__(self):
+            return "{}".format(self.name)
+
 class Location(models.Model):
     label = models.CharField(max_length=16, verbose_name=_("№/метка"))
     name = models.CharField(max_length=64, verbose_name=_("Название"))
@@ -30,17 +40,18 @@ class Thing(models.Model):
     employees = models.ManyToManyField("employee.User", verbose_name=_("Сотрудники"), through="storage.UseThings")
     finresp = models.ForeignKey("employee.User", on_delete=models.SET_NULL, verbose_name=_("Материально-ответственное лицо"), related_name="finresp_thing", null=True, blank=True)
     comment = models.TextField(verbose_name=_("Комментарии"), null=True, blank=True)
-    
+    equipments = models.ManyToManyField("storage.Equipment", verbose_name=_("Сотрудники"), through="storage.CompositionEquipment")
+    status = models.ForeignKey("storage.Status", on_delete=models.SET_NULL, verbose_name=_("Статус"), related_name="status_thing", null=True, blank=True)
     class Meta:
-        verbose_name = 'Предмет'
-        verbose_name_plural = 'Предметы'
-        ordering = ['id']
+        verbose_name = 'Позиция'
+        verbose_name_plural = 'Позиции'
+        ordering = ['name_manufacturer']
     def __str__(self):
             return self.name_manufacturer
     def get_absolute_url(self):
         return reverse('storage:things') 
     def get_id(self):
-        return "ДиТ-{:05}".format(self.id)
+        return "{:05}".format(self.id)
     def get_invnumber(self):
         if self.inventory_number is not None: 
             if self.inventory_number.isdigit():
@@ -71,28 +82,36 @@ class UseThings(models.Model):
                          str(self.count),))
 
 class Equipment(models.Model):
-    thing = models.ForeignKey("storage.Thing", on_delete=models.CASCADE, verbose_name=_("Позиция"), related_name="thing_equipment")
     name = models.CharField(max_length=255, verbose_name=_("Наименование"))
-    count = models.SmallIntegerField(verbose_name=_("Кол-во"), default=1)
     photo = models.ImageField(upload_to='equipment_photo', blank=True, verbose_name=_("Изображение элемента"), null=True)
+    info = models.TextField(verbose_name=_("Информация"), null=True, blank=True)
     class Meta:
         verbose_name = 'Элемент'
         verbose_name_plural = 'Элементы'
         ordering = ['name']
     def __str__(self):
-        return "-".join((str(self.name),
-                         str(self.count),
-                         str(self.thing),))
+        return self.name
+
+class CompositionEquipment(models.Model):
+    equipment = models.ForeignKey("storage.Equipment", on_delete=models.CASCADE, verbose_name=_("Элемент"), related_name="copmpos_equipment")
+    thing = models.ForeignKey("storage.Thing", on_delete=models.CASCADE, verbose_name=_("Позиция"), related_name="compos_thing")
+    count = models.SmallIntegerField(verbose_name=_("Кол-во"), default=1)
+    class Meta:
+        verbose_name = 'Состав'
+        verbose_name_plural = 'Составы'
+    def __str__(self):
+        return "-".join((str(self.equipment),
+                        str(self.thing)))
 
 class StatusEquipment(models.Model):
     equipment = models.ForeignKey("storage.Equipment", on_delete=models.CASCADE, verbose_name=_("Элемент"), related_name="status_equipment")
     name = models.CharField(max_length=255, verbose_name=_("Статус"))
     note = models.CharField(max_length=255, verbose_name=_("Примечание"), blank=True)
     count = models.SmallIntegerField(verbose_name=_("Кол-во"), default=1)
-    user = models.ForeignKey("employee.User", on_delete=models.CASCADE, verbose_name=_("Пользователь"), related_name="status", null=True, blank=True)
+    user = models.ForeignKey("employee.User", on_delete=models.CASCADE, verbose_name=_("Пользователь"), related_name="status_employee", null=True, blank=True)
     class Meta:
-        verbose_name = 'Статус'
-        verbose_name_plural = 'Статусы'
+        verbose_name = 'Статус элемента'
+        verbose_name_plural = 'Статусы элементов'
     def __str__(self):
         return "-".join((str(self.name),
                          str(self.user)))

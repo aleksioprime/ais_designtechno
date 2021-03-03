@@ -1,0 +1,46 @@
+<!-- templates/equipment_edit.html -->
+{% extends 'storage_base.html' %}
+{% block title %} Склад. Редактирование {{ equipment.name }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+{% if equipment.name %}
+<h3> Редактирование: {{ equipment.name }}</h3>
+{% else %}
+<h3> Добавление нового элемента </h3>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="wrapper-thing-data">
+        <div class="thing-data">
+            <table class='table'>
+                <tr>
+                    <td style="width: 150px;"><label for="id_name"> Название: </label>
+                    </td>
+                    <td>{{form.name}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_info}"> Информация: </label> </td>
+                    <td>{{form.info}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="wrapper-thing-img">
+            <div class="thing-img">
+                <label for="id_photo"> Фотография элемента: </label>
+                {% if thing.photo %}
+                <img src="{{ thing.photo.url }}" alt="" width="200px" height="auto">
+                {% else %}
+                <img src="{% static 'img/unknown.svg' %}" alt="" width="200px" height="auto">
+                {% endif %}
+                
+                {{form.photo}}
+            </div>
+        </div>
+
+    </div>
+    <div class="buttons-wrapper">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+    </div>
+</form>
+{% endblock %}

@@ -23,6 +23,7 @@ class MyUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    # На сервере при авторизации ошибка с uuid
     # id = models.UUIDField(default=uuid.uuid4, primary_key=True, verbose_name=_("Идентификатор"))
     username = models.CharField(_('Логин'), max_length=16, blank=False, unique=True)
     email = models.EmailField(_('E-Mail'), blank=True, unique=False)

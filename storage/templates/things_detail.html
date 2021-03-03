@@ -25,16 +25,8 @@
                 <td>{{ thing.get_invnumber }}</td>
             </tr>
             <tr>
-                <th scope="row">Производитель: </th>
-                <td>{{ thing.manufacturer }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Ссылка на сайт: </th>
-                <td>{{ thing.url_site }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Цена поставки: </th>
-                <td>{{ thing.price }} руб.</td>
+                <th scope="row">Статус:</th>
+                <td>{{ thing.status }}</td>
             </tr>
             <tr>
                 <th scope="row">Количество:</th>
@@ -46,39 +38,63 @@
             </tr>
             <tr>
                 <th scope="row">Материально-ответственное лицо:</th>
-                <td> 
-                <div class="finresp-photo">
-                    {% if thing.finresp.photo %}
-                    <img src="{{ thing.finresp.photo.url }}" alt="" width="40px" height="auto">
-                    {% else %}
-                    <img src="{% static 'img/noname.svg' %}" alt="" width="40px" height="auto">
-                    {% endif %}
-                    <p>{{ thing.finresp.surname }} {{ thing.finresp.name }} {{ thing.finresp.patronymic }}</p>
-                </div>
+                <td>
+                    <div class="finresp-photo">
+                        {% if thing.finresp.photo %}
+                        <img src="{{ thing.finresp.photo.url }}" alt="" width="40px" height="auto">
+                        {% else %}
+                        <img src="{% static 'img/noname.svg' %}" alt="" width="40px" height="auto">
+                        {% endif %}
+                        <p>{{ thing.finresp.surname }} {{ thing.finresp.name }} {{ thing.finresp.patronymic }}</p>
+                    </div>
                 </td>
+            </tr>
+            <tr>
+                <th scope="row">Комментарии: </th>
+                <td>{{ thing.comment }}</td>
             </tr>
         </table>
     </div>
 </div>
 
-<h4>Элементы: </h4>
-<table class="table table-striped">
+<h5>Элементы: </h5>
+<table class="table table-bordered table-sm">
     <tbody>
-        <th>№</th>
-        <th>Фото</th>
+        <th style="width: 50px;">№</th>
+        <th style="max-width: 80px;">Фото</th>
         <th>Элемент</th>
-        <th>Кол-во</th>
+        <th style="width: 80px;">Кол-во</th>
         <th>Состояние</th>
     </tbody>
-    {% for equipment in thing.thing_equipment.all %}
+    {% for eq in thing.compos_thing.all %}
     <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ equipment.photo }}</td>
-        <td>{{ equipment.name }}</td>
-        <td>{{ equipment.count }}</td>
+        <td>
+            {% if eq.equipment.photo %}
+            <img src="{{ eq.equipment.photo.url }}" alt="" width="50px" height="auto">
+            {% else %}
+            <img src="{% static 'img/element.svg' %}" alt="" width="50px" height="auto">
+            {% endif %}
+        </td>
+        <td>
+            <div class="edit-container">
+                <a href="">
+                    {{ eq.equipment.name }}
+                </a>
+                <div class="edit-icons">
+                    <a href="{% url 'storage:compos_equipment_edit' eq.pk %}" title="Редактировать запись">
+                        <img src="{% static 'img/pencil.svg' %}" alt="" width="20px" height="auto">
+                    </a>
+                    <a href="{% url 'storage:compos_equipment_delete' eq.pk %}" title="Удалить запись">
+                        <img src="{% static 'img/remove.svg' %}" alt="" width="20px" height="auto">
+                    </a>
+                </div>
+            </div>
+        </td>
+        <td>{{ eq.count }}</td>
         <td>
             <div class="use-emp-data">
-                {% for status in equipment.status_equipment.all %}
+                {% for status in eq.equipment.status_equipment.all %}
                 <div>
                     {% if status.user %}
                     <img src="{{ status.user.photo.url }}" alt="{{status.user.surname }}"
@@ -95,6 +111,12 @@
         </td>
     </tr>
     {% endfor %}
+    <tr>
+        <td colspan="5">
+            <a class="btn btn-primary"
+                href="{% url 'storage:compos_equipment_create' %}?thing={{thing.pk}}">Добавить элемент</a>
+        </td>
+    </tr>
 </table>
 
 <div class="accordion" id="accordionExample">
@@ -113,6 +135,18 @@
 
                 <div class="mb-5">
                     <table class="table">
+                        <tr>
+                            <th scope="row">Производитель: </th>
+                            <td>{{ thing.manufacturer }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Ссылка на сайт: </th>
+                            <td>{{ thing.url_site }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Цена поставки: </th>
+                            <td>{{ thing.price }} руб.</td>
+                        </tr>
                         <tr>
                             <th scope="row">Описание: </th>
                             <td>{{ thing.description }}</td>
@@ -133,44 +167,48 @@
                         </tr>
                     </table>
                 </div>
-
-
-                {% if thing.use_thing.all %}
-                <h4>Использование: </h4>
-                <table class="table table-striped">
-                    <tbody>
-                        <th colspan="2">ФИО сотрудника</th>
-                        <th>Информация</th>
-                        <th>Местоположение</th>
-                    </tbody>
-                    {% for usething in thing.use_thing.all %}
-                    <tr>
-                        <td style="width: 50px;">
-                            {% if usething.employee.photo %}
-                            <img src="{{ usething.employee.photo.url }}" alt="{{usething.employee.surname }}"
-                                width="50px" height="auto" class="emp-mini-photo">
-                            {% endif %}
-                        </td>
-                        <td style="width: 300px;">{{ usething.employee.surname }}
-                            {{ usething.employee.name }}
-                            {{usething.employee.patronymic }}</td>
-                        <td>
-                            <div>Кол-во: <b>{{usething.count}} шт.</b></div>
-                            <div>Обоснование: {{usething.justification}}</div>
-                            <div>Запись внесена: {{usething.created}}</div>
-                        </td>
-                        <td>{{usething.location}}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-                {% else %}
-                <h4>Данная позиция никому не была передана</h4>
-                {% endif %}
-
             </div>
         </div>
     </div>
 </div>
+<br>
+{% if thing.use_thing.all %}
+<h5>Использование: </h5>
+<table class="table">
+    <tbody>
+        <th colspan="2">ФИО сотрудника</th>
+        <th>Информация</th>
+        <th>Местоположение</th>
+    </tbody>
+    {% for usething in thing.use_thing.all %}
+    <tr>
+        <td style="width: 50px;">
+            {% if usething.employee.photo %}
+            <img src="{{ usething.employee.photo.url }}" alt="{{usething.employee.surname }}" width="100px"
+                height="auto" class="emp-normal-photo">
+            {% endif %}
+        </td>
+        <td style="min-width: 200px;">{{ usething.employee.surname }} <br>
+            {{ usething.employee.name }} <br>
+            {{usething.employee.patronymic }}</td>
+        <td style="max-width: 400px;">
+            <div>Кол-во: <b>{{usething.count}} шт.</b></div>
+            <div>Обоснование: {{usething.justification}}</div>
+            <div>Запись внесена: {{usething.created}}</div>
+        </td>
+        <td>{{usething.location}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3">
+            <a class="btn btn-primary"
+                href="{% url 'storage:usethings_create' %}?thing={{thing.pk}}">Добавить пользователя</a>
+        </td>
+    </tr>
+</table>
+{% else %}
+<h4>Данная позиция никому не была передана</h4>
+{% endif %}
 <div class="buttons-wrapper">
     <a class="btn btn-secondary" href="{% url 'storage:things' %}">Вернуться к списку</a>
 </div>

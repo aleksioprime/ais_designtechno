@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from employee.models import User
-from storage.models import  Thing, UseThings
+from storage.models import  Thing, UseThings, Equipment, CompositionEquipment
 from django.db.models import F,  Sum
 from employee.views import authView
-from storage.forms import ThingForm, UseThingsForm
+from storage.forms import ThingForm, UseThingsForm, EquipmentForm, ComposEquipmentForm
 from django.urls import reverse_lazy
 from django.db.models.functions import Coalesce
 from django_filters.views import FilterView
@@ -22,12 +22,6 @@ class ThingList(authView, CountThing, FilterView):
     filterset_class = ThingFilter
     paginate_by = 20
     ordering = ['id']
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     filter = ThingFilter(self.request.GET, queryset=Thing.objects.all())
-    #     context['filter'] = filter
-    #     return context 
 
 class ThingDetail(authView, CountThing, DetailView):
     model = Thing
@@ -50,6 +44,79 @@ class ThingCreate(authView, CreateView):
     form_class = ThingForm
     template_name = 'things_edit.html'
     success_url = reverse_lazy('storage:things')
+
+class EquipmentCreate(authView, CreateView):
+    model = Equipment
+    form_class = EquipmentForm
+    template_name = 'equipment_edit.html'
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+    def get_success_url(self): 
+        return self.request.session['previous_page']
+
+class EquipmentEdit(authView, UpdateView):
+    model = Equipment
+    form_class = EquipmentForm
+    template_name = 'equipment_edit.html'
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+    def get_success_url(self): 
+        return self.request.session['previous_page']
+
+class EquipmentDelete(authView, DeleteView):
+    model = Equipment
+    template_name = 'equipment_delete.html'
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+    def get_success_url(self): 
+        return self.request.session['previous_page']
+
+# Добавление элемента в состав позиции
+class CompositionEquipmentCreate(authView, CreateView):
+    model = CompositionEquipment
+    form_class = ComposEquipmentForm
+    template_name = 'compos_equipment_edit.html'
+    def get_initial(self):
+        initial = super(CompositionEquipmentCreate, self).get_initial()
+        if self.request.GET['thing']:
+            initial.update({'thing': self.request.GET['thing']})
+        return initial
+    def get_success_url(self): 
+        return reverse_lazy('storage:things_detail', args = (self.request.GET['thing'],))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET['thing']:
+            context['thing'] = Thing.objects.filter(pk=self.request.GET['thing']).first()
+        return context 
+
+# Редактирование элемента в составе позиции
+class CompositionEquipmentEdit(authView, UpdateView):
+    model = CompositionEquipment
+    form_class = ComposEquipmentForm
+    template_name = 'compos_equipment_edit.html'
+    def get_success_url(self): 
+        return reverse_lazy('storage:things_detail', args = (self.get_object().thing.id,))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['thing'] = Thing.objects.filter(pk=self.get_object().thing.id).first()
+        return context 
+
+# Удаление элемента из состава позиции
+class CompositionEquipmentDelete(authView, DeleteView):
+    model = CompositionEquipment
+    template_name = 'compos_equipment_delete.html'
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+    def get_success_url(self): 
+        return self.request.session['previous_page']
 
 class UseThingsEdit(authView, UpdateView):
     model = UseThings
