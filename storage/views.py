@@ -1,3 +1,4 @@
+from django.db.models.expressions import OrderBy
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from employee.models import User
@@ -12,16 +13,19 @@ from storage.filters import ThingFilter
 
 class CountThing():
     def get_queryset(self):
-        queryset = Thing.objects.all().annotate(count_storage=Coalesce(F("count") - Sum("use_thing__count"),F("count")))
+        queryset = Thing.objects.all().annotate(count_storage=Coalesce(F("count") - Sum("use_thing__count"),F("count"))).order_by('name_manufacturer')
         return queryset
 
 class ThingList(authView, CountThing, FilterView):
     model = Thing
-    context_object_name = "things"
     template_name = "things_list.html"
     filterset_class = ThingFilter
-    paginate_by = 20
-    ordering = ['id']
+    context_object_name = 'things'
+    paginate_by = 30
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data()
+    #     context['things'] = ThingFilter(self.request.GET, queryset=Thing.objects.order_by('name_manufacturer')).qs
+    #     return context
 
 class ThingDetail(authView, CountThing, DetailView):
     model = Thing
@@ -42,7 +46,12 @@ class ThingEdit(authView, UpdateView):
 class ThingDelete(authView, DeleteView):
     model = Thing
     template_name = 'things_delete.html'
-    success_url = reverse_lazy('storage:things')
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+    def get_success_url(self): 
+        return self.request.session['previous_page']
 
 class ThingCreate(authView, CreateView):
     model = Thing

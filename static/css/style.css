@@ -388,3 +388,9 @@ footer {
     justify-content: space-between;
     align-items: center;
 }
+
+/* Блока разбивки на страницы */
+.thing-pagination {
+    display: flex;
+    justify-content: center;
+}

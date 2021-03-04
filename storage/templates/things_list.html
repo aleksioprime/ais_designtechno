@@ -27,22 +27,24 @@
         </div>
     </form>
 </div>
-<table class="table table-hover table-sm">
+<table class="table table-hover table-sm mt-3">
     <thead>
         <tr>
-            <th scope="col" style="min-width: 90px;">№</th>
+            <!-- <th scope="col" style="min-width: 90px;">№</th> -->
             <th scope="col" style="max-width: 50px;">Фото</th>
-            <th scope="col">Наименование</th>
+            <th scope="col ">Наименование</th>
             <th scope="col" style="width: 90px; text-align: center">Кол-во</th>
             <th scope="col" style="width: 90px; text-align: center">Каб.</th>
             <!-- <th scope="col" style="max-width: 70px;">Склад</th> -->
-            <th scope="col" style="min-width: 100px; text-align: center">Отв.</th>
-            <th scope="col" style="min-width: 100px;">Используют</th>
+            <th scope="col" style="max-width: 100px; text-align: center">Отв.</th>
+            <th scope="col" style="max-width: 100px;">Используют</th>
+            <th colspan="3"></th>
         </tr>
     </thead>
+
     {% for thing in things %}
     <tr>
-        <th scope="row">{{ thing.get_id }}</th>
+        <!-- <th scope="row">{{ thing.get_id }}</th> -->
         <td>
             {% if thing.photo %}
             <img src="{{ thing.photo.url }}" alt="" width="100px" height="auto">
@@ -95,23 +97,20 @@
     </tr>
     {% endfor %}
 </table>
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; На первую</a>
-        <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
-        {% endif %}
 
-        <span class="current">
-            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
-        {% endif %}
-    </span>
+{% if is_paginated %}
+<div class="thing-pagination">
+    <nav aria-label="things">
+        <ul class="pagination">
+            {% for page in paginator%}
+            <li class="page-item {% if page_obj.number == page.number %} active {% endif %}"><a class="page-link"
+                    href="?page={{page.number}}">{{page.number}}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
 </div>
+{% endif %}
+
 <div class="buttons-wrapper">
     <a class="btn btn-primary" href="{% url 'storage:things_create' %}">Добавить</a>
 </div>
