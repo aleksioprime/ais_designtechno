@@ -17,6 +17,7 @@ class ThingForm(forms.ModelForm):
     photo = forms.ImageField(label='Фотография', required=False)
     photo_base_location = forms.ImageField(label='Фотография метонахождения', required=False)
     status = forms.ModelChoiceField(queryset=Status.objects.all(), required=False, label='Статус')
+    url_site = forms.CharField(required=False, label='Ссылка на сайт')
     def __init__(self, *args, **kwargs):
         super(ThingForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):

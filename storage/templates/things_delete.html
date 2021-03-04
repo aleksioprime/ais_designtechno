@@ -9,7 +9,7 @@
   <p>Вы подтверждаете удаление "{{ thing.name_manufacturer }}"?</p>
   <div class="buttons-wrapper">
     <input class="btn btn-danger" type="submit" value="Удалить" />
-    <a class="btn btn-secondary" href="{% url 'storage:things' %}">Отмена</a>
+    <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
   </div>
 </form>
 {% endblock %}

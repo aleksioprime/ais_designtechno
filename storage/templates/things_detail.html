@@ -4,9 +4,15 @@
 
 {% block storage_content %}
 {% load static %}
-<h3> {{ thing.name_manufacturer }} ({{ thing.get_id }}) </h3>
+<div class="thing-detail-view">
+    <h3> {{ thing.name_manufacturer }}</h3>
+    <a href="{% url 'storage:things_edit' thing.pk %}">
+        <img src="{% static 'img/pencil.svg' %}" alt="" width="25px" height="auto">
+    </a>
+</div>
 
-<div class="wrapper-thing-detail">
+
+<div class="wrapper-thing-detail mt-3">
     <div class="img-thing-detail">
         {% if thing.photo %}
         <img src="{{ thing.photo.url }}" alt="" width="300px" height="auto">

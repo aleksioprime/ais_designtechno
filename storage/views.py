@@ -21,11 +21,7 @@ class ThingList(authView, CountThing, FilterView):
     template_name = "things_list.html"
     filterset_class = ThingFilter
     context_object_name = 'things'
-    paginate_by = 30
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data()
-    #     context['things'] = ThingFilter(self.request.GET, queryset=Thing.objects.order_by('name_manufacturer')).qs
-    #     return context
+    paginate_by = 10
 
 class ThingDetail(authView, CountThing, DetailView):
     model = Thing

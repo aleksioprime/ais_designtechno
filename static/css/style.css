@@ -64,7 +64,7 @@ footer {
     justify-content:space-between;
 }
 
-.img-thing-detail {
+.img-thing-detail img{
     width: 300px;
     padding: 20px;
 }
@@ -393,4 +393,10 @@ footer {
 .thing-pagination {
     display: flex;
     justify-content: center;
+}
+
+.thing-detail-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
