@@ -47,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     position = models.CharField(max_length=255, verbose_name=_("Должность"), default='Учитель')
     phone = models.CharField(max_length=12, verbose_name=_("Телефон"), null=True, blank=True)
     photo = models.ImageField(upload_to='employee_photo', blank=True, verbose_name=_("Фотография сотрудника"), null=True)
+    id_card = models.CharField(max_length=32, verbose_name=_("ID карты пропуска"), null=True, blank=True)
 
     objects = MyUserManager()
 
@@ -75,3 +76,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return "{} {}".format(self.name, self.surname)
+
+
+class LogNoteBook(models.Model):
+    date = models.DateTimeField(_('Дата использования'), auto_now=True)
+    location = models.ForeignKey("storage.Location", on_delete=models.SET_NULL, verbose_name=_("Местоположение"), related_name="loc_lognotebook", null=True, blank=True)
+    employee = models.ForeignKey("employee.User", on_delete=models.SET_NULL, verbose_name=_("Пользователь"), related_name="emp_lognotebook", null=True, blank=True)
+    class Meta:
+        verbose_name = 'Запись использования ноутбуков'
+        verbose_name_plural = 'Записи использования ноутбуков'
+        ordering = ['date']
+    def __str__(self):
+            return "{} {}".format(self.date, self.employee)
