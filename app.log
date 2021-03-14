@@ -1,0 +1,18 @@
+[14Mar 20:18:27] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 20:25:02] INFO [django.utils.autoreload:240] /Users/admin/OneDrive/development/designtechno/storage/views.py changed, reloading.
+[14Mar 20:25:03] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 20:27:34] INFO [django.utils.autoreload:240] /Users/admin/OneDrive/development/designtechno/storage/views.py changed, reloading.
+[14Mar 20:27:36] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 20:29:59] INFO [storage.views:19] Thing.annotate calculated
+[14Mar 20:30:55] INFO [storage.views:19] Thing.annotate calculated
+[14Mar 20:31:02] INFO [storage.views:19] Thing.annotate calculated
+[14Mar 20:49:24] INFO [storage.views:19] Thing.annotate calculated
+[14Mar 20:56:04] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 20:57:11] INFO [django.utils.autoreload:240] /Users/admin/OneDrive/development/designtechno/storage/views.py changed, reloading.
+[14Mar 20:57:12] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 20:57:19] INFO [storage.views:20] Thing.annotate calculated
+[14Mar 20:59:26] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 21:00:22] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader
+[14Mar 21:00:26] INFO [storage.views:20] Thing.annotate calculated
+[14Mar 21:03:43] INFO [django.utils.autoreload:240] /Users/admin/OneDrive/development/designtechno/storage/views.py changed, reloading.
+[14Mar 21:03:45] INFO [django.utils.autoreload:617] Watching for file changes with StatReloader

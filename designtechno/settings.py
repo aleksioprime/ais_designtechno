@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sites', 
     # приложение импорта-экспорта 
     'import_export', 
+    # приложение получения информации об опрерациях
+    'debug_toolbar',
     # приложение регистрации
     'allauth',  
     'allauth.account',
@@ -58,6 +60,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -172,3 +175,40 @@ LOGIN_REDIRECT_URL = '/'
 #     'django.contrib.staticfiles.finders.FileSystemFinder',
 #     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 # )
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+# Logging
+# https://docs.djangoproject.com/en/3.0/topics/logging/
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%d%b %H:%M:%S",
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "simple"},
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "standard",
+            "filename": os.path.join(BASE_DIR, "app.log"),
+            "mode": "a",
+            "maxBytes": 10485760,
+            "backupCount": 5,
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        }
+    },
+}

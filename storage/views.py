@@ -10,10 +10,15 @@ from django.urls import reverse_lazy
 from django.db.models.functions import Coalesce
 from django_filters.views import FilterView
 from storage.filters import ThingFilter
+import logging
+import q
+logger = logging.getLogger(__name__)
 
 class CountThing():
     def get_queryset(self):
         queryset = Thing.objects.all().annotate(count_storage=Coalesce(F("count") - Sum("use_thing__count"),F("count"))).order_by('name_manufacturer')
+        # logger.info("Thing.annotate calculated")
+        # q(queryset)
         return queryset
 
 class ThingList(authView, CountThing, FilterView):
