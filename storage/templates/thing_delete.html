@@ -1,12 +1,12 @@
-<!-- templates/compos_equipment_delete.html -->
+<!-- templates/things_delete.html -->
 {% extends 'storage_base.html' %}
-{% block title %} Склад. Удаление {{ compositionequipment.equipment }} {% endblock %}
+{% block title %} МТО кафедры. Удаление {{ thing.name }} {% endblock %}
 
 {% block storage_content %}
 {% load static %}
-<h3> Удаление: {{ compositionequipment.equipment }}</h3>
+<h3> Удаление: {{ thing.name }}</h3>
 <form action="" method="post">{% csrf_token %}
-  <p>Вы подтверждаете удаление "{{ compositionequipment.equipment }}"?</p>
+  <p>Вы подтверждаете удаление "{{ thing.name }}"?</p>
   <div class="buttons-wrapper">
     <input class="btn btn-danger" type="submit" value="Удалить" />
     <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>

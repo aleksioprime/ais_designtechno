@@ -25,8 +25,10 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 
 {% else %}
+{% comment %} 
 <p>{% blocktrans %}Если вы ещё не создали аккаунт, то, пожвлуйста,
-<a href="{{ signup_url }}">зарегистрируйтесь</a> на сайте!{% endblocktrans %}</p>
+<a href="{{ signup_url }}">зарегистрируйтесь</a> на сайте!{% endblocktrans %}</p> 
+{% endcomment %}
 {% endif %}
 
 <form class="login" method="POST" action="{% url 'account_login' %}">
@@ -53,5 +55,5 @@
   <button class="primaryAction" type="submit">{% trans "Войти" %}</button>
 </form>
 <br> 
-Также вы можете <a href="{{ signup_url }}">зарегистрироваться на сайте</a>
+{% comment %} Также вы можете <a href="{{ signup_url }}">зарегистрироваться на сайте</a> {% endcomment %}
 {% endblock %}

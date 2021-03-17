@@ -1,72 +1,84 @@
 from django.contrib import admin
-from storage.models import Thing, UseThings, Equipment, StatusEquipment, Location, CompositionEquipment, Status
+from storage.models import Thing, UseThing, Composition, Cabinet, Location, Status, StatusThing
 from import_export.admin import ImportExportActionModelAdmin
-from import_export import resources, fields
-from import_export.widgets import ForeignKeyWidget
+from import_export import resources
 
-
-# @admin.register(Thing)
-# class ThingAdmin(admin.ModelAdmin):
-#     list_display = ('name_manufacturer', 'count')
-
-# класс ресурса для создания импорта-экспорта
+# класс ресурса для создания импорта-экспорта таблицы Thing
 class ThingResource(resources.ModelResource):
     class Meta:
         model = Thing
 
-# класс ресурса для создания импорта-экспорта
+# класс ресурса для создания импорта-экспорта таблицы UseThing
+class UseThingResource(resources.ModelResource):
+    class Meta:
+        model = UseThing
+
+# класс ресурса для создания импорта-экспорта таблицы Location
 class LocationResource(resources.ModelResource):
     class Meta:
         model = Location
 
-# класс ресурса для создания импорта-экспорта
-class EquipmentResource(resources.ModelResource):
+# класс ресурса для создания импорта-экспорта таблицы Cabinet
+class CabinetResource(resources.ModelResource):
     class Meta:
-        model = Equipment
+        model = Cabinet
 
-# класс ресурса для создания импорта-экспорта
-class CompositionEquipmentResource(resources.ModelResource):
+# класс ресурса для создания импорта-экспорта таблицы Composition
+class CompositionResource(resources.ModelResource):
     class Meta:
-        model = CompositionEquipment
+        model = Composition
 
-# класс ресурса для создания импорта-экспорта
+# класс ресурса для создания импорта-экспорта таблицы Status
 class StatusResource(resources.ModelResource):
     class Meta:
         model = Status
 
-# класс модели 
+# класс ресурса для создания импорта-экспорта таблицы StatusThing
+class StatusThingResource(resources.ModelResource):
+    class Meta:
+        model = StatusThing
+
+# класс модели Thing
 @admin.register(Thing)
 class ThingAdmin(ImportExportActionModelAdmin):
     resource_class = ThingResource
-    list_display = ['name_manufacturer', 'manufacturer', 'inventory_number', 'price', 'count', 'base_location', 'finresp', 'id']
+    list_display = ['name', 'name_docs', 'count']
 
+# класс модели UseThing
+@admin.register(UseThing)
+class UseThingAdmin(ImportExportActionModelAdmin):
+    resource_class = UseThingResource
+    list_display = ('thing', 'employee', 'count')
+
+# класс модели Location
 @admin.register(Location)
 class LocationAdmin(ImportExportActionModelAdmin):
     resource_class = LocationResource
+    list_display = ('name', 'cabinet')
+
+# класс модели Cabinet
+@admin.register(Cabinet)
+class CabinetAdmin(ImportExportActionModelAdmin):
+    resource_class = CabinetResource
     list_display = ('label', 'name')
 
-@admin.register(UseThings)
-class UseThingsAdmin(admin.ModelAdmin):
-    list_display = ('thing', 'employee', 'count')
+# класс модели Equipment
+@admin.register(Composition)
+class CompositionAdmin(ImportExportActionModelAdmin):
+    resource_class = CompositionResource
+    list_display = ('thing', 'equipment', 'count')
 
-@admin.register(Equipment)
-class EquipmentAdmin(ImportExportActionModelAdmin):
-    resource_class = EquipmentResource
-    list_display = ('name',)
-
-@admin.register(CompositionEquipment)
-class CompositionEquipmentAdmin(ImportExportActionModelAdmin):
-    resource_class = CompositionEquipmentResource
-    list_display = ('equipment', 'thing', 'count')
-
-@admin.register(StatusEquipment)
-class StatusEquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user')
-
+# класс модели Status
 @admin.register(Status)
 class StatusAdmin(ImportExportActionModelAdmin):
     resource_class = StatusResource
     list_display = ('name', )
+
+# класс модели StatusThing
+@admin.register(StatusThing)
+class StatusThingAdmin(ImportExportActionModelAdmin):
+    resource_class = StatusThingResource
+    list_display = ('thing', 'status', 'count', 'update')
 
 
 

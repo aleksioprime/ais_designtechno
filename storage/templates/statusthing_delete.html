@@ -1,0 +1,15 @@
+<!-- templates/statusthing_delete.html -->
+{% extends 'storage_base.html' %}
+{% block title %} МТО кафедры. Удаление статуса позиции {{ statusthing.thing }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+<h3> Удаление {{ statusthing.thing }} из {{ statusthing.status }}</h3>
+<form action="" method="post">{% csrf_token %}
+  <p>Вы подтверждаете удаление "{{ statusthing.status }}" из состава "{{ statusthing.thing }}"?</p>
+  <div class="buttons-wrapper">
+    <input class="btn btn-danger" type="submit" value="Удалить" />
+    <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+  </div>
+</form>
+{% endblock %}

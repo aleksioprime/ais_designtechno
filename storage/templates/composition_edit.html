@@ -1,0 +1,51 @@
+<!-- templates/equipment_edit.html -->
+{% extends 'storage_base.html' %}
+{% block title %} МТО кафедры. Состав позиции {{ thing.name }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+{% if composition.equipment.name %}
+<h3> Редактирование: {{ composition.equipment.name }}</h3>
+{% else %}
+<h3>Добавление элемента в состав позиции</h3>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="wrapper-thing-data">
+        <div class="thing-data">
+            <table class='table'>
+                <tr>
+                    <td style="width: 150px;">
+                        <label for="id_thing"> Позиция: </label>
+                    </td>
+                    {% if composition.equipment.name %}
+                    <td>{{form.thing}} {{ composition.thing.name }}</td>
+                    {% else %}
+                    <td>{{form.thing}} {{ thing.name }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td><label for="id_equipment}"> Элемент: </label> </td>
+                    <td>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                {{form.equipment}}
+                            </div>
+                            <a href="{% url 'storage:thing_create' %}">
+                                <img src="{% static 'img/add.svg' %}" alt="" width="30px" height="auto">
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="id_count}"> Количество: </label> </td>
+                    <td>{{form.count}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="buttons-wrapper">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+    </div>
+</form>
+{% endblock %}

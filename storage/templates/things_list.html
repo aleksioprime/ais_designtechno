@@ -1,41 +1,114 @@
 {% extends "storage_base.html" %}
 
-{% block title %}Склад кафедры{% endblock %}
+{% block title %}МТО кафедры{% endblock %}
 
 {% block storage_content %}
 {% load static %}
-<h5 class="mt-3">Список позиций по учётным документам</h5>
 <div>
-    <form action="" method="get">
-        <div class="filter-things">
-            <div class="filter-item">
-                <!-- <label for="id_name_manufacturer"> Наименование: </label> -->
-                {{ filter.form.name_manufacturer }}
+
+    <div class="d-flex">
+        <a class="btn btn-success mr-3" href="{% url 'storage:thing_create' %}">Создать новую позицию</a>
+        <a class="btn btn-primary mr-3" data-toggle="collapse" href="#collapse_filter" role="button" aria-expanded="false"
+            aria-controls="collapse_filter">Фильтрация</a>
+        <a class="btn btn-secondary" href="{% url 'storage:index' %}">Сбросить</a>
+        <b class="ml-auto">Количество записей: {{paginator.count}}</b>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="collapse_filter">
+                <div class="card card-body">
+                    <form action="{% url 'storage:index' %}" method="get">
+                        <div class="form-row">
+                            <div class="col-2 d-flex flex-column">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_accounting" id="id_isacc_all"
+                                        value="" checked>
+                                    <label class="form-check-label" for="id_isacc_all">
+                                        Все
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_accounting" id="id_isacc_true"
+                                        value="True" {% if is_accounting == 'True' %} checked {% endif %}>
+                                    <label class="form-check-label" for="id_isacc_true">
+                                        На балансе
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="is_accounting"
+                                        id="id_isacc_false" value="False" 
+                                        {% if is_accounting == 'False' %} checked {% endif %}>
+                                    <label class="form-check-label" for="id_isacc_false">
+                                        Без учёта
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-row mb-1">
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="is_material" value="True"
+                                                class="form-check-input" id="id_is_material" 
+                                                {% if is_material == 'True' %} checked {% endif %}>
+                                            <label class="form-check-label" for="id_is_material">Расх. материал</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" name="name" class="form-control" value="{{name}}"
+                                            placeholder="Наименование">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <select class="form-control" name="status">
+                                            <option selected disabled>Статус</option>
+                                            {% for stat in statuses %}
+                                            <option value={{stat.id}} {% if status == stat.id %} selected {% endif %}>
+                                                {{stat.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" name="cabinet">
+                                            <option selected disabled>Кабинет</option>
+                                            {% for cab in cabinets %}
+                                            <option value={{cab.id}} {% if cabinet == cab.id %} selected {% endif %}>
+                                                {{cab.label}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" name="employee">
+                                            <option selected disabled>Сотрудник</option>
+                                            {% for emp in employees %}
+                                            <option value={{emp.id}} {% if employee == emp.id %} selected {% endif %}>
+                                                {{emp.get_short_name}}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex justify-content-end">
+                                <input class="btn btn-info mr-2" type="submit" value="Фильтр" />
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-            <div class="filter-item">
-                <!-- <label for="id_base_location"> Помещение: </label> -->
-                {{ filter.form.base_location }}
-            </div>
-            <div class="filter-item">
-                <!-- <label for="id_finresp"> Ответственный: </label> -->
-                {{ filter.form.finresp }}
-            </div>
-            <div class="filter-buttons">
-                <input class="btn btn-info" type="submit" value="Фильтр" />
-                <a class="btn btn-secondary" href="{% url 'storage:things' %}">Отмена</a>
-            </div> <br>
         </div>
-    </form>
+    </div>
 </div>
 
 <table class="table table-hover table-sm mt-3">
     <thead>
         <tr>
-            <!-- <th scope="col" style="min-width: 90px;">№</th> -->
             <th scope="col" style="max-width: 50px;">Фото</th>
             <th scope="col" style="min-width: 100px;">Наименование</th>
             <th scope="col" style="width: 90px; text-align: center">Кол-во</th>
-            <th scope="col" style="width: 90px; text-align: center">Место</th>
+            <th scope="col" style="width: 90px;">Хранение</th>
             <th scope="col" style="min-width: 100px;">Использование</th>
             <th colspan="3"></th>
         </tr>
@@ -43,56 +116,172 @@
 
     {% for thing in things %}
     <tr>
-        <!-- <th scope="row">{{ thing.get_id }}</th> -->
         <td>
-            {% if thing.photo %}
-            <img src="{{ thing.photo.url }}" alt="" width="100px" height="auto">
+            {% if thing.picture %}
+            <img src="{{ thing.picture.url }}" alt="" width="100px" height="auto">
             {% else %}
-            <img src="{% static 'img/unknown.svg' %}" alt="" width="50px" height="auto">
+            <img src="{% static 'img/unknown.svg' %}" alt="" width="100px" height="auto">
             {% endif %}
         </td>
-        <td><a href="{% url 'storage:things_detail' thing.pk %}">{{ thing.name_manufacturer }}</td>
-        <td style="text-align: center">{{ thing.count_storage }}/{{ thing.count }}</td>
-        <td style="text-align: center">{{ thing.base_location }}</td>
-        <!-- <td>
-            <div class="finresp-wrapper">
-                <div class="finresp-photo">
-                    {% if thing.finresp.photo %}
-                    <img src="{{ thing.finresp.photo.url }}" alt="" width="40px" height="auto">
-                    {% else %}
-                    <img src="{% static 'img/noname.svg' %}" alt="" width="40px" height="auto">
-                    {% endif %}
+        <td>
+
+            {% if thing.is_accounting %}
+            <img class="mr-1" src="{% static 'img/sk.png' %}" alt="На балансе ОЧУ МГ Сколково"
+                title="На балансе ОЧУ МГ Сколково" width="20px" height="auto">
+            {% endif %}
+            {% if thing.is_material %}
+            <img class="mr-1" src="{% static 'img/material.svg' %}" alt="На балансе ОЧУ МГ Сколково"
+                title="На балансе ОЧУ МГ Сколково" width="20px" height="auto">
+            {% endif %}
+            <a href="{% url 'storage:thing_detail' thing.pk %}"> {{ thing.name }} </a>
+
+        </td>
+        <td style="text-align: center">{{ thing.count_storage }} / {{ thing.count }}</td>
+        <td>
+            {% if thing.location %}
+            <a href="#" data-toggle="modal" data-target="#modalLoc{{thing.id}}">
+                <img src="{% static 'img/eye.svg' %}" alt="" width="25px" height="auto"></a>
+            {{ thing.location.cabinet.label }}
+
+            <div class="modal fade" id="modalLoc{{thing.id}}" tabindex="-1" role="dialog"
+                aria-labelledby="modalLocLabel{{thing.id}}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLocLabel{{thing.id}}">Хранение<br>{{thing.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <tr>
+                                    <td>Описание местоположения</td>
+                                    <td>{{ thing.location.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Кабинет</td>
+                                    <td>{{ thing.location.cabinet.label }} ({{ thing.location.cabinet.name }})</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">
+                                        {% if thing.location.photo %}
+                                        <img src="{{ thing.location.photo.url }}" alt="" width="200px" height="auto">
+                                        {% else %}
+                                        <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px"
+                                            height="auto">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </td> -->
+            {% else %}
+            ?
+            {% endif %}
+        </td>
         <td>
-            <div class="use-emp-data">
-                {% for usething in thing.use_thing.all %}
-                <div> <a href="{% url 'storage:usethings_edit' usething.pk %}">
-                        {% if usething.employee.photo %}
-                        <img src="{{ usething.employee.photo.url }}" alt="{{usething.employee.surname }}"
-                            title="{{usething.employee.get_short_name }} - {{usething.count}} шт." width="40px"
-                            height="auto" class="emp-mini-photo">
+            <div class="d-flex">
+                {% if thing.use.all %}
+                {% for use in thing.use.all %}
+                <div>
+                    <a href="#" data-toggle="modal" data-target="#modalUse{{use.id}}">
+                        {% if use.employee.photo %}
+                        <img src="{{ use.employee.photo.url }}" alt="{{use.employee.surname }}"
+                            title="{{use.employee.get_short_name }} - {{use.count}} шт." width="40px" height="auto"
+                            class="emp-mini-photo">
                         {% endif %}
                     </a>
+
+                    <div class="modal fade" id="modalUse{{use.id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="modalUseLabel{{use.id}}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalUseLabel{{use.id}}">
+                                        Использование<br>{{thing.name}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Сотрудник:</td>
+                                            <td>{{ use.employee.surname }} {{ use.employee.name }} 
+                                                {{ use.employee.patronymic }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Количество:</td>
+                                            <td>{{ use.count }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Местоположение:</td>
+                                            <td>{{ use.location.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Кабинет:</td>
+                                            <td>{{ use.location.cabinet.label }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align: center;">
+                                                {% if use.location.photo %}
+                                                <img src="{{ thing.use.location.photo.url }}" alt="" width="200px"
+                                                    height="auto">
+                                                {% else %}
+                                                <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px"
+                                                    height="auto">
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Цель использования:</td>
+                                            <td>{{ use.justification }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Обновление:</td>
+                                            <td>{{ use.updated }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-warning"
+                                        href="{% url 'storage:usething_edit' thing.pk use.pk %}">Редактировать</a>
+                                    <a class="btn btn-danger"
+                                        href="{% url 'storage:usething_delete' thing.pk use.pk %}">Возврат</a>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 {% endfor %}
+                {% else %}
+                Никто не использует
+                {% endif %}
             </div>
         </td>
-        <td><a href="{% url 'storage:usethings_create' %}?thing={{thing.pk}}">
-                <img src="{% static 'img/hand.svg' %}" alt="" width="30px" height="auto">
+        <td><a href="{% url 'storage:usething_create' thing.pk %}">
+                <img src="{% static 'img/add-user.svg' %}" alt="" width="30px" height="auto">
             </a></td>
-        <td><a href="{% url 'storage:things_edit' thing.pk %}">
+        <td><a href="{% url 'storage:thing_edit' thing.pk %}">
                 <img src="{% static 'img/pencil.svg' %}" alt="" width="25px" height="auto">
             </a></td>
         </td>
-        <td><a href="{% url 'storage:things_delete' thing.pk %}">
+        <td><a href="{% url 'storage:thing_delete' thing.pk %}">
                 <img src="{% static 'img/remove.svg' %}" alt="" width="25px" height="auto">
             </a></td>
     </tr>
     {% endfor %}
 </table>
-
 
 {% if is_paginated %}
 <div class="thing-pagination">
@@ -100,9 +289,9 @@
         <ul class="pagination">
             {% for page in paginator%}
             <li class="page-item {% if page_obj.number == page.number %} active {% endif %}">
-                {% if filter.form.name_manufacturer.value or filter.form.base_location.value or filter.form.finresp.value %}
+                {% if is_accounting or name or cabinet or employee %}
                 <a class="page-link"
-                    href="?{{filter.form.name_manufacturer.name}}={{filter.form.name_manufacturer.value}}&{{filter.form.base_location.name}}={{filter.form.base_location.value}}&{{filter.form.finresp.name}}={{filter.form.finresp.value}}&page={{page.number}}">
+                    href="?is_accounting={{is_accounting}}&is_material={{is_material}}&name={{name}}&cabinet={{cabinet}}&employee={{employee}}&status={{status}}&page={{page.number}}">
                     {{page.number}}
                 </a>
                 {% else %}
@@ -116,9 +305,5 @@
     </nav>
 </div>
 {% endif %}
-
-<div class="buttons-wrapper">
-    <a class="btn btn-primary" href="{% url 'storage:things_create' %}">Добавить</a>
-</div>
 
 {% endblock %}

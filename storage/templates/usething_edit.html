@@ -1,0 +1,80 @@
+<!-- templates/things_edit.html -->
+{% extends 'storage_base.html' %}
+{% block title %} Запись об использовании {{ usething.thing }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+{% if usething.thing %}
+<h3> Редактирование: </h3> <strong>{{ usething.thing }}</strong>
+{% else %}
+<h3> Добавление новой записи </h3>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="wrapper-usething-data">
+        <div class="usething-data">
+            <table>
+                <tr>
+                    <td><label for="id_thing"> Позиция: </label> </td>
+                    <td colspan="3">{{form.thing}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_employee">Сотрудник:</label> </td>
+                    <td style="max-width: 200px;">{{form.employee}}</td>
+                    <td><label for="id_count">Кол-во:</label> </td>
+                    <td style="width: 80px;">{{form.count}}</td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td><label for="id_justification"> Цель использования </label> </td>
+                    <td colspan="3">{{form.justification}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_location_name"> Описание места: </label> </td>
+                    <td colspan="3">{{form.location_name}} {{form.location}}</td>
+                    
+                </tr>
+                <tr>
+                    <td><label for="id_location_cabinet"> Кабинет: </label> </td>
+                    <td colspan="3">{{form.location_cabinet}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_location_photo"> Фотография: </label> </td>
+                    <td colspan="3">{{form.location_photo}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="usething-img">
+            {% if currentthing %}
+            <img {% if currentthing.picture %} src="{{ currentthing.picture.url }}" {% else %}
+                src="{% static 'img/unknown.svg' %}" {% endif %} alt="" width="200px" height="auto">
+            <img class="mt-2" {% if currentthing.photo %} src="{{ currentthing.photo.url }}" 
+                {% else %}
+                src="{% static 'img/camera.svg' %}" {% endif %} alt="" width="200px" height="auto">
+            <img class="mt-2" {% if currentthing.location.photo %} src="{{ currentthing.location.photo.url }}" 
+                {% else %}
+                src="{% static 'img/unknown_place.svg' %}" {% endif %} alt="" width="200px" height="auto">
+            {% endif %}
+            {% if usething.thing %}
+            <img {% if usething.thing.picture %} src="{{ usething.thing.picture.url }}" {% else %}
+                src="{% static 'img/unknown.svg' %}" {% endif %} alt="" width="200px" height="auto">
+            <img class="mt-2" {% if usething.thing.photo %} src="{{ usething.thing.photo.url }}" 
+                {% else %} 
+                src="{% static 'img/camera.svg' %}" {% endif %} alt="" width="200px" height="auto">
+            <img class="mt-2" {% if usething.location.photo %} src="{{ usething.location.photo.url }}" 
+                {% else %}
+                src="{% static 'img/unknown_place.svg' %}" {% endif %} alt="" width="200px" height="auto">
+            {% endif %}
+        </div>
+    </div>
+    <div class="buttons-wrapper">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        {% if usething.thing %}
+        <a class="btn btn-danger" href="{% url 'storage:usething_delete' usething.thing.pk usething.pk %}"> Возврат </a>
+        {% endif %}
+        <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+    </div>
+
+</form>
+
+{% endblock %}

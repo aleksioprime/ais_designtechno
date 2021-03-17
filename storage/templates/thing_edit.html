@@ -1,0 +1,113 @@
+<!-- templates/things_edit.html -->
+{% extends 'storage_base.html' %}
+{% block title %} МТО кафедры. Создание/редактирование {{ thing.name }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+{% if thing.name %}
+<h3> Редактирование: {{ thing.name }}</h3>
+{% else %}
+<h3> Добавление новой позиции МТО кафедры </h3>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="wrapper-thing-data">
+        <div class="thing-data">
+            <table class='table'>
+                <tr>
+                    <td style="width: 150px;"><label for="id_name"> Наименование: </label>
+                    </td>
+                    <td>{{form.name}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;"><label for="id_is_accounting"> Состоит на балансе: </label>
+                    </td>
+                    <td>{{form.is_accounting}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 150px;"><label for="id_name_docs"> Наименование по документам: </label>
+                    </td>
+                    <td>{{form.name_docs}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_inventory"> Инвентарный номер: </label> </td>
+                    <td>{{form.inventory}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_manufacturer"> Производитель: </label> </td>
+                    <td>{{form.manufacturer}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_site"> Ссылка на сайт: </label> </td>
+                    <td>{{form.site}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_is_set"> Является набором: </label> </td>
+                    <td>{{form.is_set}}</td>
+                </tr>    
+                <tr>
+                    <td><label for="id_is_material"> Является расходным материалом: </label> </td>
+                    <td>{{form.is_material}}</td>
+                </tr>            
+                <tr>
+                    <td><label for="id_description"> Описание: </label> </td>
+                    <td>{{form.description}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_location_name"> Место хранения: </label> </td>
+                    <td>{{form.location_name}} {{form.location}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_location_cabinet"> Кабинет: </label> </td>
+                    <td>{{form.location_cabinet}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_location_photo"> Фотография места хранения: </label> </td>
+                    <td>{{form.location_photo}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_price"> Цена поставки: </label> </td>
+                    <td>{{form.price}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_count}"> Количество: </label> </td>
+                    <td>{{form.count}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_person}">  Ответственный сотрудник: </label> </td>
+                    <td>{{form.person}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_comment"> Комментарий: </label> </td>
+                    <td>{{form.comment}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="wrapper-thing-img">
+            <div class="thing-img">
+                <label for="id_picture"> Изображение: </label>
+                {% if thing.picture %}
+                <img src="{{ thing.picture.url }}" alt="" width="200px" height="auto">
+                {% else %}
+                <img src="{% static 'img/unknown.svg' %}" alt="" width="200px" height="auto">
+                {% endif %}
+                
+                {{form.picture}}
+            </div>
+            <div class="location-img">
+                <label for="id_photo"> Фотография: </label>
+                {% if thing.photo %}
+                <img src="{{ thing.photo_base_location.url }}" alt="" width="200px" height="auto">
+                {% else %}
+                <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
+                {% endif %}
+                {{form.photo}}
+            </div>
+        </div>
+
+    </div>
+    <div class="buttons-wrapper">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+    </div>
+</form>
+{% endblock %}

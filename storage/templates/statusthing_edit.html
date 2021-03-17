@@ -1,0 +1,49 @@
+<!-- templates/equipment_edit.html -->
+{% extends 'storage_base.html' %}
+{% block title %} МТО кафедры. Статус позиции {{ thing.name }} {% endblock %}
+
+{% block storage_content %}
+{% load static %}
+{% if statusthing.status %}
+<h3> Редактирование {{ statusthing.status }} у {{ thing.name }}</h3>
+{% else %}
+<h3>Добавление статуса позиции</h3>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="wrapper-thing-data">
+        <div class="thing-data">
+            <table class='table'>
+                <tr>
+                    <td style="width: 150px;">
+                        <label for="id_thing"> Позиция: </label>
+                    </td>
+                    {% if statusthing.status %}
+                    <td>{{form.thing}} {{ statusthing.thing.name }}</td>
+                    {% else %}
+                    <td>{{form.thing}} {{ thing.name }}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td><label for="id_status}"> Статус: </label> </td>
+                    <td> {{form.status}} </td>
+                </tr>
+                <tr>
+                    <td><label for="id_count}"> Количество: </label> </td>
+                    <td>{{form.count}}</td>
+                </tr>
+                <tr>
+                    <td><label for="id_comment"> Комментарии: </label> </td>
+                    <td>{{form.comment}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="buttons-wrapper">
+        <input class="btn btn-success" type="submit" value="Сохранить" />
+        {% if statusthing.status %}
+        <a class="btn btn-danger" href="{% url 'storage:statusthing_delete' statusthing.thing.pk statusthing.pk %}"> Удалить </a>
+        {% endif %}
+        <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>
+    </div>
+</form>
+{% endblock %}
