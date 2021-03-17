@@ -12,12 +12,15 @@
         <img class="mr-3" src="{% static 'img/material.svg' %}" alt="Расходный материал" title="Расходный материал" width="50px" height="auto">
     {% endif %}
     <h3> {{ thing.name }}</h3>
-    {% if request.user|has_group:"storageman" %}
-    <a class="btn btn-warning ml-auto mr-1" href="{% url 'storage:thing_edit' thing.pk %}">Редактировать</a>
-    <a class="btn btn-danger mr-3" href="{% url 'storage:thing_delete' thing.pk %}">Удалить</a>
-    {% endif %}
-    <a class="ml-auto" href="{{previuos_page}}">
-        <img src="{% static 'img/return.svg' %}" alt="Вернуться" title="Вернуться" width="40px" height="auto"></a>
+    <div class="ml-auto">
+        {% if request.user|has_group:"storageman" %}
+        <a class="btn btn-warning mr-1" href="{% url 'storage:thing_edit' thing.pk %}">Редактировать</a>
+        <a class="btn btn-danger mr-3" href="{% url 'storage:thing_delete' thing.pk %}">Удалить</a>
+        {% endif %}
+        <a class="" href="{{previuos_page}}">
+            <img src="{% static 'img/return.svg' %}" alt="Вернуться" title="Вернуться" width="40px" height="auto"></a>
+    </div>
+    
 </div>
 
 <div class="wrapper-thing-detail mt-3">
