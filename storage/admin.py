@@ -13,11 +13,6 @@ class UseThingResource(resources.ModelResource):
     class Meta:
         model = UseThing
 
-# класс ресурса для создания импорта-экспорта таблицы Location
-# class LocationResource(resources.ModelResource):
-#     class Meta:
-#         model = Location
-
 # класс ресурса для создания импорта-экспорта таблицы Cabinet
 class CabinetResource(resources.ModelResource):
     class Meta:
@@ -49,12 +44,6 @@ class ThingAdmin(ImportExportActionModelAdmin):
 class UseThingAdmin(ImportExportActionModelAdmin):
     resource_class = UseThingResource
     list_display = ('thing', 'employee', 'count')
-
-# класс модели Location
-# @admin.register(Location)
-# class LocationAdmin(ImportExportActionModelAdmin):
-#     resource_class = LocationResource
-#     list_display = ('name', 'cabinet')
 
 # класс модели Cabinet
 @admin.register(Cabinet)

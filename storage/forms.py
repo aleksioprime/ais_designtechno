@@ -33,7 +33,6 @@ class ThingForm(forms.ModelForm):
         self.fields['person'].empty_label="Ответственный сотрудник"
         self.fields['count'].widget.attrs['value'] = 1
         self.fields['loc_cabinet'].empty_label="Выберите кабинет"
-        # self.fields['location'].widget.attrs.update({'style': 'display:none'})
     def save(self, *args, **kwargs):
         super(ThingForm, self).save(*args, **kwargs)
         return self
@@ -57,10 +56,8 @@ class UseThingForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
             })
-            self.fields[field].initial = ""
         self.fields['employee'].empty_label="Выберите сотрудника"
         self.fields['loc_cabinet'].empty_label="Выберите кабинет"
-        # self.fields['location'].widget.attrs.update({'style': 'display:none'})
         self.fields['count'].initial = 1 
     def save(self, *args, **kwargs):
         super(UseThingForm, self).save(*args, **kwargs)

@@ -141,25 +141,6 @@ class UseThingEdit(authView, UpdateView):
     def get(self, request, *args, **kwargs):
         request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
         return super().get(request, *args, **kwargs)
-    def get_initial(self):
-        # if self.object.location:
-        #     self.initial.update({ 'location_name': self.object.location.name })
-        #     self.initial.update({ 'location_cabinet': self.object.location.cabinet })
-        #     self.initial.update({ 'location_photo': self.object.location.photo })
-        return self.initial
-    def form_valid(self, form):
-        # if self.object.location:
-        #     Location.objects.filter(id=self.object.location.id).update(
-        #         name=form.cleaned_data['location_name'],
-        #         cabinet = form.cleaned_data['location_cabinet'],
-        #         photo = form.cleaned_data['location_photo'])
-        # else:
-        #     location = Location.objects.create(
-        #         name = form.cleaned_data['location_name'],
-        #         cabinet = form.cleaned_data['location_cabinet'],
-        #         photo = form.cleaned_data['location_photo'],)
-        #     form.instance.location = location
-        return super(UseThingEdit, self).form_valid(form)
     def get_success_url(self): 
         return self.request.session['previous_page']
 
@@ -167,8 +148,6 @@ class UseThingDelete(authView, DeleteView):
     model = UseThing
     template_name = 'usething_delete.html'
     def get_success_url(self): 
-        # if self.object.location:
-        #     Location.objects.filter(id=self.object.location.id).delete()
         return reverse_lazy('storage:index')
 
 class UseThingCreate(authView, CreateView):
@@ -183,13 +162,6 @@ class UseThingCreate(authView, CreateView):
         context = super().get_context_data(**kwargs)
         context['currentthing'] = Thing.objects.filter(pk=self.kwargs['thing_pk']).first()
         return context
-    def form_valid(self, form):
-        # location = Location.objects.create(
-        #     name = form.cleaned_data['location_name'],
-        #     cabinet = form.cleaned_data['location_cabinet'],
-        #     photo = form.cleaned_data['location_photo'],)
-        # form.instance.location = location
-        return super(UseThingCreate, self).form_valid(form)
     def get(self, request, *args, **kwargs):
         request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
         return super().get(request, *args, **kwargs)
