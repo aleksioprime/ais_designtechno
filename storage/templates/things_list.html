@@ -166,7 +166,7 @@
                                 <tr>
                                     <td colspan="2" style="text-align: center;">
                                         {% if thing.loc_photo %}
-                                        <img src="{{ thing.loc_photo.url }}" alt="" width="200px" height="auto">
+                                        <img src="{{ thing.loc_photo.url }}" alt="" width="100%" height="auto">
                                         {% else %}
                                         <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px"
                                             height="auto">
@@ -232,7 +232,7 @@
                                         <tr>
                                             <td colspan="2" style="text-align: center;">
                                                 {% if use.loc_photo %}
-                                                <img src="{{ use.loc_photo.url }}" alt="" width="200px"
+                                                <img src="{{ use.loc_photo.url }}" alt="" width="100%"
                                                     height="auto">
                                                 {% else %}
                                                 <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px"
