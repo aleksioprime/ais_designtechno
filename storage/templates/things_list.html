@@ -289,7 +289,7 @@
         <ul class="pagination">
             {% for page in paginator%}
             <li class="page-item {% if page_obj.number == page.number %} active {% endif %}">
-                {% if is_accounting or name or cabinet or employee %}
+                {% if is_accounting or name or cabinet or employee or is_material or status %}
                 <a class="page-link"
                     href="?is_accounting={{is_accounting}}&is_material={{is_material}}&name={{name}}&cabinet={{cabinet}}&employee={{employee}}&status={{status}}&page={{page.number}}">
                     {{page.number}}
