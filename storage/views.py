@@ -25,6 +25,7 @@ class ThingList(authView, ListView):
             query.add(Q(name__icontains=self.request.GET['name']), Q.AND)
         if 'cabinet' in self.request.GET and self.request.GET['cabinet']:
             query.add(Q(loc_cabinet__id=self.request.GET['cabinet']), Q.AND)
+            query.add(Q(use__loc_cabinet__id=self.request.GET['cabinet']), Q.OR)
         if 'status' in self.request.GET and self.request.GET['status']:
             query.add(Q(status_thing__status__id=self.request.GET['status']), Q.AND)
         if 'employee' in self.request.GET and self.request.GET['employee']:
