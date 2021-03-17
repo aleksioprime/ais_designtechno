@@ -1,3 +1,6 @@
+# -*- coding:utf-8 -*-
+from __future__ import unicode_literals
+
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from employee.models import User
@@ -7,13 +10,19 @@ from employee.views import authView
 from storage.forms import ThingForm, UseThingForm, CompositionForm, StatusThingForm
 from django.urls import reverse_lazy
 from django.db.models.functions import Coalesce
+from django.template.defaulttags import register
+
+@register.filter
+def has_group(user, group_name):
+    groups = user.groups.all().values_list('name', flat=True)
+    return True if group_name in groups else False
 
 # Главная таблица всего материально-технического обеспечения  
 class ThingList(authView, ListView):
     model = Thing
     template_name = "things_list.html"
     context_object_name = 'things'
-    paginate_by = 10
+    paginate_by = 15
     def get_queryset(self):
         # Реализация фильтров по бухгалтерскому учёту, по наименованию, кабинету хранения и ответственным
         query = Q()
@@ -42,7 +51,7 @@ class ThingList(authView, ListView):
                 context[key] = int(value)
             else:
                 context[key] = value
-        if params:
+        if  params and ('page' not in params or len(params) !=1):
             context['is_filter'] = True
         # Передача списка кабинетов и сотрудников
         context["cabinets"] = Cabinet.objects.all()

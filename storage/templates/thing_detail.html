@@ -12,25 +12,20 @@
         <img class="mr-3" src="{% static 'img/material.svg' %}" alt="Расходный материал" title="Расходный материал" width="50px" height="auto">
     {% endif %}
     <h3> {{ thing.name }}</h3>
+    {% if request.user|has_group:"storageman" %}
     <a class="btn btn-warning ml-auto mr-1" href="{% url 'storage:thing_edit' thing.pk %}">Редактировать</a>
     <a class="btn btn-danger mr-3" href="{% url 'storage:thing_delete' thing.pk %}">Удалить</a>
-    <a class="" href="{{previuos_page}}">
-        
+    {% endif %}
+    <a class="ml-auto" href="{{previuos_page}}">
         <img src="{% static 'img/return.svg' %}" alt="Вернуться" title="Вернуться" width="40px" height="auto"></a>
 </div>
 
 <div class="wrapper-thing-detail mt-3">
-    <div style="max-width: 200px" class="mr-5">
-        {% if thing.picture %}
-        <img src="{{ thing.picture.url }}" alt="" width="200px" height="auto">
-        {% else %}
-        <img src="{% static 'img/unknown.svg' %}" alt="" width="200px" height="auto">
-        {% endif %}
-        {% if thing.photo %}
-        <img src="{{ thing.photo.url }}" alt="" width="200px" height="auto">
-        {% else %}
-        <img src="{% static 'img/camera.svg' %}" alt="" width="200px" height="auto">
-        {% endif %}
+    <div style="max-width: 250px" class="mr-5">
+        <img class="rounded" src="{% if thing.picture %}{{ thing.picture.url }}
+        {% else %}{% static 'img/unknown.svg' %}{% endif %}" alt="" width="100%" height="auto">
+        <img class="rounded" src="{% if thing.photo %}{{ thing.photo.url }}
+        {% else %}{% static 'img/camera.svg' %}{% endif %}" alt="" width="100%" height="auto">
     </div >
         <table class="table">
             <tr>
@@ -42,7 +37,10 @@
                             <img class="mr-3" title="{{st.status.name}} - {{st.count}}" src="{{ st.status.picture.url }}" alt="" width="40px" height="auto">
                         </a>
                         {% endfor %}
-                        <a class="ml-auto" href="{% url 'storage:statusthing_create' thing.pk %}"><img title="Добавить статус" src="{% static 'img/add_status.svg' %}" alt="" width="40px" height="auto"></a> 
+                        {% if request.user|has_group:"storageman" %}
+                        <a class="ml-auto" href="{% url 'storage:statusthing_create' thing.pk %}">
+                            <img title="Добавить статус" src="{% static 'img/add_status.svg' %}" alt="" width="40px" height="auto"></a> 
+                        {% endif %}
                     </div>
                 </td>
             </tr>
@@ -109,6 +107,7 @@
                 <a href="">
                     {{ eq.equipment.name }}
                 </a>
+                {% if request.user|has_group:"storageman" %}
                 <div class="edit-icons">
                     <a href="{% url 'storage:composition_edit' thing.pk eq.pk %}" title="Редактировать запись">
                         <img src="{% static 'img/pencil.svg' %}" alt="" width="20px" height="auto">
@@ -117,6 +116,7 @@
                         <img src="{% static 'img/remove.svg' %}" alt="" width="20px" height="auto">
                     </a>
                 </div>
+                {% endif %}
             </div>
         </td>
         <td>{{ eq.count }}</td>
@@ -124,12 +124,14 @@
         </td>
     </tr>
     {% endfor %}
+    {% if request.user|has_group:"storageman" %}
     <tr>
         <td colspan="5">
             <a class="btn btn-primary"
                 href="{% url 'storage:composition_create' thing.pk %}">Добавить элемент</a>
         </td>
     </tr>
+    {% endif %}
 </table>
 {% endif %}
 
@@ -145,41 +147,46 @@
         </div>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
-
-                <div class="mb-5">
-                    <table class="table">
-                        <tr>
-                            <th scope="row">Ответственный сотрудник: </th>
-                            <td>{{ thing.person }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Описание: </th>
-                            <td>{{ thing.description }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Цена поставки: </th>
-                            <td>{{ thing.price }} руб.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="width: 300px;">Место хранения:</th>
-                            <td>{{ thing.loc_name }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="width: 300px;">Кабинет:</th>
-                            <td>{{ thing.loc_cabinet }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style="width: 300px;">Фотография места хранения:</th>
-                            <td>
-                                {% if thing.loc_photo %}
-                                <img src="{{ thing.loc_photo.url }}" alt="" width="100%" height="auto">
-                                {% else %}
-                                <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
-                                {% endif %}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <table class="table">
+                    <tr>
+                        <th scope="row">Ответственный сотрудник: </th>
+                        <td>
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="finresp-photo">
+                                    {% if thing.person.photo %}
+                                    <img src="{{ thing.person.photo.url }}" alt="" width="40px" height="auto">
+                                    {% else %}
+                                    <img src="{% static 'img/noname.svg' %}" alt="" width="40px" height="auto">
+                                    {% endif %}
+                                </div>
+                                <div class="ml-2">{{ thing.person.surname }} {{ thing.person.name }} {{ thing.person.patronymic }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Описание: </th>
+                        <td>{{ thing.description }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Цена поставки: </th>
+                        <td>{{ thing.price }} руб.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="width: 300px;">Место хранения:</th>
+                        <td>{{ thing.loc_name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="width: 300px;">Кабинет:</th>
+                        <td>{{ thing.loc_cabinet }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="width: 300px;">Фотография места хранения:</th>
+                        <td>    
+                            <img class="rounded" src="{% if thing.loc_photo %}{{ thing.loc_photo.url }}
+                            {% else %}{% static 'img/unknown_place.svg' %}{% endif %}" alt="" width="100%" height="auto">
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
@@ -194,6 +201,7 @@
         <th>Информация</th>
         <th>Цель использования</th>
         <th>Местоположение</th>
+        <th></th>
     </tbody>
     {% if thing.employees.all %}
     {% for usething in thing.use.all %}
@@ -232,11 +240,13 @@
                 </div>
             </div>
         </td>
-        <td colspan="5">
+        {% if request.user|has_group:"storageman" %}
+        <td>
             <a href="{% url 'storage:usething_edit' thing.pk usething.pk %}">
                 <img src="{% static 'img/pencil.svg' %}" alt="" width="25px" height="auto">
             </a>
         </td>
+        {% endif %}
     </tr>
     {% endfor %}
     {% else %}
@@ -246,12 +256,14 @@
         </td>
     </tr>
     {% endif %}
+    {% if request.user|has_group:"storageman" %}
     <tr>
         <td colspan="5">
             <a class="btn btn-primary"
                 href="{% url 'storage:usething_create' thing.pk %}">Добавить пользователя</a>
         </td>
     </tr>
+    {% endif %}
 </table>
 
 <div class="buttons-wrapper">
