@@ -14,7 +14,8 @@
     <h3> {{ thing.name }}</h3>
     <a class="btn btn-warning ml-auto mr-1" href="{% url 'storage:thing_edit' thing.pk %}">Редактировать</a>
     <a class="btn btn-danger mr-3" href="{% url 'storage:thing_delete' thing.pk %}">Удалить</a>
-    <a class="" href="{% url 'storage:index' %}">
+    <a class="" href="{{previuos_page}}">
+        
         <img src="{% static 'img/return.svg' %}" alt="Вернуться" title="Вернуться" width="40px" height="auto"></a>
 </div>
 

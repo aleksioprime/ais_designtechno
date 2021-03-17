@@ -56,6 +56,16 @@ class ThingDetail(authView, DetailView):
         # которое считает оставшееся количество предметов на складе
         queryset = Thing.objects.all().annotate(count_storage=Coalesce(F("count") - Sum("use__count"),F("count"))).order_by('name')
         return queryset
+    def get(self, request, *args, **kwargs):
+        print(request.META.get('HTTP_REFERER', '/'))
+        return super().get(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'thing' in self.request.META.get('HTTP_REFERER', '/'):
+            context['previuos_page'] = reverse_lazy('storage:index')
+        else:
+            context['previuos_page'] = self.request.META.get('HTTP_REFERER', '/')
+        return context
 
 # Редактирование выбранного предмета из таблицы
 class ThingEdit(authView, UpdateView):
@@ -147,8 +157,12 @@ class UseThingEdit(authView, UpdateView):
 class UseThingDelete(authView, DeleteView):
     model = UseThing
     template_name = 'usething_delete.html'
+    default_redirect = '/'
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
     def get_success_url(self): 
-        return reverse_lazy('storage:index')
+        return self.request.session['previous_page']
 
 class UseThingCreate(authView, CreateView):
     model = UseThing
