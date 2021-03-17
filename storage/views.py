@@ -41,6 +41,8 @@ class ThingList(authView, ListView):
                 context[key] = int(value)
             else:
                 context[key] = value
+        if params:
+            context['is_filter'] = True
         # Передача списка кабинетов и сотрудников
         context["cabinets"] = Cabinet.objects.all()
         context["statuses"] = Status.objects.all()
