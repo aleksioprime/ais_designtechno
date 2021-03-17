@@ -53,16 +53,16 @@
                     <td>{{form.description}}</td>
                 </tr>
                 <tr>
-                    <td><label for="id_location_name"> Место хранения: </label> </td>
-                    <td>{{form.location_name}} {{form.location}}</td>
+                    <td><label for="id_loc_name"> Место хранения: </label> </td>
+                    <td>{{form.loc_name}}</td>
                 </tr>
                 <tr>
-                    <td><label for="id_location_cabinet"> Кабинет: </label> </td>
-                    <td>{{form.location_cabinet}}</td>
+                    <td><label for="id_loc_cabinet"> Кабинет: </label> </td>
+                    <td>{{form.loc_cabinet}}</td>
                 </tr>
                 <tr>
-                    <td><label for="id_location_photo"> Фотография места хранения: </label> </td>
-                    <td>{{form.location_photo}}</td>
+                    <td><label for="id_loc_photo"> Фотография места хранения: </label> </td>
+                    <td>{{form.loc_photo}}</td>
                 </tr>
                 <tr>
                     <td><label for="id_price"> Цена поставки: </label> </td>
@@ -96,7 +96,7 @@
             <div class="location-img">
                 <label for="id_photo"> Фотография: </label>
                 {% if thing.photo %}
-                <img src="{{ thing.photo_base_location.url }}" alt="" width="200px" height="auto">
+                <img src="{{ thing.photo.url }}" alt="" width="200px" height="auto">
                 {% else %}
                 <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
                 {% endif %}

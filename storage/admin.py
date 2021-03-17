@@ -1,5 +1,5 @@
 from django.contrib import admin
-from storage.models import Thing, UseThing, Composition, Cabinet, Location, Status, StatusThing
+from storage.models import Thing, UseThing, Composition, Cabinet, Status, StatusThing
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources
 
@@ -14,9 +14,9 @@ class UseThingResource(resources.ModelResource):
         model = UseThing
 
 # класс ресурса для создания импорта-экспорта таблицы Location
-class LocationResource(resources.ModelResource):
-    class Meta:
-        model = Location
+# class LocationResource(resources.ModelResource):
+#     class Meta:
+#         model = Location
 
 # класс ресурса для создания импорта-экспорта таблицы Cabinet
 class CabinetResource(resources.ModelResource):
@@ -51,10 +51,10 @@ class UseThingAdmin(ImportExportActionModelAdmin):
     list_display = ('thing', 'employee', 'count')
 
 # класс модели Location
-@admin.register(Location)
-class LocationAdmin(ImportExportActionModelAdmin):
-    resource_class = LocationResource
-    list_display = ('name', 'cabinet')
+# @admin.register(Location)
+# class LocationAdmin(ImportExportActionModelAdmin):
+#     resource_class = LocationResource
+#     list_display = ('name', 'cabinet')
 
 # класс модели Cabinet
 @admin.register(Cabinet)

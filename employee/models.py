@@ -80,7 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class LogNoteBook(models.Model):
     date = models.DateTimeField(_('Дата использования'), auto_now=True)
-    location = models.ForeignKey("storage.Location", on_delete=models.SET_NULL, verbose_name=_("Местоположение"), related_name="loc_lognotebook", null=True, blank=True)
+    location = models.ForeignKey("storage.Cabinet", on_delete=models.SET_NULL, verbose_name=_("Местоположение"), related_name="loc_lognotebook", null=True, blank=True)
     employee = models.ForeignKey("employee.User", on_delete=models.SET_NULL, verbose_name=_("Пользователь"), related_name="emp_lognotebook", null=True, blank=True)
     class Meta:
         verbose_name = 'Запись использования ноутбуков'

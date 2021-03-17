@@ -161,17 +161,17 @@
                         </tr>
                         <tr>
                             <th scope="row" style="width: 300px;">Место хранения:</th>
-                            <td>{{ thing.location.name }}</td>
+                            <td>{{ thing.loc_name }}</td>
                         </tr>
                         <tr>
                             <th scope="row" style="width: 300px;">Кабинет:</th>
-                            <td>{{ thing.location.cabinet }}</td>
+                            <td>{{ thing.loc_cabinet }}</td>
                         </tr>
                         <tr>
                             <th scope="row" style="width: 300px;">Фотография места хранения:</th>
                             <td>
-                                {% if thing.location.photo %}
-                                <img src="{{ thing.location.photo.url }}" alt="" width="300px" height="auto">
+                                {% if thing.loc_photo %}
+                                <img src="{{ thing.loc_photo.url }}" alt="" width="100%" height="auto">
                                 {% else %}
                                 <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
                                 {% endif %}
@@ -219,12 +219,12 @@
         <td>
             <div class="d-flex justify-content-between">
                 <div class="d-flex flex-column">
-                    <div>{{usething.location.name}}</div>
-                    <div>{{usething.location.cabinet}}</div>
+                    <div>{{usething.loc_name}}</div>
+                    <div>{{usething.loc_cabinet}}</div>
                 </div>
                 <div>
-                    {% if thing.location.photo %}
-                    <img src="{{ thing.location.photo.url }}" alt="" width="100px" height="auto">
+                    {% if thing.loc_photo %}
+                    <img src="{{ thing.loc_photo.url }}" alt="" width="100px" height="auto">
                     {% else %}
                     <img src="{% static 'img/unknown_place.svg' %}" alt="" width="100px" height="auto">
                     {% endif %}

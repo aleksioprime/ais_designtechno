@@ -138,10 +138,10 @@
         </td>
         <td style="text-align: center">{{ thing.count_storage }} / {{ thing.count }}</td>
         <td>
-            {% if thing.location %}
+            {% if thing.loc_cabinet %}
             <a href="#" data-toggle="modal" data-target="#modalLoc{{thing.id}}">
                 <img src="{% static 'img/eye.svg' %}" alt="" width="25px" height="auto"></a>
-            {{ thing.location.cabinet.label }}
+            {{ thing.loc_cabinet.label }}
 
             <div class="modal fade" id="modalLoc{{thing.id}}" tabindex="-1" role="dialog"
                 aria-labelledby="modalLocLabel{{thing.id}}" aria-hidden="true">
@@ -157,16 +157,16 @@
                             <table class="table">
                                 <tr>
                                     <td>Описание местоположения</td>
-                                    <td>{{ thing.location.name }}</td>
+                                    <td>{{ thing.loc_name }}</td>
                                 </tr>
                                 <tr>
                                     <td>Кабинет</td>
-                                    <td>{{ thing.location.cabinet.label }} ({{ thing.location.cabinet.name }})</td>
+                                    <td>{{ thing.loc_cabinet.label }} ({{ thing.loc_cabinet.name }})</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: center;">
-                                        {% if thing.location.photo %}
-                                        <img src="{{ thing.location.photo.url }}" alt="" width="200px" height="auto">
+                                        {% if thing.loc_photo %}
+                                        <img src="{{ thing.loc_photo.url }}" alt="" width="200px" height="auto">
                                         {% else %}
                                         <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px"
                                             height="auto">
@@ -223,16 +223,16 @@
                                         </tr>
                                         <tr>
                                             <td>Местоположение:</td>
-                                            <td>{{ use.location.name }}</td>
+                                            <td>{{ use.loc_name }}</td>
                                         </tr>
                                         <tr>
                                             <td>Кабинет:</td>
-                                            <td>{{ use.location.cabinet.label }}</td>
+                                            <td>{{ use.loc_cabinet.label }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="text-align: center;">
-                                                {% if use.location.photo %}
-                                                <img src="{{ thing.use.location.photo.url }}" alt="" width="200px"
+                                                {% if use.loc_photo %}
+                                                <img src="{{ use.loc_photo.url }}" alt="" width="200px"
                                                     height="auto">
                                                 {% else %}
                                                 <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px"

@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from employee.models import User
-from storage.models import  Thing, UseThing, Composition, Cabinet, Location, StatusThing, Status
+from storage.models import  Thing, UseThing, Composition, Cabinet, StatusThing, Status
 from django.db.models import F,  Sum, Q
 from employee.views import authView
 from storage.forms import ThingForm, UseThingForm, CompositionForm, StatusThingForm
@@ -24,7 +24,7 @@ class ThingList(authView, ListView):
         if 'name' in self.request.GET:
             query.add(Q(name__icontains=self.request.GET['name']), Q.AND)
         if 'cabinet' in self.request.GET and self.request.GET['cabinet']:
-            query.add(Q(location__cabinet__id=self.request.GET['cabinet']), Q.AND)
+            query.add(Q(loc_cabinet__id=self.request.GET['cabinet']), Q.AND)
         if 'status' in self.request.GET and self.request.GET['status']:
             query.add(Q(status_thing__status__id=self.request.GET['status']), Q.AND)
         if 'employee' in self.request.GET and self.request.GET['employee']:
@@ -67,29 +67,29 @@ class ThingEdit(authView, UpdateView):
     def get_initial(self):
         # Если местоположение введено в базе данных, 
         # то соответствующие данные отображаются в полях формы
-        if self.object.location:
-            self.initial.update({ 'location_name': self.object.location.name })
-            self.initial.update({ 'location_cabinet': self.object.location.cabinet })
-            self.initial.update({ 'location_photo': self.object.location.photo })
+        # if self.object.location:
+        #     self.initial.update({ 'location_name': self.object.location.name })
+        #     self.initial.update({ 'location_cabinet': self.object.location.cabinet })
+        #     self.initial.update({ 'location_photo': self.object.location.photo })
         return self.initial
     def form_valid(self, form):
         # Если местоположение введено в базе данных, 
         # то по id находится соответствующая запись в связанной таблице местоположений 
         # и обновляются поля name, cabinet и photo данными с текущей формы
-        if self.object.location:
-            Location.objects.filter(id=self.object.location.id).update(
-                name=form.cleaned_data['location_name'],
-                cabinet = form.cleaned_data['location_cabinet'],
-                photo = form.cleaned_data['location_photo'])
+        # if self.object.location:
+        #     Location.objects.filter(id=self.object.location.id).update(
+        #         name=form.cleaned_data['location_name'],
+        #         cabinet = form.cleaned_data['location_cabinet'],
+        #         photo = form.cleaned_data['location_photo'])
         # если местоположения не было в базе данных, а пользователь ввёл местоположение, 
         # то создаётся новая запись в базе Location и связь OneToOne с полем location
-        elif form.cleaned_data['location_name']:
-            location = Location.objects.create(
-                name = form.cleaned_data['location_name'],
-                cabinet = form.cleaned_data['location_cabinet'],
-                photo = form.cleaned_data['location_photo'],)
-            form.instance.location = location
-        form.save()
+        # elif form.cleaned_data['location_name']:
+        #     location = Location.objects.create(
+        #         name = form.cleaned_data['location_name'],
+        #         cabinet = form.cleaned_data['location_cabinet'],
+        #         photo = form.cleaned_data['location_photo'],)
+        #     form.instance.location = location
+        # form.save()
         return super(ThingEdit, self).form_valid(form)
     # Реализация перехода на предыдущую страницу после успешного сохранения изменений
     def get(self, request, *args, **kwargs):
@@ -106,8 +106,8 @@ class ThingDelete(authView, DeleteView):
         request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
         return super().get(request, *args, **kwargs)
     def get_success_url(self): 
-        if self.object.location:
-            Location.objects.filter(id=self.object.location.id).delete()
+        # if self.object.location:
+        #     Location.objects.filter(id=self.object.location.id).delete()
         return self.request.session['previous_page']
 
 class ThingCreate(authView, CreateView):
@@ -116,16 +116,16 @@ class ThingCreate(authView, CreateView):
     template_name = 'thing_edit.html'
     default_redirect = '/'
     def get_initial(self):
-        self.initial.update({ 'location_name': ''})
-        self.initial.update({ 'location_cabinet': '' })
-        self.initial.update({ 'location_photo': '' })
+        # self.initial.update({ 'location_name': ''})
+        # self.initial.update({ 'location_cabinet': '' })
+        # self.initial.update({ 'location_photo': '' })
         return self.initial
     def form_valid(self, form):
-        location = Location.objects.create(
-            name = form.cleaned_data['location_name'],
-            cabinet = form.cleaned_data['location_cabinet'],
-            photo = form.cleaned_data['location_photo'],)
-        form.instance.location = location
+        # location = Location.objects.create(
+        #     name = form.cleaned_data['location_name'],
+        #     cabinet = form.cleaned_data['location_cabinet'],
+        #     photo = form.cleaned_data['location_photo'],)
+        # form.instance.location = location
         return super(ThingCreate, self).form_valid(form)
     def get(self, request, *args, **kwargs):
         request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
@@ -142,23 +142,23 @@ class UseThingEdit(authView, UpdateView):
         request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
         return super().get(request, *args, **kwargs)
     def get_initial(self):
-        if self.object.location:
-            self.initial.update({ 'location_name': self.object.location.name })
-            self.initial.update({ 'location_cabinet': self.object.location.cabinet })
-            self.initial.update({ 'location_photo': self.object.location.photo })
+        # if self.object.location:
+        #     self.initial.update({ 'location_name': self.object.location.name })
+        #     self.initial.update({ 'location_cabinet': self.object.location.cabinet })
+        #     self.initial.update({ 'location_photo': self.object.location.photo })
         return self.initial
     def form_valid(self, form):
-        if self.object.location:
-            Location.objects.filter(id=self.object.location.id).update(
-                name=form.cleaned_data['location_name'],
-                cabinet = form.cleaned_data['location_cabinet'],
-                photo = form.cleaned_data['location_photo'])
-        else:
-            location = Location.objects.create(
-                name = form.cleaned_data['location_name'],
-                cabinet = form.cleaned_data['location_cabinet'],
-                photo = form.cleaned_data['location_photo'],)
-            form.instance.location = location
+        # if self.object.location:
+        #     Location.objects.filter(id=self.object.location.id).update(
+        #         name=form.cleaned_data['location_name'],
+        #         cabinet = form.cleaned_data['location_cabinet'],
+        #         photo = form.cleaned_data['location_photo'])
+        # else:
+        #     location = Location.objects.create(
+        #         name = form.cleaned_data['location_name'],
+        #         cabinet = form.cleaned_data['location_cabinet'],
+        #         photo = form.cleaned_data['location_photo'],)
+        #     form.instance.location = location
         return super(UseThingEdit, self).form_valid(form)
     def get_success_url(self): 
         return self.request.session['previous_page']
@@ -167,8 +167,8 @@ class UseThingDelete(authView, DeleteView):
     model = UseThing
     template_name = 'usething_delete.html'
     def get_success_url(self): 
-        if self.object.location:
-            Location.objects.filter(id=self.object.location.id).delete()
+        # if self.object.location:
+        #     Location.objects.filter(id=self.object.location.id).delete()
         return reverse_lazy('storage:index')
 
 class UseThingCreate(authView, CreateView):
@@ -184,11 +184,11 @@ class UseThingCreate(authView, CreateView):
         context['currentthing'] = Thing.objects.filter(pk=self.kwargs['thing_pk']).first()
         return context
     def form_valid(self, form):
-        location = Location.objects.create(
-            name = form.cleaned_data['location_name'],
-            cabinet = form.cleaned_data['location_cabinet'],
-            photo = form.cleaned_data['location_photo'],)
-        form.instance.location = location
+        # location = Location.objects.create(
+        #     name = form.cleaned_data['location_name'],
+        #     cabinet = form.cleaned_data['location_cabinet'],
+        #     photo = form.cleaned_data['location_photo'],)
+        # form.instance.location = location
         return super(UseThingCreate, self).form_valid(form)
     def get(self, request, *args, **kwargs):
         request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)

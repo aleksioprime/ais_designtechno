@@ -18,16 +18,16 @@ class Cabinet(models.Model):
             return "{}".format(self.label)
 
 # Таблица местоположений (будет заполняться автоматически)
-class Location(models.Model):
-    name = models.CharField(max_length=255, verbose_name=_("Описание"))
-    cabinet = models.ForeignKey("storage.Cabinet", on_delete=models.SET_NULL, verbose_name=_("Кабинет"), related_name="loc", null=True, blank=True)
-    photo = models.ImageField(upload_to='location_photo', blank=True, verbose_name=_("Фотография местоположения"), null=True)
-    class Meta:
-        verbose_name = 'Местоположение'
-        verbose_name_plural = 'Местоположения'
-        ordering = ['cabinet','name']
-    def __str__(self):
-            return "{} {}".format(self.name, self.cabinet)
+# class Location(models.Model):
+#     name = models.CharField(max_length=255, verbose_name=_("Описание"))
+#     cabinet = models.ForeignKey("storage.Cabinet", on_delete=models.SET_NULL, verbose_name=_("Кабинет"), related_name="loc", null=True, blank=True)
+#     photo = models.ImageField(upload_to='location_photo', blank=True, verbose_name=_("Фотография местоположения"), null=True)
+#     class Meta:
+#         verbose_name = 'Местоположение'
+#         verbose_name_plural = 'Местоположения'
+#         ordering = ['cabinet','name']
+#     def __str__(self):
+#             return "{} {}".format(self.name, self.cabinet)
 
 # Таблица статусов (заполняется модератором через админку)
 class Status(models.Model):
@@ -70,7 +70,10 @@ class Thing(models.Model):
     is_material = models.BooleanField(verbose_name=_("Расходный материал"), default=False)
     is_set = models.BooleanField(verbose_name=_("Набор"), default=False)
     person = models.ForeignKey("employee.User", on_delete = models.SET_NULL, related_name="thing_person", verbose_name=_("Ответственный сотрудник"), null=True, blank=True)
-    location = models.OneToOneField("storage.Location", on_delete = models.SET_NULL, related_name="thing", verbose_name=_("Местоположение"), null=True, blank=True)
+    # location = models.OneToOneField("storage.Location", on_delete = models.SET_NULL, related_name="thing", verbose_name=_("Местоположение"), null=True, blank=True)
+    loc_name = models.CharField(max_length=255, verbose_name=_("Описание местоположения"), null=True, blank=True)
+    loc_cabinet = models.ForeignKey("storage.Cabinet", on_delete=models.SET_NULL, verbose_name=_("Кабинет"), related_name="thing", null=True, blank=True)
+    loc_photo = models.ImageField(upload_to='location_photo', blank=True, verbose_name=_("Фотография местоположения"), null=True)
     employees = models.ManyToManyField("employee.User", verbose_name=_("Сотрудники"), through="storage.UseThing")
     composition = models.ManyToManyField("storage.Thing", verbose_name=_("Элементы"), through="storage.Composition")
     statuses = models.ManyToManyField("storage.Status", verbose_name=_("Статусы"), through="storage.StatusThing")
@@ -87,7 +90,10 @@ class Thing(models.Model):
 class UseThing(models.Model):
     thing = models.ForeignKey("storage.Thing", on_delete=models.CASCADE, verbose_name=_("Предмет"), related_name="use")
     employee = models.ForeignKey("employee.User", on_delete=models.CASCADE, verbose_name=_("Сотрудник"), related_name="use")
-    location = models.OneToOneField("storage.Location", on_delete = models.SET_NULL, related_name="use", verbose_name=_("Местоположение"), null=True, blank=True)
+    # location = models.OneToOneField("storage.Location", on_delete = models.SET_NULL, related_name="use", verbose_name=_("Местоположение"), null=True, blank=True)
+    loc_name = models.CharField(max_length=255, verbose_name=_("Описание местоположения"), null=True, blank=True)
+    loc_cabinet = models.ForeignKey("storage.Cabinet", on_delete=models.SET_NULL, verbose_name=_("Кабинет"), related_name="use", null=True, blank=True)
+    loc_photo = models.ImageField(upload_to='location_photo', blank=True, verbose_name=_("Фотография местоположения"), null=True)
     count = models.SmallIntegerField(verbose_name=_("Количество"), default=1)
     justification = models.TextField(verbose_name=_("Обоснование"), null=True, blank=True)
     created = models.DateField(default=date.today)

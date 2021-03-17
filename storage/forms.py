@@ -1,6 +1,6 @@
 from django import forms
 from employee.models import User
-from storage.models import Thing, UseThing, Composition, Cabinet, Location, Status, StatusThing
+from storage.models import Thing, UseThing, Composition, Cabinet, Status, StatusThing
 from datetime import date
 
 class ThingForm(forms.ModelForm):            
@@ -19,13 +19,12 @@ class ThingForm(forms.ModelForm):
     picture = forms.ImageField(label='Изображение', required=False)
     photo = forms.ImageField(label='Фотография', required=False)
     person = forms.ModelChoiceField(User.objects.filter(groups__name='teacher').all(), required=False, label='Ответственное лицо')
-    location_cabinet = forms.ModelChoiceField(queryset=Cabinet.objects.all(), required=True, label='Кабинет')
-    location_name = forms.CharField(required=True, max_length=255, label='Конкретное описание')
-    location_photo = forms.ImageField(label='Фотография', required=False)
+    loc_cabinet = forms.ModelChoiceField(queryset=Cabinet.objects.all(), required=True, label='Кабинет')
+    loc_name = forms.CharField(required=True, max_length=255, label='Конкретное описание')
+    loc_photo = forms.ImageField(label='Фотография', required=False)
 
     def __init__(self, *args, **kwargs):
         super(ThingForm, self).__init__(*args, **kwargs)
-        self.fields['location'].widget.attrs.update({'style': 'display:none'})
         for field in iter(self.fields):
             if field not in ['is_accounting', 'is_set', 'is_material']:
                 self.fields[field].widget.attrs.update({
@@ -33,8 +32,8 @@ class ThingForm(forms.ModelForm):
                 })
         self.fields['person'].empty_label="Ответственный сотрудник"
         self.fields['count'].widget.attrs['value'] = 1
-        self.fields['location_cabinet'].empty_label="Выберите кабинет"
-        self.fields['location'].widget.attrs.update({'style': 'display:none'})
+        self.fields['loc_cabinet'].empty_label="Выберите кабинет"
+        # self.fields['location'].widget.attrs.update({'style': 'display:none'})
     def save(self, *args, **kwargs):
         super(ThingForm, self).save(*args, **kwargs)
         return self
@@ -48,9 +47,9 @@ class UseThingForm(forms.ModelForm):
     employee = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='teacher').all(), required=True, label='Сотрудник')
     count = forms.DecimalField(widget=forms.NumberInput, required=True, label='Количество', decimal_places=0, min_value=1)
     justification = forms.CharField(widget=forms.Textarea, required=False, label='Обоснование')
-    location_cabinet = forms.ModelChoiceField(queryset=Cabinet.objects.all(), required=False, label='Кабинет')
-    location_name = forms.CharField(required=True, max_length=255, label='Конкретное описание')
-    location_photo = forms.ImageField(label='Фотография', required=False)
+    loc_cabinet = forms.ModelChoiceField(queryset=Cabinet.objects.all(), required=False, label='Кабинет')
+    loc_name = forms.CharField(required=True, max_length=255, label='Конкретное описание')
+    loc_photo = forms.ImageField(label='Фотография', required=False)
 
     def __init__(self, *args, **kwargs):
         super(UseThingForm, self).__init__(*args, **kwargs)
@@ -60,8 +59,8 @@ class UseThingForm(forms.ModelForm):
             })
             self.fields[field].initial = ""
         self.fields['employee'].empty_label="Выберите сотрудника"
-        self.fields['location_cabinet'].empty_label="Выберите кабинет"
-        self.fields['location'].widget.attrs.update({'style': 'display:none'})
+        self.fields['loc_cabinet'].empty_label="Выберите кабинет"
+        # self.fields['location'].widget.attrs.update({'style': 'display:none'})
         self.fields['count'].initial = 1 
     def save(self, *args, **kwargs):
         super(UseThingForm, self).save(*args, **kwargs)

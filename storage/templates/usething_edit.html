@@ -30,17 +30,17 @@
                     <td colspan="3">{{form.justification}}</td>
                 </tr>
                 <tr>
-                    <td><label for="id_location_name"> Описание места: </label> </td>
-                    <td colspan="3">{{form.location_name}} {{form.location}}</td>
+                    <td><label for="id_loc_name"> Описание места: </label> </td>
+                    <td colspan="3">{{form.loc_name}}</td>
                     
                 </tr>
                 <tr>
-                    <td><label for="id_location_cabinet"> Кабинет: </label> </td>
-                    <td colspan="3">{{form.location_cabinet}}</td>
+                    <td><label for="id_loc_cabinet"> Кабинет: </label> </td>
+                    <td colspan="3">{{form.loc_cabinet}}</td>
                 </tr>
                 <tr>
-                    <td><label for="id_location_photo"> Фотография: </label> </td>
-                    <td colspan="3">{{form.location_photo}}</td>
+                    <td><label for="id_loc_photo"> Фотография: </label> </td>
+                    <td colspan="3">{{form.loc_photo}}</td>
                 </tr>
             </table>
         </div>
@@ -51,7 +51,7 @@
             <img class="mt-2" {% if currentthing.photo %} src="{{ currentthing.photo.url }}" 
                 {% else %}
                 src="{% static 'img/camera.svg' %}" {% endif %} alt="" width="200px" height="auto">
-            <img class="mt-2" {% if currentthing.location.photo %} src="{{ currentthing.location.photo.url }}" 
+            <img class="mt-2" {% if currentthing.loc_photo %} src="{{ currentthing.loc_photo.url }}" 
                 {% else %}
                 src="{% static 'img/unknown_place.svg' %}" {% endif %} alt="" width="200px" height="auto">
             {% endif %}
@@ -61,7 +61,7 @@
             <img class="mt-2" {% if usething.thing.photo %} src="{{ usething.thing.photo.url }}" 
                 {% else %} 
                 src="{% static 'img/camera.svg' %}" {% endif %} alt="" width="200px" height="auto">
-            <img class="mt-2" {% if usething.location.photo %} src="{{ usething.location.photo.url }}" 
+            <img class="mt-2" {% if usething.loc_photo %} src="{{ usething.loc_photo.url }}" 
                 {% else %}
                 src="{% static 'img/unknown_place.svg' %}" {% endif %} alt="" width="200px" height="auto">
             {% endif %}

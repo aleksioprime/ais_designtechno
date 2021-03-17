@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from employee.models import User, LogNoteBook
-from storage.models import Location
+from storage.models import Cabinet
 from django.template import loader
 from django.http import HttpResponse  
 from django.views.generic import ListView, UpdateView
@@ -45,7 +45,7 @@ class EmployeeList(authView, ListView):
 def get_notebook(request, card, loc=1):
     if User.objects.filter(id_card=card).exists():
         current_user = User.objects.filter(id_card=card).first()
-        current_location = Location.objects.filter(id=loc).first()
+        current_location = Cabinet.objects.filter(id=loc).first()
         log = LogNoteBook.objects.create(location=current_location, employee=current_user)
         return HttpResponse(True)
     else:
