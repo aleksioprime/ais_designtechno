@@ -119,19 +119,46 @@
     {% for thing in things %}
     <tr>
         <td class="position-relative">
-            {% if thing.is_accounting %}
-            <img class="position-absolute" style="top: 7px; left: 8px;" src="{% static 'img/sk.png' %}" width="25px" height="auto">
-            {% endif %}
-            {% if thing.is_material %}
-                <img class="position-absolute" style="top: 7px; right: 8px;" src="{% static 'img/material.svg' %}" width="20px" height="auto">
-            {% endif %}
-            <img class="img-thumbnail" src="{% if thing.picture %}{{ thing.picture.url }}
-            {% else %}{% static 'img/unknown.svg' %}{% endif %}" alt="" width="100px" height="auto">
-            <div class="position-absolute d-flex" style="bottom: 6px; left: 5px;">
-                {% for st in thing.status_thing.all %}
-                    <img class="mr-1" src="{{ st.status.picture.url }}" alt="" width="25px" height="auto">
-                {% endfor %}
+            <a href="#" data-toggle="modal" data-target="#modalPic{{thing.id}}">
+                {% if thing.is_accounting %}
+                <img class="position-absolute" style="top: 7px; left: 8px;" src="{% static 'img/sk.png' %}" width="25px" height="auto">
+                {% endif %}
+                {% if thing.is_material %}
+                    <img class="position-absolute" style="top: 7px; right: 8px;" src="{% static 'img/material.svg' %}" width="20px" height="auto">
+                {% endif %}
+                <img class="img-thumbnail" src="{% if thing.picture %}{{ thing.picture.url }}
+                {% else %}{% static 'img/unknown.svg' %}{% endif %}" alt="" width="100px" height="auto">
+                <div class="position-absolute d-flex" style="bottom: 6px; left: 5px;">
+                    {% for st in thing.status_thing.all %}
+                        <img class="mr-1" src="{{ st.status.picture.url }}" alt="" width="25px" height="auto">
+                    {% endfor %}
+                </div>
+            </a>
+            
+            <div class="modal fade" id="modalPic{{thing.id}}" tabindex="-1" role="dialog"
+                aria-labelledby="modalPicLabel{{thing.id}}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalPicLabel{{thing.id}}">{{thing.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                            <img class="rounded" src="{% if thing.picture %}{{ thing.picture.url }}
+                            {% else %}{% static 'img/unknown.svg' %}{% endif %}" alt="" width="300px" height="auto">
+                            <img class="rounded" src="{% if thing.photo %}{{ thing.photo.url }}
+                            {% else %}{% static 'img/camera.svg' %}{% endif %}" alt="" width="300px" height="auto">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+
         </td>
         <td>
             <div>
@@ -150,7 +177,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalLocLabel{{thing.id}}">Хранение<br>{{thing.name}}</h5>
+                            <h5 class="modal-title" id="modalLocLabel{{thing.id}}">{{thing.name}}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -158,7 +185,7 @@
                         <div class="modal-body">
                             <table class="table">
                                 <tr>
-                                    <td>Описание местоположения</td>
+                                    <td>Хранится: </td>
                                     <td>{{ thing.loc_name }}</td>
                                 </tr>
                                 <tr>
@@ -207,7 +234,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modalUseLabel{{use.id}}">
-                                        Использование<br>{{thing.name}}</h5>
+                                        {{thing.name}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -215,21 +242,13 @@
                                 <div class="modal-body">
                                     <table class="table">
                                         <tr>
-                                            <td>Сотрудник:</td>
+                                            <td>Использует:</td>
                                             <td>{{ use.employee.surname }} {{ use.employee.name }} 
-                                                {{ use.employee.patronymic }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Количество:</td>
-                                            <td>{{ use.count }}</td>
+                                                {{ use.employee.patronymic }} (<b>{{ use.count }} шт.</b>)</td>
                                         </tr>
                                         <tr>
                                             <td>Местоположение:</td>
-                                            <td>{{ use.loc_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Кабинет:</td>
-                                            <td>{{ use.loc_cabinet.label }}</td>
+                                            <td>{{ use.loc_cabinet.label }} ({{ use.loc_name }})</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="text-align: center;">
@@ -243,7 +262,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Цель использования:</td>
+                                            <td>Цель:</td>
                                             <td>{{ use.justification }}</td>
                                         </tr>
                                         <tr>

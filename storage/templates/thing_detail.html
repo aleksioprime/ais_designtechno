@@ -4,15 +4,15 @@
 
 {% block storage_content %}
 {% load static %}
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-start">
     {% if thing.is_accounting %}
-        <img class="mr-3" src="{% static 'img/sk.png' %}" alt="На балансе ОЧУ МГ Сколково" title="На балансе ОЧУ МГ Сколково" width="50px" height="auto">
+        <img class="mr-3 mt-1" src="{% static 'img/sk.png' %}" alt="На балансе ОЧУ МГ Сколково" title="На балансе ОЧУ МГ Сколково" width="50px" height="auto">
     {% endif %}
     {% if thing.is_material %}
-        <img class="mr-3" src="{% static 'img/material.svg' %}" alt="Расходный материал" title="Расходный материал" width="50px" height="auto">
+        <img class="mr-3 mt-1" src="{% static 'img/material.svg' %}" alt="Расходный материал" title="Расходный материал" width="50px" height="auto">
     {% endif %}
-    <h3> {{ thing.name }}</h3>
-    <div class="ml-auto">
+    <h3 class="mr-3"> {{ thing.name }}</h3>
+    <div class="ml-auto d-flex">
         {% if request.user|has_group:"storageman" %}
         <a class="btn btn-warning mr-1" href="{% url 'storage:thing_edit' thing.pk %}">Редактировать</a>
         <a class="btn btn-danger mr-3" href="{% url 'storage:thing_delete' thing.pk %}">Удалить</a>
@@ -25,7 +25,7 @@
 
 <div class="wrapper-thing-detail mt-3">
     <div style="max-width: 250px" class="mr-5">
-        <img class="rounded" src="{% if thing.picture %}{{ thing.picture.url }}
+        <img class="rounded mb-3" src="{% if thing.picture %}{{ thing.picture.url }}
         {% else %}{% static 'img/unknown.svg' %}{% endif %}" alt="" width="100%" height="auto">
         <img class="rounded" src="{% if thing.photo %}{{ thing.photo.url }}
         {% else %}{% static 'img/camera.svg' %}{% endif %}" alt="" width="100%" height="auto">
