@@ -20,10 +20,9 @@
         <a class="" href="{{previuos_page}}">
             <img src="{% static 'img/return.svg' %}" alt="Вернуться" title="Вернуться" width="40px" height="auto"></a>
     </div>
-    
 </div>
 
-<div class="wrapper-thing-detail mt-3">
+<div class="wrapper-thing-detail d-flex mt-3">
     <div style="max-width: 250px" class="mr-5">
         <img class="rounded mb-3" src="{% if thing.picture %}{{ thing.picture.url }}
         {% else %}{% static 'img/unknown.svg' %}{% endif %}" alt="" width="100%" height="auto">
