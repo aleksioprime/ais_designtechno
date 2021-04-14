@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     # приложения разработчика
     'employee',
     'storage',
-    # 'sumassess',
+    'sumassess',
 ]
 
 MIDDLEWARE = [

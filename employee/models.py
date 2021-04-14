@@ -75,7 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return reverse('employee:index') 
 
     def __str__(self):
-        return "{} {}".format(self.name, self.surname)
+        return self.get_short_name()
 
 
 class LogNoteBook(models.Model):

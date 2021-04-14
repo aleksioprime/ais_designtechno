@@ -1,0 +1,384 @@
+/* Стили секции главного информационного баннера*/
+.info-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.info-text {
+    display: flex;
+    flex-direction: column;
+    max-width: 620px;
+}
+.info-content > img {
+    margin-top: 10px;
+    width: 270px;
+}
+@media screen and (max-width: 900px) {
+    .info-text {
+        max-width: 100%;
+    }  
+}
+@media screen and (max-width: 768px) {
+    .info-content > img {
+        display: none;
+    }
+}
+
+/* Стили секции с блоками задач */
+.task-block h2{
+    margin-top: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.task-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.task-item {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 28%;
+    text-align: center;
+}
+.task-item p {
+    margin-top: 1vw;
+}
+.task-item img {
+    height: 80px;
+    width: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .task-item{
+        width: 45%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .task-item{
+        width: 100%;
+    }
+}
+
+/* Стили секции с блоками дисциплин кафедры */
+.subject-block h2{
+    margin-top: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.bs-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.bs-item {
+    flex-basis: 100%;
+    border: 1px solid #a8a7a7;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.bs-item-header {
+    text-transform: uppercase;
+    color: #00AFA8;
+    font-weight: 700;
+}
+.bs-item-photo {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+.bs-item-photo:hover {
+    box-shadow: 0 0 2px 1px #00AFA880;
+  }
+.bs-item-photo img{
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+}
+.bs-item-programm {
+    font-size: small;
+}
+.bs-item-text {
+    margin-top: 5px;
+}
+.bs-item-footer {
+    margin-top: auto;
+}
+
+@media screen and (max-width: 900px) {
+    .bs-wrapper {
+        flex-wrap: wrap;
+    }
+    .bs-item {
+        flex-basis: auto;
+        width: 45%;
+    } 
+}
+@media screen and (max-width: 430px) {
+    .bs-item {
+        width: 100%;
+    } 
+}
+ 
+/* Блок лабораторий*/
+.union-block {
+    margin-top: 0px;
+}
+.ld-content, .le-content, .lit-content {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+.ld-text, .le-text, .lit-text {
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+}
+.ld-text h2 {
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.le-text h2 {
+    color: white;
+    margin-top: 15px;
+}
+.lit-text h2 {
+    color: rgb(105, 105, 105);
+    margin-top: 15px;
+}
+.ld-content > img, .le-content > img, .lit-content > img {
+    display: block;
+    object-fit: cover;
+    height: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin: 0 15px;
+}
+.lit-content > img {
+    max-width: 500px;
+}
+
+.ld-img {
+    display: none;
+    max-width: 250px;
+    float: right;
+    margin: 10px 0 10px 10px;
+}
+.le-img {
+    display: none;
+    max-width: 250px;
+    float: left;
+    margin: 10px 10px 10px 0;
+}
+.lit-img {
+    max-width: 250px;
+    float: right;
+    margin: 10px 10px 10px 0;
+}
+@media screen and (max-width: 945px) {
+    .ld-content > img, .le-content > img, .lit-content > img{
+        display: none;
+    }
+    .ld-text, .le-text, .lit-text {
+        max-width: 100%;
+    } 
+    .ld-img, .le-img, .lit-img{
+        display: inline-block;
+    }
+}
+@media screen and (max-width: 600px) {
+    .ld-text, .le-text, .lit-text {
+        max-width: 100%;
+    } 
+    .ld-img, .le-img, .lit-img {
+        display: block;
+        float: none;
+        margin: 10px auto;
+    }
+}
+/* Стили контейнеров с фотографиями лабораторий и пространств */
+.lab-slider-container {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 0;
+}
+.lab-slider__item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.lab-slider__item a {
+    display: inline-block;
+    line-height: 0;
+}
+.lab-slider__item a img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.lab-slider__item a:hover img {
+    -webkit-transform: scale(1.2) rotate(-5deg);
+    transform: scale(1.2) rotate(-5deg);
+}
+.tns-nav {
+    text-align: center;
+    margin-top: 5px;
+}
+.tns-nav button{
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    border: none;
+    margin: 0 5px;
+    background-color: #dddddd;
+}
+.tns-nav button.tns-nav-active{
+    background-color:#2779a8;
+}
+
+/* Блок партнёры */
+.partner-block h2 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.list-partners {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.list-partners img {
+    width: 20%;
+    margin: 10px;
+}
+
+/* Стили блока достижений */
+.progress-block h2 {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.progress-department-all {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.progress-department {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.progress-department img {
+    width: 100px;
+    margin-right: 30px;
+}
+.progress-department-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.progress-department-text h5 {
+    color: #00AFA8;
+}
+
+/* Стили блока списка учителей кафедры */
+.teachers-block h2{
+    margin-top: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.teacher-info {
+    width: 30%;
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.teacher-info img {
+    border-radius: 100%;
+}
+.teacher-content {
+    margin: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 650px) {
+    .teacher-info {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .teacher-info {
+        width: 100%;
+    }
+}
+
+/* Стили блока обратной связи и контактов */
+.contact-block h2{
+    margin-top: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.contact-wrapper {
+    border: 1px solid #00AFA8;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+.feedback-wrapper {
+    flex-basis: 100%;
+}
+.email-wrapper {
+    padding: 10px 15px 10px 15px;
+    width: 450px;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.feedback-form-name {
+    display: flex;
+    justify-content: space-between;
+}
+.feedback-form-name > label {
+    flex-basis: 48%
+}
+.feedback-form button{
+    margin: 10px auto;
+}
+@media screen and (max-width: 650px) {
+    .contact-wrapper {
+        flex-direction: column;
+    } 
+    .feedback-wrapper {
+        width: 100%;
+    }
+    .email-wrapper {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 425px) {
+    .feedback-form-name {
+        flex-direction: column;
+    }
+}

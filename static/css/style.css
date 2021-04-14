@@ -1,6 +1,383 @@
 [v-cloak] {
     display: none;
 }
+/* Цветовая схема: https://colorscheme.ru/#3j31zw0w0w0w0 */
+
+/* Общие стили */
+body {
+    color: #333;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #FF8500;
+    font-weight: bold;
+}
+
+.first-bg {
+    background-color: #00AFA8;
+    color: white;
+}
+
+.second-bg {
+    background-color: #FF8500;
+    color: white;
+}
+
+.first-color-text {
+    color: #00AFA8;
+}
+
+.second-color-text {
+    color: #FF8500;
+}
+
+.dit-container {
+	max-width: 960px;
+	padding: 0 15px;
+	margin: 0 auto;
+    min-width: 320px;
+}
+
+/* Стили секции заголовка сайта */
+.header-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60px;
+}
+.header-wrapper a {
+    text-decoration: none;
+}
+.header-logo > a{
+    display: flex;
+    align-items: center;
+}
+.header-logo > a > b{
+    margin-left: 10px;
+    font-size: 24px;
+}
+.header-menu {
+    margin-left: 10px;
+    max-width: 270px;
+}
+.header-menu > ul{
+    list-style: none;
+    padding: 25px 0 5px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.header-menu > ul > li{
+    margin-left: 15px;
+    display: inline-block;
+}
+.header-menu > ul > li:last-child:after {content: none;}
+.header-menu > ul a {
+  text-decoration: none;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 20px;
+  text-transform: uppercase;
+  display: inline-block;
+  transition: color .2s;
+}
+.header-menu > ul a, .header-menu > ul a:visited {color: #9d999d;}
+.header-menu > ul a.current, .header-menu > ul a:hover{color: #FF8500;}
+.header-menu > ul a:before,
+.header-menu > ul a:after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  top: auto;
+  right: 50%;
+  bottom: 10px;
+  left: 50%;
+  background: #FF8500;
+  transition: .8s;
+}
+.header-menu > ul a:hover:before, .header-menu > ul .current:before {left: 0;}
+.header-menu > ul a:hover:after, .header-menu > ul .current:after {right: 0;}   
+@media (max-width: 550px) {
+    .header-menu > ul {padding-top: 0;}
+    .header-menu > ul li {display: block;}
+    .header-menu > ul li:after {content: none;}
+    .header-menu > ul a {
+    padding: 25px 0 20px; 
+    margin: 0 30px;
+    }
+}
+
+.header-add {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+}
+.dropbtn {
+    background-color: #FF8500;
+    color: white;
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #00AFA8;
+}
+.dropdown {
+    position: relative;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown a:hover {background-color: #ddd;}
+.show {
+    display: block;
+}
+.header-user {
+    margin-left: 10px;
+}
+@media screen and (max-width: 820px) {
+    .header-menu {
+        display: none;
+    } 
+}
+@media screen and (max-width: 820px) {
+    .header-add {
+        display: none;
+    }
+    .header-user {
+        margin-left: auto;
+    }
+}
+
+/* Меню предметных групп */
+.item-subjectgroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 15px;
+    padding: 10px;
+    width: 20%;
+    text-align: center;
+    background-color: rgb(233, 230, 230);
+    border-radius: 10px;
+}
+.item-subjectgroup img {
+    width: 50%;
+    margin-bottom: 10px;
+}
+.item-subjectgroup:hover {
+    -webkit-transition: all 0.5s ease;;
+    -moz-transition: all 0.5s ease;;
+    -o-transition: all 0.5s ease;;
+    transition: all 0.5s ease;
+
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    background-color: rgb(245, 250, 204);
+    cursor: pointer;
+}
+.current-subjectgroup {
+    background-color: rgb(222, 243, 189);
+    font-weight: 700;
+}
+.is-closed .subjectgroup-body{
+    max-height: 0;
+}
+.subjectgroup-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-height: 100em;
+    overflow: hidden;
+    transition: 0.6s ease all;
+}
+.subjectgroup-header {
+    text-align: center;
+}
+
+/* Список критериев */
+.item-criteria {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid rgb(189, 189, 189);
+    width: 45%;
+}
+.item-criteria img {
+    max-width: 40px;
+    margin: 10px 15px 10px 10px;
+}
+.item-strand {
+    color: #000000;
+}
+.item-strand:hover {
+    transition: all 0.5s ease;
+    background-color: rgb(245, 250, 204);
+    cursor: pointer;
+}
+.current-strand {
+    background-color: rgb(222, 243, 189);
+}
+.item-year:hover {
+    transition: all 0.5s ease;
+    background-color: rgb(227, 255, 15);
+    cursor: pointer;
+}
+.current-year {
+    background-color: rgb(222, 243, 189);
+}
+.is-closed .criterion-body{
+    max-height: 0;
+}
+.criterion-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-height: 100em;
+    overflow: hidden;
+    transition: 0.6s ease all;
+}
+.criterion-header {
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px;
+}
+/* Эффекты на подсказки */
+dfn {
+    padding: 0 0.4em;
+    cursor: help;
+    font-style: normal;
+    position: relative;
+}
+dfn::after {
+    content: attr(data-info);
+    display: inline;
+    position: absolute;
+    top: 22px; left: 0;
+    opacity: 0;
+    width: 230px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5em;
+    padding: 0.5em 0.8em;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    pointer-events: none; /* This prevents the box from apearing when hovered. */
+    transition: opacity 250ms, top 250ms;
+}
+dfn::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 12px; left: 20px;
+    opacity: 0;
+    width: 0; height: 0;
+    border: solid transparent 5px;
+    border-bottom-color: rgba(0,0,0,0.8);
+    transition: opacity 250ms, top 250ms;
+}
+dfn:hover {z-index: 2;} /* Keeps the info boxes on top of other elements */
+dfn:hover::after,
+dfn:hover::before {opacity: 1;}
+dfn:hover::after {top: 30px;}
+dfn:hover::before {top: 20px;}
+
+/* Таблица образовательных целей */
+.img_schema {
+    max-width: 130px;
+    margin: 10px;
+}
+.img_schema:hover {
+    transition: all 0.5s ease;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.objective-body {
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid rgb(218, 217, 217);
+    max-height: 50em;
+    overflow: hidden;
+    overflow-y: scroll;
+    transition: 0.6s ease all;
+}
+.objective-header {
+    text-align: center;
+    padding: 10px;
+}
+.current-criterion {
+    background-color: rgb(222, 243, 189);
+    font-weight: 700;
+}
+.criterion-a {
+    background-color: rgb(92, 15, 139);
+    color: #fff;
+}
+
+.criterion-b {
+    background-color: rgb(255, 182, 0);
+}
+
+.criterion-c {
+    background-color: rgb(194, 213, 0);
+}
+
+.criterion-d {
+    background-color: rgb(255, 107, 0);
+}
+
+.point_text {
+    font-size: 1em;
+}
+
+.point_excelent {
+    background-color: rgb(58, 145, 0);
+}
+
+.point_good {
+    background-color: rgb(172, 172, 172);
+}
+
+.point_based {
+    background-color: rgb(172, 172, 172);
+}
+
+.point_bad {
+    background-color: rgb(172, 172, 172);
+}
+
+.point_verybad {
+    background-color: rgb(190, 45, 9);
+}
+
+.item-criteria p {
+    margin: 0;
+}
 
 .content {
     min-height: calc(100vh - 170px);
@@ -14,6 +391,22 @@ footer {
     background-color: rgb(189, 189, 189);
 }
 
+.appname-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 15px 0;
+    text-transform: uppercase;
+}
+
+.appname-wrapper a {
+    color: rgb(197, 132, 34);;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* 
 .appname-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -33,7 +426,6 @@ footer {
     padding: 5px 15px;
 }
 
-/* Обёртка для кнопок */
 .buttons-wrapper {
     padding: 15px 0;
 }
@@ -171,7 +563,6 @@ footer {
     justify-content: center;
 }
 
-/* Стили ответственного в таблице */
 .finresp-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -214,7 +605,6 @@ footer {
     margin: 15px 0;
 }
 
-/* Стиль таблицы с выбором студентов */
 .student-choice td,th {
     padding: 2px;
 }
@@ -250,7 +640,6 @@ footer {
     margin: 5px 15px;
 }
 
-/* Строка заголовка в списке юнитов */
 .wrapper-head-period {
     display: flex;
     justify-content: space-between;
@@ -279,13 +668,11 @@ footer {
     background-color: beige;
 }
 
-/* Ссылка названия юнита в списке */
 .unit-link-edit:hover {
     text-decoration: none; 
     color: red; 
 }
 
-/* Обёртка для списка классов в пункте юнита */
 .unit-group-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -296,7 +683,6 @@ footer {
     text-decoration: none; 
 }
 
-/* Класс в пункте юнита */
 .unit-group {
     display: flex;
     justify-content: center;
@@ -309,7 +695,6 @@ footer {
     border-radius: 5px;
 }
 
-/* Обёртка для данных об оцениваемом студенте */
 .assessment-wrapper {
     display: flex;
     justify-content: space-between;
@@ -387,7 +772,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
 /* Блока разбивки на страницы */
 .thing-pagination {

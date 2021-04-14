@@ -10,84 +10,93 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>{% block title %}АИС кафедры ДиТ{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/load_style.css' %}">
+    {% block style %}{% endblock %}
+    <!-- Подключение плагина jquerry с cdn -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!-- Подключение плагина relevator для плавного появления элементов на странице -->
+    <link rel="stylesheet" href="{% static 'css/revealator/fm.revealator.jquery.css' %}">
+    <script src="{% static 'js/revealator/fm.revealator.jquery.js' %}"></script>
+    <!-- Подключение плагина lightbox для увеличения картинки на всю страницу -->
+    <link rel="stylesheet" href="{% static 'css/lightbox/lightbox.css' %}" />
+    <script src="{% static 'js/lightbox/lightbox.js' %}"></script>
+    <!-- Подключение плагина tiny-slider для создания каруселей -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <title>{% block title %}Кафедра дизайна и технологии{% endblock %}</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col"> </div>
-            <div class="col-10">
-                <header>
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <a class="navbar-brand" href="{% url 'employee:index' %}">
-                            <img src="{% static 'img/exlogo.svg' %}" width="30" height="30"
-                                class="d-inline-block align-top" alt="">
-                            АИС кафедры ДиТ
-                        </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav">
-                                {% if username %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'employee:users' %}">Сотрудники</a>
-                                </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                        <span class="navbar-text">
-                            {% if show_login %}
-                            {% if username %}
-                            Привет, <a href="{% url 'employee:user_edit' user.username %}">
-                                {{ user.name }} ({{ user.username }})
-                            </a>! <a href="/accounts/logout"> Выйти</a>
-                            {% else %}
-                            <!-- <a href="/accounts/signup/">Зарегистрироваться</a> или  -->
-                            <a href="/accounts/login/">Войти на сайт</a>!
-                                {% endif %}
-
-                                {% endif %}
-                        </span>
-                    </nav>
-                </header>
-
-                <div class="content">
-                    <div class="appname-wrapper">
-                        {% block extra_head %}
-                        {% endblock %}
+    <!-- Блок заголовка сайта -->
+    <header id="header" class="header bg-light">
+        <div class="dit-container">
+            <div class="header-wrapper">
+                <div class="header-logo">
+                    <a class="" href="{% url 'employee:index' %}">
+                        <img class="" src="{% static 'img/designtechno.svg' %}" height="50px" width="auto"
+                            alt="">
+                        <b class="second-color-text">Д&Т</b> 
+                    </a>
+                </div>
+                <div class="header-menu">
+                    <ul class="">
+                        <li class="">
+                            <a class="" href="">Проекты</a>
+                        </li>
+                        <li class="">
+                            <a class="" href="">Уроки</a>
+                        </li>
+                        <li class="">
+                            <a class="" href="https://designtechno.ru/" target="_blank">Курсы</a>
+                        </li>                        
+                    </ul>
+                </div>
+                <div class="header-add">
+                    {% if username %}
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Приложения</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a href="{% url 'storage:index' %}">МТО</a>
+                                <a href="{% url 'sumassess:criteria' %}">Оценивание</a>
+                                <a href="{% url 'employee:log_notebook' %}">Ноутбуки</a>
+                            </div>
                     </div>
-                    {% block extra_base %}
-
-
-
-
-                    {% endblock %}
+                    {% endif %}
+                    <a class="" href="https://gymnasium.sk.ru/" target="_blank"><img src="{% static 'img/igsk_background.png' %}" alt="" height="40px"></a>
+                </div>
+                <div class="header-user">
+                    {% if show_login %}
+                        {% if username %}
+                        Приветствуем, <br><a href="{% url 'employee:user_edit' user.username %}">
+                            {{ user.name }}</a>!
+                        <a href="/accounts/logout"> Выйти</a>
+                        {% else %}
+                        <a href="/accounts/login/">Войти на сайт</a>!
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
-            <div class="col"> </div>
         </div>
-    </div>
-    <footer class="bg-light text-center text-lg-start">
-        <div class="container">
-            <div class="row">
-                <div class="col"></div>
-                <div class="col-10">
+    </header>
+
+    <!-- Блок контента сайта -->
+    <main class="main-body">
+        {% block extra_base %}
+        {% endblock %}
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer class="bg-light mt-5 text-center text-lg-start">
+        <div class="dit-container">
                     <div>&copy; Алексей Сёмочкин, 2021</div>
                     <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
                             href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                     <div>Icons made by <a href="" title="ultimatearm">ultimatearm</a> from <a
                             href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-                </div>
-                <div class="col"></div>
-            </div>
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
@@ -96,8 +105,33 @@
         integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js" integrity="sha512-3TmPrquYLaAsUmZKXRARTDC5siWhLAdBVqNo4dWpDABBtLU62AaoTaQJEvjxjExcZYurO6i1dnK85k8pPIBlRg==" crossorigin="anonymous"></script>
-    {% block load_vue %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js"
+        integrity="sha512-3TmPrquYLaAsUmZKXRARTDC5siWhLAdBVqNo4dWpDABBtLU62AaoTaQJEvjxjExcZYurO6i1dnK85k8pPIBlRg=="
+        crossorigin="anonymous"></script>
+    {% block load_js %}
     {% endblock %}
+    <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) {
+        
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+    </script>
 </body>
+
 </html>

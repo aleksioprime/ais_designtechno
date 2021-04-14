@@ -1,0 +1,124 @@
+{% extends "sumassess_base.html" %}
+{% block sumassess_title %}: критерии оценки{% endblock %}
+{% block sumassess_content %}
+{{ subject.id|json_script:"dataSubjectGroup" }}
+{% verbatim %}
+<div class="container" id="criteria" v-cloak>
+
+    <div v-if="extraLoading" class="content">
+        <div class="cssload-loader">
+            <div class="cssload-inner cssload-one"></div>
+            <div class="cssload-inner cssload-two"></div>
+            <div class="cssload-inner cssload-three"></div>
+        </div>
+    </div>
+
+    <div v-if="extraData">
+
+        <section class="mt-3" :class="accordionSubjectGroup">
+        <h4 class="subjectgroup-header">Предметные группы <span class="badge badge-primary badge-pill" style="cursor: pointer;"  @click="toggleAccordionSubjectGroup">{{ openSubjectGroupText }}</span><br><hr></h4>
+        <div class="subjectgroup-body">
+            <div class="item-subjectgroup" v-for="sg in subjectGroup" 
+            :class="{'current-subjectgroup': sg.id === currentSubjectGroup}" v-on:click="getCriteriaAndStrands(sg.id)">
+                <img :src="sg.picture">
+                {{ sg.name_eng }}
+            </div>
+        </div>
+        </section>
+
+        <section class="mt-3" v-if="criteria.length" :class="accordionCriteria">
+            <h4 class="criterion-header">Критерии оценивания и стренды <span class="badge badge-primary badge-pill" style="cursor: pointer;"  @click="toggleAccordionCriteria">{{ openCriteriaText }}</span><br><hr></h4>
+            <div class="criterion-body">
+                <div class="item-criteria" 
+                    :class="{'criterion-a': cr.letter === 'A',
+                    'criterion-b': cr.letter === 'B',
+                    'criterion-c': cr.letter === 'C',
+                    'criterion-d': cr.letter === 'D'}"
+                    v-for="cr in criteria">
+                    <div class="d-flex justify-content-start align-items-center mr-2">
+                        <img :src="cr.picture">
+                        <h2 class="mr-3">{{ cr.letter }}</h2>
+                        <p>{{ cr.name_eng }} <br><b>{{ cr.name_rus }}</b></p>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <ul class="list-group">
+                            <li class="list-group-item item-strand" :class="{'current-strand': st.id === currentStrand}" v-for="st in getStrands(cr.id)">
+                                {{st.letter}}. <dfn :data-info="st.name_rus">{{st.shortname_rus}}</dfn>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-3 mb-5" v-else>
+            <h4 class="criterion-header">Нет данных в выбранной предметной области</h4>
+        </section>
+
+        <section class="mt-3" v-if="criteria.length">
+            <h4 class="objective-header">Образовательные цели и уровни достижений</h4>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="item-subjectgroup">
+                <img :src="getSubjectGroup()['picture']">
+                {{ getSubjectGroup()['name_eng'] }}
+            </div>
+                <img :src="getSubjectGroup()['schema']" class="img_schema" alt="">
+                <ul class="list-group list-group-horizontal-lg">
+                    <li class="list-group-item item-year" :class="{'current-year': year.id === currentYear}" v-for="year in yearsIB" v-on:click="getObjectiveAndLevelByYear(year.id)">{{ year.year_ib }}<br>{{ year.year_rus }} класс</li>
+                </ul>
+            </div>
+            <div class="objective-body">
+                <div v-if="loading" class="cssload-container">
+                    <div class="cssload-loader">
+                        <div class="cssload-inner cssload-one"></div>
+                        <div class="cssload-inner cssload-two"></div>
+                        <div class="cssload-inner cssload-three"></div>
+                    </div>
+                </div>
+                <table v-if="data" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 20px;">К&С</th>
+                            <th scope="col" style="text-align: center">Образовательная цель</th>
+                            <th scope="col" style="width: 60%; text-align: center">Уровни достижений и баллы</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(obj, idx) in objectives">
+                            <th scope="row" 
+                            :class="{'criterion-a': obj.strand.criteria.letter === 'A',
+                                    'criterion-b': obj.strand.criteria.letter === 'B',
+                                    'criterion-c': obj.strand.criteria.letter === 'C',
+                                    'criterion-d': obj.strand.criteria.letter === 'D'}">
+                            {{obj.strand.criteria.letter}}. {{obj.strand.letter}}</th>
+                            <td>Студент должен уметь {{obj.name_rus}}</td>
+                            <td>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" v-for="lvl in getLevels(obj.id)">
+                                        Студент {{lvl.name_rus}}
+                                        <span class="badge badge-primary badge-pill ml-2 point_text" :class="{
+                                            'point_bad': lvl.point === 2,
+                                            'point_based': lvl.point === 4,
+                                            'point_good': lvl.point === 6,
+                                            'point_excelent': lvl.point === 8,
+                                        }">{{lvl.point-1}} - {{lvl.point}}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Студент не достиг соответствующего уровня
+                                        <span class="badge badge-primary badge-pill ml-2 point_verybad point_text">0</span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endverbatim %}
+{% endblock %}
+
+{% block load_js %}
+<script src="/static/js/app_criteria.js"></script>
+{% endblock %}

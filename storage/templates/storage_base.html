@@ -1,20 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'apps.html' %}
 
-{% block extra_head %}
+{% block content %}
 {% load static %}
-<a href="{% url 'storage:index' %}">
-    <img src="{% static 'img/storage.svg' %}" width="30" height="auto" class="" alt=""> Материально-техническое обеспечение
-</a>
+<div class="appname-wrapper">
+    <a href="{% url 'storage:index' %}">
+        <img src="{% static 'img/storage.svg' %}" width="30" height="auto" class="" alt=""> Материально-техническое обеспечение
+    </a>
+</div>
+<hr>
+{% block storage_content %}
+
 {% endblock %}
 
-{% block extra_base %}
-{% load static %}
-<div class="content-wrapper">
-    {% block storage_content %}
-
-
-    {% endblock %}
-</div>
 <div class="buttons-wrapper">
 </div>
 

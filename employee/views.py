@@ -24,7 +24,8 @@ def index(request):
     context = {}  
     context['show_login'] = True
     if request.user.is_authenticated:  
-        context['username'] = request.user.username 
+        context['username'] = request.user.username
+    context['teachers'] = User.objects.filter(groups__name='teacher').all()
     return HttpResponse(template.render(context, request))
 
 class UserEdit(UpdateView):

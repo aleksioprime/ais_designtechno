@@ -7,7 +7,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('employee.urls')),
     path('', include('storage.urls')),
-    # path('', include('sumassess.urls')),
+    path('', include('sumassess.urls')),
 ]
 
 # добавление панели DEBUG на всех страницах

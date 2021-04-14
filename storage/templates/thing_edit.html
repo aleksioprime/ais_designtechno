@@ -10,101 +10,136 @@
 <h3> Добавление новой позиции МТО кафедры </h3>
 {% endif %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <div class="wrapper-thing-data">
-        <div class="thing-data">
-            <table class='table'>
-                <tr>
-                    <td style="width: 150px;"><label for="id_name"> Наименование: </label>
-                    </td>
-                    <td>{{form.name}}</td>
-                </tr>
-                <tr>
-                    <td style="width: 150px;"><label for="id_is_accounting"> Состоит на балансе: </label>
-                    </td>
-                    <td>{{form.is_accounting}}</td>
-                </tr>
-                <tr>
-                    <td style="width: 150px;"><label for="id_name_docs"> Наименование по документам: </label>
-                    </td>
-                    <td>{{form.name_docs}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_inventory"> Инвентарный номер: </label> </td>
-                    <td>{{form.inventory}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_manufacturer"> Производитель: </label> </td>
-                    <td>{{form.manufacturer}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_site"> Ссылка на сайт: </label> </td>
-                    <td>{{form.site}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_is_set"> Является набором: </label> </td>
-                    <td>{{form.is_set}}</td>
-                </tr>    
-                <tr>
-                    <td><label for="id_is_material"> Является расходным материалом: </label> </td>
-                    <td>{{form.is_material}}</td>
-                </tr>            
-                <tr>
-                    <td><label for="id_description"> Описание: </label> </td>
-                    <td>{{form.description}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_loc_name"> Место хранения: </label> </td>
-                    <td>{{form.loc_name}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_loc_cabinet"> Кабинет: </label> </td>
-                    <td>{{form.loc_cabinet}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_loc_photo"> Фотография места хранения: </label> </td>
-                    <td>{{form.loc_photo}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_price"> Цена поставки: </label> </td>
-                    <td>{{form.price}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_count}"> Количество: </label> </td>
-                    <td>{{form.count}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_person}">  Ответственный сотрудник: </label> </td>
-                    <td>{{form.person}}</td>
-                </tr>
-                <tr>
-                    <td><label for="id_comment"> Комментарий: </label> </td>
-                    <td>{{form.comment}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="wrapper-thing-img">
-            <div class="thing-img">
-                <label for="id_picture"> Изображение: </label>
-                {% if thing.picture %}
-                <img src="{{ thing.picture.url }}" alt="" width="200px" height="auto">
-                {% else %}
-                <img src="{% static 'img/unknown.svg' %}" alt="" width="200px" height="auto">
-                {% endif %}
-                
-                {{form.picture}}
-            </div>
-            <div class="location-img">
-                <label for="id_photo"> Фотография: </label>
-                {% if thing.photo %}
-                <img src="{{ thing.photo.url }}" alt="" width="200px" height="auto">
-                {% else %}
-                <img src="{% static 'img/unknown_place.svg' %}" alt="" width="200px" height="auto">
-                {% endif %}
-                {{form.photo}}
+        <div class="form-group row">
+            <div class="col">
+                <label for="id_name">Наименование:</label>
+                {{form.name}}
             </div>
         </div>
-
-    </div>
+        <div class="form-group row">
+            <div class="col-sm">
+                <label for="id_name">Наименование по документам:</label>
+                {{form.name_docs}}
+            </div>
+            <div class="col-sm-3">
+                <label for="id_inventory">Инвентарный номер:</label>
+                {{form.inventory}}
+            </div>
+        </div>
+        <div class="form-group row"> 
+            <div class="col-sm">
+                <label for="id_loc_name">Описание места хранения:</label>
+                {{form.loc_name}}
+            </div>
+            <div class="col-sm-2">
+                <label for="id_loc_cabinet">Кабинет:</label> 
+                {{form.loc_cabinet}}
+            </div>
+        </div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-picture-tab" data-toggle="tab" href="#nav-picture" role="tab" aria-controls="nav-picture" aria-selected="true">Изображение</a>
+                <a class="nav-item nav-link" id="nav-photo-tab" data-toggle="tab" href="#nav-photo" role="tab" aria-controls="nav-photo" aria-selected="false">Фотография позиции</a>
+                <a class="nav-item nav-link" id="nav-loc-photo-tab" data-toggle="tab" href="#nav-loc-photo" role="tab" aria-controls="nav-loc-photo" aria-selected="false">Фотография места хранения</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-picture" role="tabpanel" aria-labelledby="nav-picture-tab">
+                <div class="form-group row mt-2">
+                    <div class="col-sm">
+                        <label for="id_picture">Изображение:</label><br>
+                        {{form.picture}}
+                    </div>
+                    <div class="col-sm-3">
+                        {% if thing.picture %}
+                        <img src="{{ thing.picture.url }}" alt="" class="rounded img-thumbnail">
+                        {% else %}
+                        <img src="{% static 'img/unknown.svg' %}" alt="" class="rounded img-thumbnail" width="100px" height="auto">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-photo" role="tabpanel" aria-labelledby="nav-photo-tab">
+                <div class="form-group row mt-2">
+                    <div class="col-sm">
+                        <label for="id_photo">Фотография:</label><br>
+                        {{form.photo}}
+                    </div>
+                    <div class="col-sm-4">
+                        {% if thing.picture %}
+                        <img src="{{ thing.photo.url }}" alt="" class="rounded img-thumbnail">
+                        {% else %}
+                        <img src="{% static 'img/unknown.svg' %}" alt="" class="rounded img-thumbnail">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-loc-photo" role="tabpanel" aria-labelledby="nav-loc-photo-tab">
+                <div class="form-group row mt-2">
+                    <div class="col-sm">
+                        <label for="id_loc_photo">Фотография места хранения:</label>  <br>
+                        {{form.loc_photo}}
+                    </div>
+                    <div class="col-sm-4">
+                        {% if thing.loc_photo %}
+                        <img src="{{ thing.loc_photo.url }}" alt="" class="rounded img-thumbnail">
+                        {% else %}
+                        <img src="{% static 'img/unknown.svg' %}" alt="" class="rounded img-thumbnail">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <label for="id_manufacturer">Производитель:</label>
+                {{form.manufacturer}}
+            </div>
+            <div class="col-sm">
+                <label for="id_site">Ссылка на сайт:</label>
+                {{form.site}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <div class="form-check">
+                    {{form.is_accounting}}
+                    <label for="id_is_accounting" class="form-check-label">Состоит на балансе</label>
+                </div>
+                <div class="form-check">
+                    {{form.is_set}}
+                    <label for="id_is_set" class="form-check-label">Набор/комплект</label>
+                </div>
+                <div class="form-check">
+                    {{form.is_material}}
+                    <label for="id_is_material" class="form-check-label">Расходный материал</label>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label for="id_price">Цена:</label>
+                {{form.price}}
+            </div>
+            <div class="col-sm-2">
+                <label for="id_count">Кол-во:</label>
+                {{form.count}}
+            </div>
+            <div class="col-sm-3">
+                <label for="id_person">Ответственный:</label>
+                {{form.person}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm">
+                <label for="id_description">Описание:</label>
+                {{form.description}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm">
+                <label for="id_comment">Комментарии:</label>
+                {{form.comment}}
+            </div>
+        </div>
     <div class="buttons-wrapper">
         <input class="btn btn-success" type="submit" value="Сохранить" />
         <a class="btn btn-secondary" href="" onclick="javascript:history.back();return false;">Отмена</a>

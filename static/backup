@@ -1,0 +1,753 @@
+
+<!-- <div class="container-fluid">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-md-8">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand d-flex align-items-center" href="{% url 'employee:index' %}">
+                            <img class="" src="{% static 'img/exlogo.svg' %}" width="35px" height="35px"
+                                alt="">
+                            <b class="ml-2 second-color-text">Д&Т</b> 
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Проекты</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Уроки</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="https://designtechno.ru/" target="_blank">Курсы</a>
+                                </li>
+                                {% if username %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle btn btn-sm btn-outline-success ml-2" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Приложения
+                                      </a>
+                                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{% url 'storage:index' %}">МТО</a>
+                                        <a class="dropdown-item" href="{% url 'sumassess:criteria' %}">Оценивание</a>
+                                        <a class="dropdown-item" href="{% url 'employee:log_notebook' %}">Ноутбуки</a>
+                                      </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="https://gymnasium.sk.ru/" target="_blank"><img src="{% static 'img/igsk_background.png' %}" alt="" width="35px"></a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <span class="navbar-text">
+                            {% if show_login %}
+                            {% if username %}
+                            Приветствуем, <a href="{% url 'employee:user_edit' user.username %}">
+                                {{ user.name }} ({{ user.username }})</a>!
+                                <a href="/accounts/logout"> Выйти</a>
+                            {% else %}
+                            <a href="/accounts/login/">Войти на сайт</a>!
+                                {% endif %}
+            
+                                {% endif %}
+                        </span>
+                    </nav>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div> -->
+        
+<!-- <section>
+    <div class="container-fluid info-bg">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8  revealator-slideleft revealator-once">
+                <div class="info-content">
+                    <div class="info-text">
+                        <h2 class="mt-3 text-light text-left">Кафедра дизайна и технологии</h2>
+                        <p class="mt-3"><q>Цель нашей команды - не только познакомить студентов с
+                                разнообразием инновационных технологий, но и на основе актуальных трендов и достижений
+                                современности предсказать технологическое развитие завтрашнего дня. С младших классов мы
+                                прививаем у детей интерес к IT-сфере, развиваем алгоритмическое мышление, знакомим с
+                                компьютерными редакторами и средами разработки/
+                                На наших занятиях студенты получают представление об основах промышленного
+                                программирования, технологиях анализа данных и искусственного интеллекта, 3D
+                                моделирования и компьютерного
+                                дизайна, программируемой электроники и робототехники; учатся создавать свои компьютерные
+                                приложения, электронные устройства, продукцию медиа-дизайна.
+                                Фундаментом наших дисциплин является IB-методика проектирования, которая начинается с
+                                анализа проблемы и формирования идей её решения и завершается презентацией
+                                изготовленного
+                                прототипа или рабочей модели продукта, его тестированием и оценкой.</q> </p>
+                        <p class="mt-2 text-right"><b>Алексей Викторович Семочкин</b>, заведующий кафедрой</p>
+                    </div>
+                    <img src="{% static 'photo/alexphoto.png' %}"
+                        class="revealator-slideright revealator-once revealator-delay2" alt="">
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-5 text-center">Наши основные задачи</h2>
+
+                <div class="task-wrapper">
+                    <div class="task-department revealator-slidedown revealator-once">
+                        <img src="{% static 'img/knowledge_techno.svg' %}" alt="">
+                        <p class="mt-2">Познакомить со всем спектром технологических достижений и дать представление о
+                            возможных инновациях будущего</p>
+                    </div>
+                    <div class="task-department revealator-slidedown revealator-once">
+                        <img src="{% static 'img/prof_future.svg' %}" alt="">
+                        <p class="mt-2">Предоставить возможность получить компетенции разработчиков и познакомить с
+                            профессиями будущего</p>
+                    </div>
+                    <div class="task-department revealator-slidedown revealator-once">
+                        <img src="{% static 'img/problem_need.svg' %}" alt="">
+                        <p class="mt-2">Научить методикам проектирования продукта, ориентированного на решение
+                            конкретных проблем</p>
+                    </div>
+                    <div class="task-department revealator-slidedown revealator-once">
+                        <img src="{% static 'img/practice_robot.svg' %}" alt="">
+                        <p class="mt-2">Развить навыки работы со специализированными компьютерными средами и HiTech
+                            оборудованием</p>
+                    </div>
+                    <div class="task-department revealator-slidedown revealator-once">
+                        <img src="{% static 'img/developer.svg' %}" alt="">
+                        <p class="mt-2">Научить эффективно применять знания других дисциплин для разработки своего
+                            продукта (STEM-образование)</p>
+                    </div>
+                    <div class="task-department revealator-slidedown revealator-once">
+                        <img src="{% static 'img/team.svg' %}" alt="">
+                        <p class="mt-2">Сформировать навык презентации своих умений и разработок, предоставить
+                            возможность участия на конкурсах и соревнованиях</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section>
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-5 text-center">Дисциплины кафедры</h2>
+                <div class="card-group mt-3">
+                    <div class="card border-dark mb-3 revealator-fade revealator-once" style="max-width: 18rem;">
+                        <div class="card-header">Программа начальной школы (PYP)</div>
+                        <img class="card-img-top photo-subject revealator-fade" src="{% static 'photo/ict_pyp.jpg' %}"
+                            alt="">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Информатика</h5>
+                            <p class="card-text"> <img class="" src="{% static 'img/study_plan.svg' %}" width="25px"
+                                    alt="">Учебный план</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">1-4 классы</small>
+                        </div>
+                    </div>
+                    <div class="card border-dark mb-3 revealator-fade revealator-once" style="max-width: 18rem;">
+                        <div class="card-header">Программа основной (средней) школы (MYP)</div>
+                        <img class="card-img-top photo-subject revealator-fade" src="{% static 'photo/ict_myp.jpeg' %}"
+                            alt="">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Информатика</h5>
+                            <a href="{% static 'docs/study_plan_ict_myp.pdf' %}" target="_blank" class="card-text"> <img
+                                    class="" src="{% static 'img/study_plan.svg' %}" width="25px" alt="">Учебный
+                                план</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">5-9 классы</small>
+                        </div>
+                    </div>
+                    <div class="card border-dark mb-3 revealator-fade revealator-once" style="max-width: 18rem;">
+                        <div class="card-header">Программа основной (средней) школы (MYP)</div>
+                        <img class="card-img-top photo-subject revealator-fade"
+                            src="{% static 'photo/techno_myp.jpeg' %}" alt="">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Технология</h5>
+                            <a href="{% static 'docs/study_plan_techno_myp.pdf' %}" target="_blank" class="card-text">
+                                <img class="" src="{% static 'img/study_plan.svg' %}" width="25px" alt="">Учебный
+                                план</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">5-8 классы</small>
+                        </div>
+                    </div>
+                    <div class="card border-dark mb-3 revealator-fade revealator-once" style="max-width: 18rem;">
+                        <div class="card-header">Программа старших классов (DP/ФГОС)</div>
+                        <img class="card-img-top photo-subject revealator-fade"
+                            src="{% static 'photo/intro_programming.jpeg' %}" alt="">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Информатика</h5>
+                            <p class="card-text"> <img class="" src="{% static 'img/study_plan.svg' %}" width="25px"
+                                    alt="">Учебный план</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">10-11 классы</small>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="mt-3 text-center">Внеурочные занятия</h3>
+                <div class="card-group mt-3">
+                    <div class="card">
+                        <img class="card-img-top photo-extrasubject revealator-fade"
+                            src="{% static 'photo/tech_creative.jpeg' %}" alt="">
+                        <div class="card-body revealator-fade">
+                            <h5 class="card-title">Техническое творчество для малышей</h5>
+                            <p class="card-text">Конструирование объектов современной техники, изучение
+                                принципов их работы, знакомство с простыми алгоритмами, решение инженерных
+                                задач</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Дошкольное отделение</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top photo-extrasubject revealator-fade"
+                            src="{% static 'photo/intro_programming.jpeg' %}" alt="">
+                        <div class="card-body revealator-fade">
+                            <h5 class="card-title">Введение в программирование</h5>
+                            <p class="card-text">Развитие алгоритмического мышления и креативности, практическое
+                                изучение программирования на блочном языке в онлайн-среде Scratch</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">1-4 класс</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top photo-extrasubject revealator-fade"
+                            src="{% static 'photo/multimedia.jpeg' %}" alt="">
+                        <div class="card-body revealator-fade">
+                            <h5 class="card-title">Мультимедиа-технологии</h5>
+                            <p class="card-text">Знакомство с современными мультимедиа системами и технологиями,
+                                развитие навыков создания презентаций, слайд-фильмов и видеороликов
+                                в программах PowerPoint и iMovie</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">3-4 класс</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-group mt-5 mb-5">
+                    <div class="card">
+                        <img class="card-img-top photo-extrasubject revealator-fade"
+                            src="{% static 'photo/programming.jpeg' %}" alt="">
+                        <div class="card-body revealator-fade">
+                            <h5 class="card-title">Основы программирования</h5>
+                            <p class="card-text">Основы программирования на языке Scratch и Python. Олимпиадное
+                                программирование. Промышленное
+                                программирование по программе <a href="https://yandexlyceum.ru/"
+                                    target="_blank">Яндекс.Лицея</a></p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">5-11 класс</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top photo-extrasubject revealator-fade"
+                            src="{% static 'photo/engineering.jpeg' %}" alt="">
+                        <div class="card-body revealator-fade">
+                            <h5 class="card-title">SK-инженерия</h5>
+                            <p class="card-text">Прототипирование, 3D моделирование, печать и лазерная резка,
+                                программируемая электроника, интернет вещей
+                                и робототехника. Подготовка к техническим конкурсам и соревнованиям</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">5-11 класс</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top photo-extrasubject revealator-fade"
+                            src="{% static 'photo/intel_ai4y.jpeg' %}" alt="">
+                        <div class="card-body revealator-fade">
+                            <h5 class="card-title">Технологии искусственного интеллекта</h5>
+                            <p class="card-text">Принципы работы искусственного интеллекта, наука о данных, машинное
+                                обучение, компьютерное зрение. Обучение по программе "<a href="https://ai.mob-edu.ru/"
+                                    target="_blank">Intel AI For Youth</a>"</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">8-11 класс</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="mt-5 mb-5 text-center">Объединения</h2>
+    <div class="container-fluid lab-design-bg">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <div class="lab-content">
+                    <div class="lab-text">
+                        <h2 class="mt-3 text-light revealator-slideright text-right">Лаборатория дизайна</h2>
+                        <p class="mt-2 revealator-slideright text-right">Лаборатория дизайна включает в себя творческую
+                            мастерскую и класс компьютерного дизайна и позволяет всем студентам реализовать свой
+                            неповторимый творческий замысел.
+                            В распоряжении студентов - большой выбор материалов для прототипирования, необходимый набор
+                            как ручных инструментов, так и станков с ЧПУ.
+                            Для создания 3D-моделей, макетов полиграфической продукции и других продуктов медиа дизайна
+                            студенты всегда могут воспользоваться компьютерами, оснащёнными профессиональными пакетами
+                            Autodesk и Adobe CC</p>
+                        <p class="text-right revealator-slideright"><b>Людмила Геннадьевна Зайцева</b>, <br>
+                            учитель-евангелист направления "Технологии дизайна"</p>
+                        <div class="d-flex lab-slider-container">
+                            <div class="lab-slider-design">
+                                <div class="lab-slider__item revealator-slideright revealator-delay3">
+                                    <a href="{% static 'photo/design_photo_1.jpeg' %}" data-lightbox="photo-design"
+                                        data-title="Инженерная лаборатория">
+                                        <img class="" src="{% static 'photo/design_photo_1.jpeg' %}" width="200px"
+                                            alt="">
+                                    </a>
+                                </div>
+                                <div class="lab-slider__item revealator-slideright revealator-delay2">
+                                    <a href="{% static 'photo/design_photo_2.jpeg' %}" data-lightbox="photo-design"
+                                        data-title="Инженерная лаборатория">
+                                        <img class="" src="{% static 'photo/design_photo_2.jpeg' %}" width="200px"
+                                            alt="">
+                                    </a>
+                                </div>
+                                <div class="lab-slider__item revealator-slideright revealator-delay1">
+                                    <a href="{% static 'photo/design_photo_3.jpeg' %}" data-lightbox="photo-design"
+                                        data-title="Инженерная лаборатория">
+                                        <img class="" src="{% static 'photo/design_photo_3.jpeg' %}" width="200px"
+                                            alt="">
+                                    </a>
+                                </div>
+                                <div class="lab-slider__item revealator-slideright revealator-delay1">
+                                    <a href="{% static 'photo/design_photo_4.jpeg' %}" data-lightbox="photo-design"
+                                        data-title="Инженерная лаборатория">
+                                        <img class="" src="{% static 'photo/design_photo_4.jpeg' %}" width="200px"
+                                            alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="{% static 'photo/zayceva_lab.jpeg' %}" class="revealator-slideleft mt-3 img-lab" alt="">
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    <div class="container-fluid lab-engineering-bg">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <div class="lab-content">
+                    <img src="{% static 'photo/petushkov_lab.png' %}" class="revealator-slideright mt-3 img-lab" alt="">
+                    <div class="lab-text">
+                        <h2 class="mt-3 text-light revealator-slideleft">Инженерная мастерская</h2>
+                        <p class="mt-2 revealator-slideleft">Инженерная лаборатория кафедры предоставляет всем студентам
+                            гимназии возможность воплотить свои самые смелые инженерные идеи и разработать уникальный
+                            инновационный продукт.
+                            В вашем распоряжении наборы электрокомпонентов, программируемые платы Arduino и
+                            совместимые с ними модули и датчики, аппарат лазерной резки с большим запасом фанеры и
+                            акрила, 3D принтеры с пластиком разных цветов, а также рабочие места со всеми необходимыми
+                            инструментами</p>
+                        <p class="revealator-slideleft"><b>Роман Викторович Петушков</b>, <br> учитель-евангелист
+                            направления "Инженерные технологии"</p>
+                        <div class="d-flex lab-slider-container">
+                            <div class="lab-slider-engineering">
+                                <div class="lab-slider__item revealator-slideleft revealator-delay2">
+                                    <a href="{% static 'photo/tech_photo_3dprinter.jpg' %}"
+                                        data-lightbox="photo-engineering" data-title="3D принтер">
+                                        <img class="" src="{% static 'photo/tech_photo_3dprinter.jpg' %}" alt="">
+                                    </a>
+                                </div>
+                                <div class="lab-slider__item revealator-slideleft revealator-delay3">
+                                    <a href="{% static 'photo/tech_photo_laser.jpg' %}"
+                                        data-lightbox="photo-engineering" data-title="Лазерный резчик">
+                                        <img class="" src="{% static 'photo/tech_photo_laser.jpg' %}" alt="">
+                                    </a>
+                                </div>
+                                <div class="lab-slider__item revealator-slideleft revealator-delay4">
+                                    <a href="{% static 'photo/tech_photo_lab.jpeg' %}" data-lightbox="photo-engineering"
+                                        data-title="Инженерная мастерская № 3021">
+                                        <img class="" src="{% static 'photo/tech_photo_lab.jpeg' %}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-3 text-dark text-center revealator-slidedown">IT-пространство</h2>
+                <div class="lab-it-content">
+                    <div class="lab-text">
+                        <h2 class="mt-3 text-dark revealator-slideright text-right">IT-Hub</h2>
+                        <p class="mt-2 revealator-slideright text-right"></p>
+                        <p class="text-right revealator-slideright"><b>Анна Андреевна Пермякова</b>, <br>ведущий
+                            IB-педагог информатики и Computer Science</p>
+                    </div>
+                    <img src="{% static 'img/teacher_women.png' %}" class="revealator-slideleft mt-3 lab-it-img" alt="">
+                    <img src="{% static 'img/teacher_man.png' %}" class="revealator-slideright mt-3 lab-it-img" alt="">
+                    <div class="lab-text">
+                        <h2 class="mt-3 text-dark revealator-slideleft text-left">Computer Lab</h2>
+                        <p class="mt-2 revealator-slideleft text-right"></p>
+                        <p class="text-left revealator-slideleft"><b>Антон Викторович Скворцов</b>,
+                            <br>профессиональный учитель
+                            информатики и программирования
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex lab-slider-it mt-3">
+                    <div class="d-flex lab-slider-container">
+                        <div class="lab-slider__item revealator-slideup">
+                            <a href="{% static 'photo/tech_photo_3dprinter.jpg' %}" data-lightbox="photo-engineering"
+                                data-title="3D принтер">
+                                <img class="" src="{% static 'photo/tech_photo_3dprinter.jpg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex lab-slider-container">
+                        <div class="lab-slider__item revealator-slideup">
+                            <a href="{% static 'photo/tech_photo_3dprinter.jpg' %}" data-lightbox="photo-engineering"
+                                data-title="3D принтер">
+                                <img class="" src="{% static 'photo/tech_photo_3dprinter.jpg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex lab-slider-container">
+                        <div class="lab-slider__item revealator-slideup">
+                            <a href="{% static 'photo/tech_photo_3dprinter.jpg' %}" data-lightbox="photo-engineering"
+                                data-title="3D принтер">
+                                <img class="" src="{% static 'photo/tech_photo_3dprinter.jpg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex lab-slider-container">
+                        <div class="lab-slider__item revealator-slideup">
+                            <a href="{% static 'photo/tech_photo_3dprinter.jpg' %}" data-lightbox="photo-engineering"
+                                data-title="3D принтер">
+                                <img class="" src="{% static 'photo/tech_photo_3dprinter.jpg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex lab-slider-container">
+                        <div class="lab-slider__item revealator-slideup">
+                            <a href="{% static 'photo/tech_photo_3dprinter.jpg' %}" data-lightbox="photo-engineering"
+                                data-title="3D принтер">
+                                <img class="" src="{% static 'photo/tech_photo_3dprinter.jpg' %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-5 text-center">Наши партнёры</h2>
+                <div class="list-partners mt-5">
+                    <img class="revealator-slideup" src="{% static 'img/yandex-logo.png' %}" alt="Яндекс">
+                    <img class="revealator-slideup revealator-delay1" src="{% static 'img/intel-logo.png' %}"
+                        alt="Intel">
+                    <img class="revealator-slideup revealator-delay2" src="{% static 'img/garage-logo.png' %}"
+                        alt="Garage">
+                    <img class="revealator-slideup revealator-delay3" src="{% static 'img/skoltech-logo.png' %}"
+                        alt="Skoltech">
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-5 text-center">Наши достижения</h2>
+                <div class="progress-department-all">
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/olympiad_vosh.jpeg' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Олимпиады по информатике и технологии</h5>
+                            <ul>
+                                <li>Призёры муниципального этапа ВОШ по технологии и информатики (г. Москва, 2019 - 2020
+                                    года)</li>
+                                <li>Призёры олимпиад "Бельчонок", "Информационные технологии", международного конкурса
+                                    по информатике "Олимпис" (г. Москва, 2018-2019 года)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/wsr_moscow.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Чемпионаты "Московские мастера" по стандартам WorldSkills</h5>
+                            <ul>
+                                <li>Ежегодные призёры чемпионата в возрастных категориях 14+ и 16+ в компетенции
+                                    "Мобильная робототехника" (г. Москва, 2018-2021 года)</li>
+                                <li>Финалисты чемпионата инженерных профессий JuniorSkills (г. Москва, 2017 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/robofest_logo.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Робототехнические соревнования RoboFest и FLL</h5>
+                            <ul>
+                                <li>
+                                    Победители и призёры региональных робототехнических соревнований в номинации Junior
+                                    First Lego League (г. Москва, 2018-2020 года)
+                                </li>
+                                <li>
+                                    Победители и призёры региональных робототехнических соревнований в номинации First
+                                    Lego League (г. Москва, 2020 год)
+                                </li>
+                                <li>
+                                    Призёры международных соренований по робототехнике в номинация "First Lego League.
+                                    Программирование" (г. Красноярск, 2020 год)
+                                </li>
+                                <li>
+                                    Призёры международных соренований по робототехнике в номинации "Junior First Lego
+                                    League" в (г. Пермь, 2019 год)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/rro.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Робототехнические соревнования Russian Robot Olympiad</h5>
+                            <ul>
+                                <li>
+                                    Победители всероссийских робототехнических соревнований в номинации "Беспилотные
+                                    летательные аппараты" (г. Иннополис, 2020 год)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/prizma.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Международный конкурс проектно-исследовательских работ школьников, студентов и
+                                педагогических работников образовательных учреждений «ПРИЗМА»</h5>
+                            <ul>
+                                <li>Победители конкурса в номинация "Вектор" (г. Москва, 2018 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/eurobot.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Всероссийские молодёжные соревнования Eurobot</h5>
+                            <ul>
+                                <li>Призёры соревнований в номинации "Eurobot Junior" (г. Калининград, 2017 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/shustrik.jpeg' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Всероссийский конкурс «Шустрик»</h5>
+                            <ul>
+                                <li>Победители конкурса в номинации "Космос" (г. Москва, 2016 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid bg-light">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-5 text-center"> Учителя кафедры</h2>
+                <div class="teacher-content">
+                    {% for teacher in teachers %}
+                    <div class="teacher-info">
+                        {% if teacher.photo %}
+                        <img src="{{ teacher.photo.url }}" class="revealator-fade" alt="" width="100px" height="auto">
+                        {% endif %}
+                        <p class="revealator-fade revealator-delay1">{{teacher.name}} {{teacher.patronymic}}<br>
+                            <b>{{teacher.surname}}</b> <br>
+                            {{teacher.position}}
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+
+<h2 class="mt-5 mb-3 text-center">Обратная связь</h2>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-5">
+                <form class="mt-3 mb-3 mr-5">
+                    <div class="form-row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Введите своё имя" required="required">
+                        </div>
+                        <div class="col">
+                            <input type="email" class="form-control" placeholder="Введите email" required="required">
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col">
+                            <label for="message" class="control-label">Сообщение (не менее 20 символов)</label>
+                            <textarea id="message" name="message" class="form-control" rows="6"
+                                placeholder="Сообщение (не менее 20 символов)" minlength="20" maxlength="500"
+                                required="required"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col">
+                            <button class="btn btn-primary" type="submit">Отправить сообщение</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3 first-bg">
+                <div class="d-flex flex-column justify-content-end mt-3">
+                    <p>Заведующий кафедрой: <br><b>Семочкин Алексей Викторович</b></p>
+                    <p>E-mail зав. кафедрой: <br><b>asemochkin@sk.ru</b></p>
+                    <p>E-mail кафедры: <br><b>designtech.igsk@gmail.com</b></p>
+                    <div class="mt-auto">
+                        <a href="http://3dtour.designtechno.ru/?scene=600f0854236abe2fe72ea918" target="_blank"> <img
+                                class="mr-2" src="{% static 'img/location.svg' %}" alt="" width="30px">Посмотреть 3D
+                            тур</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col first-bg"></div>
+        </div>
+    </div>
+</section> -->
+
+
+<!-- <section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                <h2 class="mt-5 text-center">Наши достижения</h2>
+                <div class="progress-department-all">
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/olympiad_vosh.jpeg' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Олимпиады по информатике и технологии</h5>
+                            <ul>
+                                <li>Муниципальный этап ВОШ по технологии (призёры - 1 студент, г. Москва, 2020 год)</li>
+                                <li>Муниципальный этап ВОШ по информатике (призёры - 1 студент, г. Москва, 2019 год)
+                                </li>
+                                <li>Олимпиада "Бельчонок" (призёры - 6 студентов, г. Москва, 2019 год)</li>
+                                <li>Открытая олимпиада школьников «Информационные технологии» (призёры - 5 студентов,
+                                    победители - 6 студентов, г. Москва, 2019 год)</li>
+                                <li>Международный конкурс по информатике "Олимпис-2018" (дипломы 1 степени - 1 студент,
+                                    2 степени - 5 студентов, 3 степени - 1 студент, г. Москва, 2018 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/wsr_moscow.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Чемпионаты "Московские мастера" по стандартам WorldSkills</h5>
+                            <ul>
+                                <li>III место. Компетенция "Мобильная робототехника" (г. Москва, 2021 год)</li>
+                                <li>III место. Компетенция "Мобильная робототехника" (г. Москва, 2019 год)</li>
+                                <li>II место. Компетенция "Мобильная робототехника" (г. Москва, 2018 год)</li>
+                                <li>Финалисты. Чемпионат инженерных профессий JuniorSkills (г. Москва, 2017 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/robofest_logo.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Робототехнические соревнования RoboFest, First Lego League, Russian Robot Olympiad</h5>
+                            <ul>
+                                <li>I место. Номинация "First Lego League. Программирование" (г. Красноярск, 2020 год)
+                                </li>
+                                <li>Номинанты "Junior First Lego League" (г. Красноярск, 2020 год)</li>
+                                <li>I место. Номинация "First Lego League" (г. Москва, 2020 год)</li>
+                                <li>I место. Номинация "Junior First Lego League" (г. Москва, 2020 год)</li>
+                                <li>I место. Номинация "Беспилотные летательные аппараты" в RRO-2019 (г. Иннополис, 2020
+                                    год)</li>
+                                <li>Номинанты "Junior First Lego League" в "Fisrt Robot Olympiad 6+" (г. Пермь, 2019
+                                    год)</li>
+                                <li>I место. Номинация "Junior First Lego League" в "ProFest-Москва" (г. Москва, 2019
+                                    год)</li>
+                                <li>I место. Номинация "Junior First Lego League" в "Robofest-Москва" (г. Москва, 2018
+                                    год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/prizma.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Международный конкурс проектно-исследовательских работ школьников, студентов и
+                                педагогических работников образовательных учреждений «ПРИЗМА»</h5>
+                            <ul>
+                                <li>I место. Номинация "Вектор" (г. Москва, 2018 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/eurobot.png' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Всероссийские молодёжные соревнования Eurobot</h5>
+                            <ul>
+                                <li>II место. Номинация "Eurobot Junior" (г. Калининград, 2017 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-department mt-3 revealator-slideleft">
+                        <img src="{% static 'img/shustrik.jpeg' %}" alt="">
+                        <div class="progress-department-text">
+                            <h5>Всероссийский конкурс «Шустрик»</h5>
+                            <ul>
+                                <li>I место. Тема "Космос" (г. Москва, 2016 год)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section> -->

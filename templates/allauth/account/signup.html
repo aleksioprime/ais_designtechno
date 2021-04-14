@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'apps.html' %}
 
 {% load i18n %}
 
-{% block extra_base %}
+{% block content %}
 <h1>{% trans "Регистрация" %}</h1>
 
 <p>{% blocktrans %}Если у вас уже есть акканут, то, пожалуйста, <a href="{{ login_url }}">авторизуйтесь</a>!{% endblocktrans %}</p>

@@ -1,0 +1,20 @@
+{% extends 'apps.html' %}
+
+{% block content %}
+{% load static %}
+<div class="appname-wrapper">
+    <a href="{% url 'sumassess:criteria' %}">
+        <img src="{% static 'img/bookmark.svg' %}" 
+        width="30" height="auto" class="" alt=""> 
+        Итоговое оценивание{% block sumassess_title %}{% endblock %}
+    </a>
+</div>
+<hr>
+{% block sumassess_content %}
+
+{% endblock %}
+
+<div class="buttons-wrapper">
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Кафедра дизайна и технологии {% endblock %}
+
+{% block extra_base %}
+{% load static %}
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</section>
+    
+{% endblock %}
