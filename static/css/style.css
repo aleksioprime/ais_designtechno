@@ -125,7 +125,7 @@ h1, h2, h3, h4, h5 {
     margin-right: 10px;
 }
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #00AFA8;
+    background-color: #c96903;
 }
 .dropdown {
     position: relative;
