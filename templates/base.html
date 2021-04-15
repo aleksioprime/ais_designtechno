@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Сайт кафедры дизайна и технологии Международной гимназии Сколково">
+    <meta name="description" content="Сайт кафедры дизайна и технологии">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'img/designtechno.svg' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -35,9 +35,8 @@
             <div class="header-wrapper">
                 <div class="header-logo">
                     <a class="" href="{% url 'employee:index' %}">
-                        <img class="" src="{% static 'img/designtechno.svg' %}" height="50px" width="auto"
-                            alt="">
-                        <b class="second-color-text">Д&Т</b> 
+                        <img class="" src="{% static 'img/designtechno.svg' %}" height="50px" width="auto" alt="">
+                        <b class="second-color-text">Д&Т</b>
                     </a>
                 </div>
                 <div class="header-menu">
@@ -50,31 +49,32 @@
                         </li>
                         <li class="">
                             <a class="" href="https://designtechno.ru/" target="_blank">Курсы</a>
-                        </li>                        
+                        </li>
                     </ul>
                 </div>
                 <div class="header-add">
                     {% if username %}
                     <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn">Приложения</button>
-                            <div id="myDropdown" class="dropdown-content">
-                                <a href="{% url 'storage:index' %}">МТО</a>
-                                <a href="{% url 'sumassess:criteria' %}">Оценивание</a>
-                                <a href="{% url 'employee:log_notebook' %}">Ноутбуки</a>
-                            </div>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="{% url 'storage:index' %}">МТО</a>
+                            <a href="{% url 'sumassess:criteria' %}">Оценивание</a>
+                            <a href="{% url 'employee:log_notebook' %}">Ноутбуки</a>
+                        </div>
                     </div>
                     {% endif %}
-                    <a class="" href="https://gymnasium.sk.ru/" target="_blank"><img src="{% static 'img/igsk_background.png' %}" alt="" height="40px"></a>
+                    <!-- <a class="" href="https://gymnasium.sk.ru/" target="_blank"><img
+                            src="{% static 'img/igsk_background.png' %}" alt="" height="40px"></a> -->
                 </div>
                 <div class="header-user">
                     {% if show_login %}
-                        {% if username %}
-                        Приветствуем, <br><a href="{% url 'employee:user_edit' user.username %}">
-                            {{ user.name }}</a>!
-                        <a href="/accounts/logout"> Выйти</a>
-                        {% else %}
-                        <a href="/accounts/login/">Войти на сайт</a>!
-                        {% endif %}
+                    {% if username %}
+                    Приветствуем, <br><a href="{% url 'employee:user_edit' user.username %}">
+                        {{ user.name }}</a>!
+                    <a href="/accounts/logout"> Выйти</a>
+                    {% else %}
+                    <a href="/accounts/login/">Войти на сайт</a>!
+                    {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -90,11 +90,11 @@
     <!-- Подвал сайта -->
     <footer class="bg-light mt-5 text-center text-lg-start">
         <div class="dit-container">
-                    <div>&copy; Алексей Сёмочкин, 2021</div>
-                    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
-                            href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-                    <div>Icons made by <a href="" title="ultimatearm">ultimatearm</a> from <a
-                            href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+            <div>&copy; Алексей Сёмочкин, 2021</div>
+            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a
+                    href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+            <div>Icons made by <a href="" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/"
+                    title="Flaticon">www.flaticon.com</a></div>
         </div>
     </footer>
 
@@ -117,20 +117,20 @@
         function myFunction() {
             document.getElementById("myDropdown").classList.toggle("show");
         }
-        
+
         // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-          if (!event.target.matches('.dropbtn')) {
-        
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-              }
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
             }
-          }
         }
     </script>
 </body>
