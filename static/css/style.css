@@ -88,13 +88,13 @@ h1, h2, h3, h4, h5 {
 .header-menu > ul a:after {
   content: "";
   position: absolute;
-  height: 4px;
+  height: 2px;
   top: auto;
   right: 50%;
-  bottom: 10px;
+  bottom: 14px;
   left: 50%;
   background: #FF8500;
-  transition: .8s;
+  transition: .3s;
 }
 .header-menu > ul a:hover:before, .header-menu > ul .current:before {left: 0;}
 .header-menu > ul a:hover:after, .header-menu > ul .current:after {right: 0;}   
