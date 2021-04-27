@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources, fields
-from sumassess.models import Programm, SubjectGroup, Subject, Criteria, Strand, ClassYear, Objective, Level
+from sumassess.models import Programm, SubjectGroup, Subject, Criteria, Strand, ClassYear, Objective, Level, Student
 
 # ресурс для экспорта-импорта Programm
 class ProgrammResource(resources.ModelResource):
@@ -43,6 +43,11 @@ class LevelResource(resources.ModelResource):
     class Meta:
         model = Level
 
+# ресурс для экспорта-импорта Student
+class StudentResource(resources.ModelResource):
+    class Meta:
+        model = Student
+
 @admin.register(Programm)
 class ProgrammAdmin(ImportExportActionModelAdmin):
     resource_class = ProgrammResource
@@ -82,3 +87,8 @@ class ObjectiveAdmin(ImportExportActionModelAdmin):
 class LevelAdmin(ImportExportActionModelAdmin):
     resource_class = LevelResource
     list_display = ('name_eng', 'objective')
+
+@admin.register(Student)
+class StudentAdmin(ImportExportActionModelAdmin):
+    resource_class = StudentResource
+    list_display = ('user', 'gender')

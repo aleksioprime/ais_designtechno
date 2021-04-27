@@ -9,26 +9,26 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-    color: #FF8500;
+    color: #FF6720;
     font-weight: bold;
 }
 
 .first-bg {
-    background-color: #00AFA8;
+    background-color: #00968F;
     color: white;
 }
 
 .second-bg {
-    background-color: #FF8500;
+    background-color: #FF6720;
     color: white;
 }
 
 .first-color-text {
-    color: #00AFA8;
+    color: #00968F;
 }
 
 .second-color-text {
-    color: #FF8500;
+    color: #FF6720;
 }
 
 .dit-container {
@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5 {
   transition: color .2s;
 }
 .header-menu > ul a, .header-menu > ul a:visited {color: #9d999d;}
-.header-menu > ul a.current, .header-menu > ul a:hover{color: #FF8500;}
+.header-menu > ul a.current, .header-menu > ul a:hover{color: #FF6720;}
 .header-menu > ul a:before,
 .header-menu > ul a:after {
   content: "";
@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5 {
   right: 50%;
   bottom: 14px;
   left: 50%;
-  background: #FF8500;
+  background: #FF6720;
   transition: .3s;
 }
 .header-menu > ul a:hover:before, .header-menu > ul .current:before {left: 0;}
@@ -114,7 +114,7 @@ h1, h2, h3, h4, h5 {
     align-items: center;
 }
 .dropbtn {
-    background-color: #FF8500;
+    background-color: #FF6720;
     color: white;
     height: 40px;
     padding: 5px 10px;
@@ -125,7 +125,7 @@ h1, h2, h3, h4, h5 {
     margin-right: 10px;
 }
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #c96903;
+    background-color: #FF6720;
 }
 .dropdown {
     position: relative;

@@ -85,7 +85,7 @@
 }
 .bs-item-header {
     text-transform: uppercase;
-    color: #00AFA8;
+    color: #00968F;
     font-weight: 700;
 }
 .bs-item-photo {
@@ -96,7 +96,7 @@
     margin-top: 5px;
 }
 .bs-item-photo:hover {
-    box-shadow: 0 0 2px 1px #00AFA880;
+    box-shadow: 0 0 2px 1px #00968F80;
   }
 .bs-item-photo img{
     object-fit: cover;
@@ -134,7 +134,7 @@
 }
 .ld-content, .le-content, .lit-content {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     flex-wrap: nowrap;
 }
 .ld-text, .le-text, .lit-text {
@@ -159,9 +159,14 @@
     display: block;
     object-fit: cover;
     height: 100%;
-    max-width: 300px;
     margin-left: auto;
     margin: 0 15px;
+}
+.ld-content > img {
+    max-width: 330px;
+}
+.le-content > img {
+    max-width: 400px;
 }
 .lit-content > img {
     max-width: 500px;
@@ -247,7 +252,7 @@
     background-color: #dddddd;
 }
 .tns-nav button.tns-nav-active{
-    background-color:#2779a8;
+    background-color:#00968F;
 }
 
 /* Блок партнёры */
@@ -293,7 +298,7 @@
     justify-content: center;
 }
 .progress-department-text h5 {
-    color: #00AFA8;
+    color: #00968F;
 }
 @media screen and (max-width: 600px) {
     .progress-department img {
@@ -345,7 +350,7 @@
     text-align: center;
 }
 .contact-wrapper {
-    border: 1px solid #00AFA8;
+    border: 1px solid #00968F;
     display: flex;
     justify-content: space-between;
     padding: 15px;

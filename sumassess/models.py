@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import gettext as _
 from django.urls import reverse
 from datetime import date
@@ -114,7 +115,7 @@ class Objective(models.Model):
 class Level(models.Model):
     """ Уровни достижений образовательных целей """
     objective = models.ForeignKey('sumassess.Objective', verbose_name=_("Образовательная цель"), on_delete=models.CASCADE, \
-        null=True, blank=False, related_name="level")
+        null=True, blank=False)
     name_eng = models.TextField(verbose_name=_("Описание на англ. языке"), null=True, blank=False)
     name_rus = models.TextField(verbose_name=_("Описание на рус. языке"), null=True, blank=True)
     point = models.PositiveIntegerField(verbose_name=_("Баллы"), default=0)
@@ -124,3 +125,18 @@ class Level(models.Model):
         ordering = ['objective', 'point']
     def __str__(self):
         return "{}... - {}".format(self.name_eng[:30], self.point)
+
+class Student(models.Model):  
+    GENDER = [
+        ('м', 'мужской'),
+        ('ж', 'женский'),
+    ]
+    user = models.OneToOneField("employee.User", verbose_name=_("Пользователь"), related_name='student', on_delete=CASCADE)
+    shortname = models.CharField(max_length=140, verbose_name=_("Скрытое имя"))  
+    gender = models.CharField(max_length=140, verbose_name=_("Пол"))
+    class Meta:
+        verbose_name = 'Студент'
+        verbose_name_plural = 'Студенты'
+        ordering = ['user']
+    def __str__(self):
+        return '{}'.format(self.shortname)

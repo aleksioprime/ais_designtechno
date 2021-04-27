@@ -27,9 +27,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(default=uuid.uuid4, primary_key=True, verbose_name=_("Идентификатор"))
     username = models.CharField(_('Логин'), max_length=16, blank=False, unique=True)
     email = models.EmailField(_('E-Mail'), blank=True, unique=False)
-    surname = models.CharField(_('Фамилия'), max_length=40, blank=True, null=True, unique=False)
-    name = models.CharField(_('Имя'), max_length=40, blank=True, null=True, unique=False)
-    patronymic = models.CharField(_('Отчество'), max_length=40, blank=True, null=True, unique=False)
+    surname = models.CharField(_('Фамилия'), max_length=40, blank=False, null=True, unique=False)
+    name = models.CharField(_('Имя'), max_length=40, blank=True, null=False, unique=False)
+    patronymic = models.CharField(_('Отчество'), max_length=40, blank=False, null=True, unique=False)
 
     is_staff = models.BooleanField(
         _('Статус модератора'),
@@ -87,4 +87,23 @@ class LogNoteBook(models.Model):
         verbose_name_plural = 'Записи использования ноутбуков'
         ordering = ['date']
     def __str__(self):
-            return "{} {}".format(self.date, self.employee)
+        return "{} {}".format(self.date, self.employee)
+
+class DesignPost(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    ]
+    title = models.CharField(max_length=255, verbose_name=_("Название проекта"))
+    slug = models.SlugField(max_length=255, unique='title', verbose_name=_("Ссылка"))
+    body = models.TextField(verbose_name=_("Описание проекта"))
+    teacher = models.ForeignKey("employee.User", on_delete=models.SET_NULL, verbose_name=_("Учитель"), related_name="design_post", null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_("Дата создания"))
+    updated = models.DateTimeField(auto_now=True, verbose_name=_("Дата обновления"))
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft', verbose_name=_("Статус"))
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
+        ordering = ['-created']
+    def __str__(self):
+        return "{}".format(self.title)
