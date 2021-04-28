@@ -375,7 +375,26 @@
 }
 .feedback-form button{
     margin: 10px auto;
+    color:#FF6720;
+    padding: 10px 20px;
+    width:200px;
+    text-decoration:none;
+    text-align:center;
+    margin:20px auto;
+    display: block;
+    background-image: linear-gradient(to left,transparent,transparent 50%,#FF6720 50%,#FF6720);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .25s ease-in;
+    font: 400 18px tahoma;
+    border: 1px solid #FF6720;
 }
+
+.feedback-form button:hover {
+   background-position: 0 0;
+   color:#fff;
+}
+
 @media screen and (max-width: 650px) {
     .contact-wrapper {
         flex-direction: column;
