@@ -1,5 +1,5 @@
 from django import forms
-from employee.models import User
+from employee.models import User, FeedBack
 from datetime import date
 
 class UserForm(forms.ModelForm):            
@@ -34,3 +34,11 @@ class UserForm(forms.ModelForm):
         class Meta:
             model = User
             fields = ['username', 'surname', 'name', 'patronymic', 'email', 'position', 'phone', 'photo']
+
+
+class FeedBackForm(forms.ModelForm):    
+    def __init__(self, *args, **kwargs):
+        super(FeedBackForm, self).__init__(*args, **kwargs)
+    class Meta:
+        model = FeedBack
+        fields = ['name', 'email', 'text']

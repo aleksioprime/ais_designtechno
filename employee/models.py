@@ -89,6 +89,18 @@ class LogNoteBook(models.Model):
     def __str__(self):
         return "{} {}".format(self.date, self.employee)
 
+class FeedBack(models.Model):
+    name = models.CharField(_('Имя'), max_length=255)
+    date = models.DateTimeField(_('Дата сообщения'), auto_now=True)
+    email = models.EmailField(_('E-mail'), max_length=120)
+    text = models.TextField(_('Сообщение'))
+    class Meta:
+        verbose_name = 'Сообщение обратной связи'
+        verbose_name_plural = 'Сообщения обратной связи'
+        ordering = ['date']
+    def __str__(self):
+        return "{} {}".format(self.date, self.name)
+
 class DesignPost(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),

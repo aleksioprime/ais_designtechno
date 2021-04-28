@@ -374,6 +374,7 @@
     flex-basis: 48%
 }
 .feedback-form button{
+    display: none;
     margin: 10px auto;
     color:#FF6720;
     padding: 10px 20px;
@@ -381,7 +382,6 @@
     text-decoration:none;
     text-align:center;
     margin:20px auto;
-    display: block;
     background-image: linear-gradient(to left,transparent,transparent 50%,#FF6720 50%,#FF6720);
     background-position: 100% 0;
     background-size: 200% 100%;
@@ -411,4 +411,105 @@
     .feedback-form-name {
         flex-direction: column;
     }
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,100);
+
+.captchaField {
+    margin-top: 15px;
+    border: 1px solid #ccc;  
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.wrapFields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    flex-basis: 100%;
+}
+.CaptchaTxtField {  
+    margin-top: 15px;
+    border-radius: 5px; 
+    min-width: 200px;
+    height: 40px; 
+    border: 1px solid #ccc;  
+    margin-right: 10px;
+}
+#UserCaptchaCode {
+  padding: 5px;  
+  outline: none;  
+  font-size: 18px;
+}
+#CaptchaImageCode {
+    margin-top: 15px;
+    text-align: center;
+    padding: 0px 0;
+    overflow: hidden;
+    width: 200px;
+    height: 60px;
+    margin-left: auto;
+}
+
+.capcode {  
+  font-size: 34px;  
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;  
+  cursor: default;
+  letter-spacing: 1px;
+  color: #ccc;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.ReloadBtn {  
+  background:url('http://ufive.ru/demo_file/img_demo/demo/replay.png') left top no-repeat;  
+  background-size : 100%;
+  width: 32px;  
+  height: 32px;
+  border: 0px; 
+  outline: none;
+  bottom: 30px;
+  left: 310px;
+  cursor: pointer; /**/
+}
+
+.btnSubmit {
+  margin-top: 15px;
+  border: 0px;
+  padding: 10px 20px;  
+  border-radius: 5px;
+  font-size: 18px;
+  background-color: #FF6720;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btnSubmit:hover {
+  margin-top: 15px;
+  border: 0px;
+  padding: 10px 20px;  
+  border-radius: 5px;
+  font-size: 18px;
+  background-color: #393939;
+  color: #f3be81;
+  cursor: pointer;
+}
+
+.error {  
+  color: red;  
+  font-size: 12px;  
+  display: none;  
+}
+
+.success {
+  color: green;
+  font-size: 18px;
+  margin-bottom: 15px;
+  display: none;
 }

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from employee.models import User, LogNoteBook, DesignPost
+from employee.models import User, LogNoteBook, DesignPost, FeedBack
 from import_export.admin import ImportExportActionModelAdmin
 from import_export import resources
 
@@ -17,6 +17,11 @@ class LogNoteBookResource(resources.ModelResource):
 class DesignPostResource(resources.ModelResource):
     class Meta:
         model = DesignPost
+
+# класс ресурса сообщений обратной связи
+class FeedBackResource(resources.ModelResource):
+    class Meta:
+        model = FeedBack
 
 @admin.register(User)
 class EmployeeAdmin(ImportExportActionModelAdmin):
@@ -36,3 +41,9 @@ class LogNoteBookAdmin(ImportExportActionModelAdmin):
 class DesignPostAdmin(ImportExportActionModelAdmin):
     resource_class = DesignPostResource
     list_display = ('title', 'created', 'status')
+
+@admin.register(FeedBack)
+class FeedBackAdmin(ImportExportActionModelAdmin):
+    resource_class = FeedBackResource
+    list_display = ('date', 'name', 'email')
+

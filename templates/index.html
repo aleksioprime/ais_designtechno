@@ -516,14 +516,15 @@
         <h2>Обратная связь</h2>
         <div class="contact-wrapper">
             <div class="feedback-wrapper">
-                <form class="feedback-form">
+                <form action="{% url 'employee:feedback' %}" class="feedback-form" method="POST">
+                    {% csrf_token %}
                     <div class="feedback-form-name">
                         <label for="name" class="control-label">Ваше имя:
-                            <input id="name" type="text" class="form-control" placeholder="Введите своё имя"
+                            <input name="name" id="name" type="text" class="form-control" placeholder="Введите своё имя"
                                 required="required">
                         </label>
                         <label for="email" class="control-label">Ваш email:
-                            <input id="email" type="email" class="form-control" placeholder="Введите email"
+                            <input name="email" id="email" type="email" class="form-control" placeholder="Введите email"
                                 required="required">
                         </label>
                     </div>
@@ -533,8 +534,25 @@
                             placeholder="Сообщение (не менее 20 символов)" minlength="20" maxlength="500"
                             required="required"></textarea>
                     </div>
+                    <div style="margin-top: 10px;">
+                        <span id="SuccessMessage" class="success">Спасибо! Капча верна!</span>
+                        <fieldset id="captchaField" class="captchaField">
+                            <span id="WrongCaptchaError" class="error"> </span>
+                            <div class="wrapFields">
+                                <input type="text" id="UserCaptchaCode" class="CaptchaTxtField" placeholder='Введите капчу'>
+                                <div style="display: flex; align-items: center;">
+                                    <div id="CaptchaImageCode" class="CaptchaTxtField">
+                                        <canvas id="CapCode" class="capcode" width="200" height="60"></canvas>
+                                    </div>
+                                    <input type="button" class="ReloadBtn" onclick='CreateCaptcha();'>
+                                </div>
+                                <input type="button" class="btnSubmit" onclick="CheckCaptcha()" value="ОК">
+                            </div>
+                            
+                        </fieldset>
+                    </div>
                     <div class="feedback-form-button">
-                        <button class="glo" type="submit">Отправить сообщение</button>
+                        <button id="btnSend" type="submit">Отправить сообщение</button>
                     </div>
                 </form>
             </div>
@@ -594,5 +612,87 @@
         'fadeDuration': 200,
         'wrapAround': true
     })
+
+    var cd;
+    var IsAllowed = false;
+    $(document).ready(function () { CreateCaptcha(); });
+
+    // Create Captcha
+    function CreateCaptcha() {
+        //$('#InvalidCapthcaError').hide();
+        var alpha = new Array(
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+        );
+        var i;
+        for (i = 0; i < 6; i++) {
+            var a = alpha[Math.floor(Math.random() * alpha.length)];
+            var b = alpha[Math.floor(Math.random() * alpha.length)];
+            var c = alpha[Math.floor(Math.random() * alpha.length)];
+            var d = alpha[Math.floor(Math.random() * alpha.length)];
+            var e = alpha[Math.floor(Math.random() * alpha.length)];
+            var f = alpha[Math.floor(Math.random() * alpha.length)];
+        }
+        cd = a + " " + b + " " + c + " " + d + " " + e + " " + f;
+        $("#CaptchaImageCode").empty().append('<canvas id="CapCode" class="capcode" width="200" height="60"></canvas>');
+
+        var c = document.getElementById("CapCode"),
+        ctx = c.getContext("2d"),
+        x = c.width / 2,
+        img = new Image();
+
+        img.src = "http://ufive.ru/demo_file/img_demo/demo/bg-captcha.jpg";
+        img.onload = function () {
+            var pattern = ctx.createPattern(img, "repeat");
+            ctx.fillStyle = pattern;
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.font = "35px Roboto Slab";
+            ctx.fillStyle = "#00968F";
+            ctx.textAlign = "center";
+            ctx.setTransform(1, -0.12, 0, 1, 0, 15);
+            ctx.fillText(cd, x, 40);
+        };
+    }
+
+    // Validate Captcha
+    function ValidateCaptcha() {
+        var string1 = removeSpaces(cd);
+        var string2 = removeSpaces($("#UserCaptchaCode").val());
+        if (string1 == string2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Remove Spaces
+    function removeSpaces(string) {
+        return string.split(" ").join("");
+    }
+
+    // Check Captcha
+    function CheckCaptcha() {
+        var result = ValidateCaptcha();
+        if ($("#UserCaptchaCode").val() == "" || $("#UserCaptchaCode").val() == null || $("#UserCaptchaCode").val() == "undefined") {
+            $("#WrongCaptchaError").text("Пожалуйста, введите код, указанный ниже на картинке.").show();
+            $("#UserCaptchaCode").focus();
+        } else {
+            if (result == false) {
+                IsAllowed = false;
+                $("#WrongCaptchaError").text("Неверная капча! Пожалуйста, попробуйте снова.").show();
+                CreateCaptcha();
+                $("#UserCaptchaCode").focus().select();
+            } else {
+                IsAllowed = true;
+                $("#UserCaptchaCode").val("").attr("place-holder", "Введите буквы - с учетом регистра");
+                CreateCaptcha();
+                $("#WrongCaptchaError").fadeOut(100);
+                $("#SuccessMessage").fadeIn(500).css("display", "block").delay(5000).fadeOut(250);
+                $("#captchaField").fadeOut(250);
+                $("#btnSend").fadeIn(250); 
+            }
+        }
+    }
 </script>
 {% endblock %}

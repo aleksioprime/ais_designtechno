@@ -1,13 +1,16 @@
-from django.shortcuts import render
-from employee.models import User, LogNoteBook
+from django.shortcuts import render, redirect
+from employee.models import User, LogNoteBook, FeedBack
 from storage.models import Cabinet
 from django.template import loader
 from django.http import HttpResponse  
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, View
 from django.urls import reverse_lazy
 from employee.forms import UserForm
 from allauth.socialaccount.models import SocialAccount
 from datetime import date
+from django.core.mail import send_mail
+from django.http.response import HttpResponseRedirect
+from django.conf import settings
 
 class authView():
     def get_context_data(self, **kwargs):
@@ -56,3 +59,14 @@ class LogNoteBookList(authView, ListView):
     model = LogNoteBook
     context_object_name = "lognotebook"
     template_name = "lognotebook.html"
+
+class FeedBackView(View):
+    def post(self, request):
+        print(request.POST)
+        if 'name' in request.POST and 'email' in request.POST and 'message' in request.POST:
+            FeedBack.objects.create(name=request.POST['name'], email=request.POST['email'], text=request.POST['message'])
+            send_mail('Обратная связь от {}'.format(request.POST['email']), 
+                    'Сообщение от {}: {}'.format(request.POST['name'], request.POST['message']), 
+                    settings.EMAIL_HOST_USER, 
+                    ['alex-x25@yandex.ru'])
+        return HttpResponseRedirect(reverse_lazy('employee:index'))
