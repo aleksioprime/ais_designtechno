@@ -65,8 +65,8 @@ class FeedBackView(View):
         print(request.POST)
         if 'name' in request.POST and 'email' in request.POST and 'message' in request.POST:
             FeedBack.objects.create(name=request.POST['name'], email=request.POST['email'], text=request.POST['message'])
-            send_mail('Обратная связь от {}'.format(request.POST['email']), 
-                    'Сообщение от {}: {}'.format(request.POST['name'], request.POST['message']), 
-                    settings.EMAIL_HOST_USER, 
-                    ['alex-x25@yandex.ru'])
+            # send_mail('Обратная связь от {}'.format(request.POST['email']), 
+            #         'Сообщение от {}: {}'.format(request.POST['name'], request.POST['message']), 
+            #         settings.EMAIL_HOST_USER, 
+            #         ['alex-x25@yandex.ru'])
         return HttpResponseRedirect(reverse_lazy('employee:index'))
