@@ -160,13 +160,14 @@
     object-fit: cover;
     height: 100%;
     margin-left: auto;
-    margin: 0 15px;
 }
 .ld-content > img {
     max-width: 330px;
+    margin-left: 15px;
 }
 .le-content > img {
     max-width: 400px;
+    margin-right: 15px;
 }
 .lit-content > img {
     max-width: 500px;
