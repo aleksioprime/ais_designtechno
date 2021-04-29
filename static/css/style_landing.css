@@ -63,8 +63,11 @@
 }
 
 /* Стили секции с блоками дисциплин кафедры */
+.subject-block {
+    margin-bottom: 20px;
+}
 .subject-block h2{
-    margin-top: 25px;
+    margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -211,6 +214,7 @@
         margin: 10px auto;
     }
 }
+
 /* Стили контейнеров с фотографиями лабораторий и пространств */
 .lab-slider-container {
     margin-bottom: 15px;
@@ -258,8 +262,8 @@
 
 /* Блок партнёры */
 .partner-block h2 {
-    margin-top: 15px;
-    margin-bottom: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     text-align: center;
 }
 .list-partners {
@@ -275,7 +279,7 @@
 /* Стили блока достижений */
 .progress-block h2 {
     margin-top: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
 }
 .progress-department-all {
@@ -310,7 +314,7 @@
 /* Стили блока списка учителей кафедры */
 .teachers-block h2{
     margin-top: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-align: center;
 }
 .teacher-info {
